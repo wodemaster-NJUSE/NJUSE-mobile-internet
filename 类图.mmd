@@ -1,0 +1,68 @@
+#  ClassDiagram of Meetme
+
+```mermaid
+classDiagram
+    用户 <|-- 好友
+    class 用户 {
+        -String uid
+        -String 用户名
+        -String 密码
+        -List<> 关系
+        -QQ空间类 QQ空间
+        +void 发送消息()
+        +void 删除消息()
+        +void 添加好友()
+        +void 删除好友()
+        +void 处理好友请求()
+        +void 发布动态()
+        +void 评论动态()
+        +void 带赞动态()
+        +void 浏览空间()
+}
+
+    class 好友 {
+        -String 好友uid
+        -String 好友备注
+        -boolean IsFriend
+        +void 发送消息()
+        +void 查看空间()
+ }
+
+   class 文本消息 {
+       -String 发送者ID
+       -String 接收者ID
+       -String 消息内容
+       -Date 发生时间
+ }
+
+
+   class QQ空间 {
+       -String uid
+       -List<> 动态列表
+       +void 发布动态()
+       +void 浏览空间()
+ }
+
+   class 动态 {
+       -int 动态id
+       -String 发布者uid
+       -String 发布者用户名
+       -String 动态内容
+       -Date 发布时间
+       -int 点赞数
+       -int 评论数
+       -List 评论列表
+       +void 点赞()
+       +void 取消点赞()
+       +void 评论()
+ }
+
+   class 聊天 {
+       -int 聊天室id
+       -String 聊天室名
+       -List 成员列表
+       -List 消息历史
+       +void 发送消息()
+       +void 接收消息()
+ }
+```
