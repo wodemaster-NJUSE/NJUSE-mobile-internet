@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { CustomerListComponent } from '../view/CustomerListComponent';
 import MinePageContentComponent from '../view/MinePageContentComponent';
 
 /**
@@ -11,7 +12,7 @@ struct MinePage {
   build() {
     Column() {
       this.Title()
-
+      CustomerListComponent()
       Scroll(){
         GridRow({
           columns: {

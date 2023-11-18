@@ -26,7 +26,7 @@ struct RegistrationSuccessPage {
             .fontColor($r('app.color.register_success_text_font'))
             .margin({ top: $r('app.float.register_success_text_margin_top') })
 
-          Text($r('app.string.jump_mine_page_text'))
+          Text("点击返回登录界面")
             .width($r('app.float.jump_mine_page_text_width'))
             .height($r('app.float.jump_mine_page_text_height'))
             .textAlign(TextAlign.Center)
@@ -34,7 +34,7 @@ struct RegistrationSuccessPage {
             .fontColor($r('app.color.jump_text_font'))
             .onClick(() => {
               router.replaceUrl({
-                url: CommonConstants.MINE_PAGE_URL
+                url: CommonConstants.LOGIN_PAGE_URL
               });
             })
         }

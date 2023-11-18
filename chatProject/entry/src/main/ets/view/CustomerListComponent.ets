@@ -7,6 +7,7 @@ import LoginPageViewModel from '../viewmodel/LoginViewMode';
  */
 @Component
 export struct CustomerListComponent {
+
   build() {
     Column() {
       List() {

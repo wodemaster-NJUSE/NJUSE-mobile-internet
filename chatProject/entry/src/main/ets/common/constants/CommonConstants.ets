@@ -143,6 +143,10 @@ export class CommonConstants {
   static readonly LOGIN_SCROLL_LAYOUT_WEIGHT: number = 1;
 
   /**
+   * 登陆界面url
+   */
+  static readonly LOGIN_PAGE_URL:string = "pages/LoginPage"
+  /**
    * Registration success page scroll layout weight.
    */
   static readonly SCROLL_LAYOUT_WEIGHT: number = 1;
@@ -281,4 +285,8 @@ export class CommonConstants {
    * Percent of the column width in detail page.
    */
   static readonly DETAIL_COLUMN_WIDTH_PERCENT: string = '93%';
+  /**
+   * 注册界面路由
+   */
+  static readonly REGISTER_PAGE_URL: string = 'pages/RegisterPage';
 }

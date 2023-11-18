@@ -1,33 +1,18 @@
 import router from '@ohos.router';
-import MediaQueryModel from '../model/MediaQueryModel';
+import webview from '@ohos.web.webview';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
-import { LoginComponent } from '../view/LoginComponent';
+import { RegisterComponent } from '../view/RegisterCompoent';
 
-/**
- * This template implements the Login function.
- * First register personal details. Log in after entering the username and password.
- * Click the button at the bottom to ask for help and check the privacy statement.
- * Developers can save username and password by Preference or Relational Database.
- */
 @Entry
 @Component
-struct LoginPage {
-  aboutToAppear() {
-    MediaQueryModel.register();
-  }
-
-  aboutToDisappear() {
-    MediaQueryModel.unRegister();
-  }
-
+struct RegisterPage {
   build() {
     Column() {
-      this.Title()
-
+      this.Title() //退出按钮
       Scroll() {
         Column() {
-          LoginComponent()
+          RegisterComponent()
 
           Blank()
 
@@ -38,13 +23,13 @@ struct LoginPage {
         .alignItems(HorizontalAlign.Start)
         .padding($r('app.float.login_operation_area_padding'))
       }
-      .layoutWeight(CommonConstants.LOGIN_SCROLL_LAYOUT_WEIGHT)
-    }
-    .width(CommonConstants.LOGIN_PAGE_WIDTH_PERCENT)
-    .backgroundColor($r('app.color.login_page_background'))
+      .layoutWeight(1)
+
+    }.width('100%')
+    .backgroundColor($r('app.color.register_page_background'))
   }
 
-   @Builder Title() {
+  @Builder Title() {
     Row() {
       Image($r('app.media.ic_back'))
         .width($r('app.float.image_size'))
@@ -57,7 +42,7 @@ struct LoginPage {
           router.back();
         })
 
-       Text("登录")
+      Text($r('app.string.register_success_text'))
         .fontSize($r('app.float.title_text_size'))
         .fontColor($r('app.color.title'))
         .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)

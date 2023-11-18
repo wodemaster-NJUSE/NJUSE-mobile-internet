@@ -4,6 +4,7 @@
     "pages/MinePage",
     "pages/RegistrationSuccessPage",
     "pages/PrivacyPage",
-    "pages/CustomerServicePage"
+    "pages/CustomerServicePage",
+    "pages/RegisterPage"
   ]
 }

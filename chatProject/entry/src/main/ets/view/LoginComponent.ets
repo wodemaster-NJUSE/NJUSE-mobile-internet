@@ -125,7 +125,7 @@ export struct LoginComponent {
           .backgroundColor($r('app.color.register_btn_clickable'))
           .onClick(() => {
             router.pushUrl({
-              url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
+              url: CommonConstants.REGISTER_PAGE_URL
             });
           })
       }

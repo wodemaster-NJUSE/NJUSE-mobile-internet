@@ -53,6 +53,10 @@
       "value": "#f1f3f5"
     },
     {
+      "name": "register_page_background",
+      "value": "#f1f3f5"
+    },
+    {
       "name": "register_success_text_font",
       "value": "#e6000000"
     },
