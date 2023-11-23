@@ -62,7 +62,6 @@ class UsersInfoApi {
         // Logger.info('UsersInfoTable', 'query no results.');
         let result = new UsersInfo('', '');
         callback(result);
-
       } else {
         let result = new UsersInfo('', '');
 
