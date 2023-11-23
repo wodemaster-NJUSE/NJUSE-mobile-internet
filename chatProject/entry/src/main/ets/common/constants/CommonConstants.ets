@@ -1,7 +1,17 @@
 /**
  * Common Constants for all features.
  */
+import CommonConstantsInfo from '../../viewmodel/CommonConstantsInfo';
+
 export class CommonConstants {
+  static readonly RDB_NAME = { dbName: 'UsersInfo.db' } as CommonConstantsInfo; // db name
+
+  /** Users info table */
+  static readonly USERS_INFO = {
+    tableName: 'UsersInfo',
+    columns: ['name', 'password']
+  } as CommonConstantsInfo
+
   /**
    * The number of columns for SM device.
    */

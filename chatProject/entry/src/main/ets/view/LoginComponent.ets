@@ -141,4 +141,3 @@ export struct LoginComponent {
 function isLoginButtonClickable(userName: string, password: string): boolean {
   return userName !== '' && password !== '';
 }
-
