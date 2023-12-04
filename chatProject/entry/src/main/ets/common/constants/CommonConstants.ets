@@ -289,4 +289,8 @@ export class CommonConstants {
    * 注册界面路由
    */
   static readonly REGISTER_PAGE_URL: string = 'pages/RegisterPage';
+  /**
+   * 主界面路由
+   */
+  static readonly MAIN_PAGE_URL: string = 'pages/MainPage';
 }

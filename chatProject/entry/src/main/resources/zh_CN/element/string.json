@@ -79,6 +79,18 @@
     {
       "name": "contact_customer_service",
       "value": "联系客服"
+    },
+    {
+      "name": "message",
+      "value": "消息界面"
+    },
+    {
+      "name": "LLM",
+      "value": "大语言模型"
+    },
+    {
+      "name": "contacts",
+      "value": "联系人"
     }
   ]
 }
