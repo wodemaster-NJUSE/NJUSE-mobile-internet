@@ -97,7 +97,7 @@ export struct LoginComponent {
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
             router.pushUrl({
-              url: CommonConstants.MINE_PAGE_URL
+              url: CommonConstants.MAIN_PAGE_URL //跳转主页面
             });
           })
       }

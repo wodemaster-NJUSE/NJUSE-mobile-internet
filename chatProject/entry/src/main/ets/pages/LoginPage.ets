@@ -15,7 +15,7 @@ import { LoginComponent } from '../view/LoginComponent';
 struct LoginPage {
   aboutToAppear() {
     MediaQueryModel.register();
-  }
+}
 
   aboutToDisappear() {
     MediaQueryModel.unRegister();
