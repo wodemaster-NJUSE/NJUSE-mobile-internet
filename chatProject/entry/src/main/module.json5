@@ -30,6 +30,15 @@
               "action.system.home"
             ]
           }
+
+        ],
+        "requestPermissions": [
+          {
+            "name": "ohos.permission.INTERNET",
+            "usedScene": {
+              "when": "always"
+            }
+          }
         ]
       }
     ]

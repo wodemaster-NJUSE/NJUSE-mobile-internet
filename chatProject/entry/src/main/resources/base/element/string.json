@@ -79,6 +79,22 @@
     {
       "name": "contact_customer_service",
       "value": "Contact customer service"
+    },
+    {
+      "name": "message",
+      "value": "消息"
+    },
+    {
+      "name": "LLM",
+      "value": "小智"
+    },
+    {
+      "name": "contacts",
+      "value": "联系人"
+    },
+    {
+      "name": "moment",
+      "value": "动态"
     }
   ]
 }

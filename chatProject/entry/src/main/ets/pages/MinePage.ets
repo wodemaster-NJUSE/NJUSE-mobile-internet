@@ -1,7 +1,7 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { CustomerListComponent } from '../view/CustomerListComponent';
-import MinePageContentComponent from '../view/MinePageContentComponent';
+import MinePageContentComponent from '../view/MinePageComponent';
 
 /**
  * Personal Center page, displaying personal information and app-related settings.
