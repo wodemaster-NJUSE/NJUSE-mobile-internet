@@ -6,6 +6,9 @@
     "pages/PrivacyPage",
     "pages/CustomerServicePage",
     "pages/RegisterPage",
-    "pages/MainPage"
+    "pages/MainPage",
+    "pages/LLMPage",
+    "pages/ContactsPage",
+    "pages/MomentsPage"
   ]
 }

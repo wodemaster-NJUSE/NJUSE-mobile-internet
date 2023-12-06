@@ -1,5 +1,4 @@
 import router from '@ohos.router';
-import webview from '@ohos.web.webview';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
 import { RegisterComponent } from '../view/RegisterCompoent';

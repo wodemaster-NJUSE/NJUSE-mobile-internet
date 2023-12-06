@@ -57,6 +57,18 @@
       "value": "#f1f3f5"
     },
     {
+      "name": "llm_page_background",
+      "value": "#f1f3f5"
+    },
+    {
+      "name": "contacts_page_background",
+      "value": "#f1f3f5"
+    },
+    {
+      "name": "moments_page_background",
+      "value": "#f1f3f5"
+    },
+    {
       "name": "register_success_text_font",
       "value": "#e6000000"
     },

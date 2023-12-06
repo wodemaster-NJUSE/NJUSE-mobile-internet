@@ -285,12 +285,29 @@ export class CommonConstants {
    * Percent of the column width in detail page.
    */
   static readonly DETAIL_COLUMN_WIDTH_PERCENT: string = '93%';
+
   /**
    * 注册界面路由
    */
   static readonly REGISTER_PAGE_URL: string = 'pages/RegisterPage';
+
   /**
    * 主界面路由
    */
   static readonly MAIN_PAGE_URL: string = 'pages/MainPage';
+
+  /**
+   * 大语言界面路由
+   */
+  static readonly LLM_PAGE_URL: string = 'pages/LLMPage';
+
+  /**
+   * 联系人界面路由
+   */
+  static readonly CONTACTS_PAGE_URL: string = 'pages/ContactsPage';
+
+  /**
+   * 动态界面路由
+   */
+  static readonly MOMENTS_PAGE_URL: string = 'pages/MomentsPage';
 }
