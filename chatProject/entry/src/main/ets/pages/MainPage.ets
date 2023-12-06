@@ -1,10 +1,15 @@
+import { CommonConstants } from '../common/constants/CommonConstants'
+import router from '@ohos.router'
+
 @Entry
 @Component
 struct Index {
   // 导航栏数据
   private listItem = [
-    { name: '消息', icon: $r('app.media.comments') }, { name: '大语言', icon: $r("app.media.LLM") },
-    { name: '联系人', icon: $r('app.media.contacts') }, { name: '动态', icon: $r('app.media.moment') },
+    { name: '消息', icon: $r('app.media.comments'),url: CommonConstants.MAIN_PAGE_URL },
+    { name: '大语言', icon: $r("app.media.LLM") ,url : CommonConstants.LLM_PAGE_URL},
+    { name: '联系人', icon: $r('app.media.contacts') ,url : CommonConstants.CONTACTS_PAGE_URL},
+    { name: '动态', icon: $r('app.media.moment'), url : CommonConstants.MOMENTS_PAGE_URL},
   ]
   // 导航栏宽度
   private navWidth: number = 0
@@ -50,6 +55,9 @@ struct Index {
           animateTo({ delay: 50, duration: 300 }, () => {
             this.selectItem(index)
           })
+          router.pushUrl({
+            url: this.listItem[index].url //跳转对应界面
+          });
         })
       }, item => item.name)
     }.width('100%')
