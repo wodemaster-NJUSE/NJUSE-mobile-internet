@@ -91,6 +91,14 @@
     {
       "name": "contacts",
       "value": "联系人"
+    },
+    {
+      "name": "moment",
+      "value": "动态"
+    },
+    {
+      "name": "chat",
+      "value": "聊天"
     }
   ]
 }

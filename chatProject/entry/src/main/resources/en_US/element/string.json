@@ -91,6 +91,14 @@
     {
       "name": "contacts",
       "value": "contacts"
+    },
+    {
+      "name": "moment",
+      "value": "moment"
+    },
+    {
+      "name": "chat",
+      "value": "chat"
     }
   ]
 }
