@@ -95,6 +95,14 @@
     {
       "name": "moment",
       "value": "动态"
+    },
+    {
+      "name": "chat",
+      "value": "聊天"
+    },
+    {
+      "name": "layout_100",
+      "value": "100%"
     }
   ]
 }

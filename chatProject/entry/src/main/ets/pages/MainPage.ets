@@ -1,126 +1,140 @@
+/*
+ * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+import { ContactsPage } from './ContactsPage';
+import { MomentsPage } from './MomentsPage';
+import { LLMPage } from './LLMPage';
+import { TopBar } from '../viewmodel/TopBar';
+import { CommonConstants } from '../common/constants/CommonConstants';
+import router from '@ohos.router';
+
+const TAB_INDEX_0: number = 0;
+const TAB_INDEX_1: number = 1;
+const TAB_INDEX_2: number = 2;
+const TAB_INDEX_3: number = 3;
+// divider组件的strokWidth为1
+const DIVIDER_LINE_STROKWIDTH: number = 1;
+const TABBAR_SEPARATE_LINE = 0.05;
+
 @Entry
 @Component
 struct Index {
-  // 导航栏数据
-  private listItem = [
-    { name: '消息', icon: $r('app.media.comments') }, { name: '大语言', icon: $r("app.media.LLM") },
-    { name: '联系人', icon: $r("app.media.contacts_") }, { name: '动态', icon: $r('app.media.moment') },
-  ]
-  // 导航栏宽度
-  private navWidth: number = 0
-  // 导航栏高度
-  private navHeight: number = 0
-  // 每项宽度
-  private itemWidth = 0
-  // 空心圆半径
-  private circleRadius = 0
-  // 空心圆距离item两边距离
-  private circlePadding = 0
-  // 路径值
-  @State pathValue: string = ''
-  // 实心圆x轴偏移量
-  @State offsetX: number = 0
-  // 选中的item索引
-  @State selectIndex: number = 0
-
-  onCreate() {
-   this.NavigationContent()
-  }
-
-  /**
-   * 导航内容
-   */
-  @Builder NavigationContent(){
-    Row() {
-      ForEach(this.listItem, (item, index) => {
-        Column() {
-          Image(item.icon)
-            .width(30).height(30)
-            .margin({ top: 15, bottom: 24 })
-          Text(item.name)
-            .fontSize(12)
-        }
-        .width(this.itemWidth)
-        .height('100%')
-        .offset({ y: this.selectIndex === index ? -23 : 0 })
-        .animation({ duration: 350 })
-        .onClick(() => {
-          if (this.selectIndex === index) return
-          this.selectIndex = index
-          animateTo({ delay: 50, duration: 300 }, () => {
-            this.selectItem(index)
-          })
-        })
-      }, item => item.name)
-    }.width('100%')
-    .height('100%')
+  @StorageLink('page_layout') page_layout: boolean | undefined = AppStorage.Get('page_layout'); // AppStorage中key对应的属性建立双向数据同步
+  @State currentIndex: number = TAB_INDEX_0; // tabBar初始选中的位置
+  @State message: Resource = $r('app.string.chat');
+  private controller: TabsController = new TabsController();
+  // 设置tabBar样式的位置、未选中图片、选中图片及文字显示的参数
+  @Builder
+  TabBuilder(index: number, imageNormal: Resource, imageSelected: Resource, text: Resource) {
+    Column() {
+      Divider()
+        .vertical(false)
+        .strokeWidth(DIVIDER_LINE_STROKWIDTH)
+        .color($r('app.color.tab_bar_separator_line_color'))
+        .opacity(TABBAR_SEPARATE_LINE)
+      Image(this.currentIndex === index ? imageSelected : imageNormal)
+        .syncLoad(true)
+        .width($r('app.integer.tabbar_image_width'))
+        .height($r('app.integer.tabbar_image_height'))
+        .margin($r('app.integer.tabbar_image_margin'))
+        .objectFit(ImageFit.Contain)
+      Text(text)
+        .fontSize($r('app.integer.tabbar_item_font_size'))
+        .fontColor(this.currentIndex === index ?
+        $r('app.color.tabbar_font_color_selected') : $r('app.color.tabbar_font_color_normal'));
+    }
+    .height($r('app.string.layout_100'))
+    .width($r('app.string.layout_100'))
   }
 
   build() {
-    Column() {
-      Text('').layoutWeight(1)
-
-      Stack({ alignContent: Alignment.TopStart }) {
-        // 矩形路径
-        Path()
-          .width('100%')
-          .height('100%')
-          .fill('#E0FFFF')
-          .commands(this.pathValue)
-
-        // 实心圆
-        Row() {
+    Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
+      TabContent() {
+        Column() {
+          // TopBar()
+          // ChatListDisplayView()  暂时不添加聊天展示
+          Text('here is main')
+            .fontSize(40)
+            .fontWeight(FontWeight.Bold)
         }
-        .width(this.circleRadius * 2 - 20)
-        .height(this.circleRadius * 2 - 20)
-        .backgroundColor('#E0FFFF')
-        .borderRadius(this.circleRadius)
-        .offset({ x: this.offsetX, y: -this.circleRadius / 2 })
-        .shadow({ radius: 10, color: '#E0FFFF' })
-
-        // 导航内容
-        this.NavigationContent()
-
       }
-      .width('100%')
-      .height(60)
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        // 获取组件的宽高
-        this.navWidth = parseInt(newValue.width.toString())
-        this.navHeight = parseInt(newValue.height.toString())
-        // item宽度
-        this.itemWidth = this.navWidth / 4
-        // 空圆半径
-        this.circleRadius = this.navHeight * 0.6
-        // 空圆两边间距
-        this.circlePadding = (this.itemWidth - this.circleRadius * 2) / 2
-        // 默认选中0
-        this.selectItem()
-      })
-    }
-    .width('100%')
-    .height('100%')
-  }
+      .tabBar(this.TabBuilder(TAB_INDEX_0,
+        $r('app.media.chatIconNormal'),
+        $r('app.media.chatIconSelected'),
+        $r('app.string.chat')));
 
-  /**
-   * 选中的item
-   * @param index = 0 索引
-   */
-  selectItem(index = 0) {
-    // 实心圆的偏移量
-    this.offsetX = this.circlePadding + 10 + index * this.itemWidth
-    // 矩形四个点坐标
-    const leftTop = `0,0`
-    const rightTop = `${vp2px(this.navWidth)},0`
-    const rightBottom = `${vp2px(this.navWidth)},${vp2px(this.navHeight)}`
-    const leftBottom = `0,${vp2px(this.navHeight)}`
-    // 路径命令
-    this.pathValue = `M${leftTop} L${vp2px(this.circlePadding + index * this.itemWidth - 10)},0
-        Q${vp2px(this.circlePadding + index * this.itemWidth)},0
-         ${vp2px(this.circlePadding + index * this.itemWidth)},25
-        A1,1 0 0 0 ${vp2px(this.circlePadding + this.circleRadius * 2 + index * this.itemWidth)},25
-        Q${vp2px(this.circlePadding + this.circleRadius * 2 + index * this.itemWidth)},0
-         ${vp2px(this.circlePadding + this.circleRadius * 2 + index * this.itemWidth + 10)},0
-        L${rightTop} ${rightBottom} ${leftBottom} Z`
+      TabContent() {
+        ContactsPage()
+      }
+      .tabBar(this.TabBuilder(TAB_INDEX_1,
+        $r('app.media.contactIconNormal'),
+        $r('app.media.contactIconSelected'),
+        $r('app.string.contacts')));
+
+      TabContent() {
+        MomentsPage()
+      }
+      .tabBar(this.TabBuilder(TAB_INDEX_2,
+        $r('app.media.findIconNormal'),
+        $r('app.media.findIconSelected'),
+        $r('app.string.moment')));
+
+      TabContent() {
+        LLMPage()
+      }
+      .tabBar(this.TabBuilder(TAB_INDEX_3,
+        $r('app.media.profileIconNormal'),
+        $r('app.media.profileIconSelected'),
+        $r('app.string.LLM')));
+    }
+    .onChange((index: number) => {
+      this.currentIndex = index;
+      if (this.currentIndex === TAB_INDEX_0) {
+        this.message = $r('app.string.chat');//聊天界面
+      } else if (this.currentIndex === TAB_INDEX_1) {
+        this.message = $r('app.string.contacts');// 联系人界面
+      } else if (this.currentIndex === TAB_INDEX_2) {
+        this.message = $r('app.string.LLM'); // 大语言界面
+      } else if (this.currentIndex === TAB_INDEX_3) {
+        this.message = $r('app.string.moment'); // 动态界面
+      }
+    })
+    .barWidth($r('app.string.layout_100'))
+    .barHeight($r('app.integer.tabbar_height'))
+    .backgroundColor($r('app.color.tabbar_background'))
+  }
+  @Builder Title() {
+    Row() {
+      Image($r('app.media.ic_back'))
+        .width($r('app.float.image_size'))
+        .height($r('app.float.image_size'))
+        .margin({
+          left: $r('app.float.image_margin_left'),
+          right: $r('app.float.image_margin_right')
+        })
+        .onClick(() => {
+          router.back();
+        })
+
+      Text("main")
+        .fontSize($r('app.float.title_text_size'))
+        .fontColor($r('app.color.title'))
+        .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
+    }
+    .width(CommonConstants.FULL_WIDTH_PERCENT)
+    .height($r('app.float.title_height'))
   }
 }
