@@ -4,7 +4,7 @@ import {MomentsComponent} from '../view/MomentsComponent';
 
 @Entry
 @Component
-struct LLMPage {
+struct MomentsPage {
   build() {
     Column() {
       MomentsComponent()

@@ -35,8 +35,8 @@ const buttonInfo: ButtonInfoModel[] = [
   },
   {
     index: 2,
-    img: $r("app.media.contacts"),
-    selectImg: $r('app.media.contacts'),//TODO :应该设置为选中的图标
+    img: $r("app.media.contacts_"),
+    selectImg: $r("app.media.contacts_"),//TODO :应该设置为选中的图标
     title: $r('app.string.contacts')
   },
   {

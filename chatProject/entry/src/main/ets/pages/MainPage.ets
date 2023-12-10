@@ -4,7 +4,7 @@ struct Index {
   // 导航栏数据
   private listItem = [
     { name: '消息', icon: $r('app.media.comments') }, { name: '大语言', icon: $r("app.media.LLM") },
-    { name: '联系人', icon: $r('app.media.contacts') }, { name: '动态', icon: $r('app.media.moment') },
+    { name: '联系人', icon: $r("app.media.contacts_") }, { name: '动态', icon: $r('app.media.moment') },
   ]
   // 导航栏宽度
   private navWidth: number = 0
