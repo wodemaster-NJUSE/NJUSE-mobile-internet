@@ -83,22 +83,22 @@ struct Index {
         $r('app.media.contactIconNormal'),
         $r('app.media.contactIconSelected'),
         $r('app.string.contacts')));
-
+      TabContent() {
+        LLMPage()
+      }
+      .tabBar(this.TabBuilder(TAB_INDEX_2,
+        $r('app.media.profileIconNormal'),
+        $r('app.media.profileIconSelected'),
+        $r('app.string.LLM')));
       TabContent() {
         MomentsPage()
       }
-      .tabBar(this.TabBuilder(TAB_INDEX_2,
+      .tabBar(this.TabBuilder(TAB_INDEX_3,
         $r('app.media.findIconNormal'),
         $r('app.media.findIconSelected'),
         $r('app.string.moment')));
 
-      TabContent() {
-        LLMPage()
-      }
-      .tabBar(this.TabBuilder(TAB_INDEX_3,
-        $r('app.media.profileIconNormal'),
-        $r('app.media.profileIconSelected'),
-        $r('app.string.LLM')));
+
     }
     .onChange((index: number) => {
       this.currentIndex = index;

@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import http from '@ohos.net.http';
 
 /**
  * Login page component.
@@ -9,6 +10,8 @@ export struct LoginComponent {
   @StorageProp('isMinHeight') isMinHeight: boolean = false;
   @State userName: string = '';
   @State password: string = '';
+
+
 
   build() {
     GridRow({
@@ -96,9 +99,38 @@ export struct LoginComponent {
           .backgroundColor(isLoginButtonClickable(this.userName, this.password) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
-            router.pushUrl({
-              url: CommonConstants.MAIN_PAGE_URL //跳转主页面
+            let url = "https://localhost:5173";
+            let promise = http.createHttp().request(
+              // 请求url地址
+              url,
+              {
+                // 请求方式
+                method: http.RequestMethod.POST,
+                // 请求的额外数据。
+                extraData: {
+                  "username": "value1",
+                },
+                // 可选，默认为60s
+                connectTimeout: 60000,
+                // 可选，默认为60s
+                readTimeout: 60000,
+                // 开发者根据自身业务需要添加header字段
+                header: {
+                  'Content-Type': 'application/json'
+                }
+              });
+            promise.then((data) => {
+              if (data.responseCode === http.ResponseCode.OK) {
+                console.info('Result:' + data.result);
+                console.info('code:' + data.responseCode);
+              } router.pushUrl({
+                url: CommonConstants.MAIN_PAGE_URL //跳转主页面
+              });
+            }).catch((err) => {
+              console.info('error:' + JSON.stringify(err));
             });
+
+
           })
       }
 
