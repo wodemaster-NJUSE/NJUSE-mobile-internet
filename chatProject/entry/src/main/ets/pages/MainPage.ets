@@ -64,7 +64,7 @@ struct Index {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
         Column() {
-          // TopBar()
+          TopBar()
           // ChatListDisplayView()  暂时不添加聊天展示
           Text('here is main')
             .fontSize(40)
@@ -83,6 +83,7 @@ struct Index {
         $r('app.media.contactIconNormal'),
         $r('app.media.contactIconSelected'),
         $r('app.string.contacts')));
+
       TabContent() {
         LLMPage()
       }
@@ -90,6 +91,7 @@ struct Index {
         $r('app.media.profileIconNormal'),
         $r('app.media.profileIconSelected'),
         $r('app.string.LLM')));
+
       TabContent() {
         MomentsPage()
       }
@@ -116,25 +118,5 @@ struct Index {
     .barHeight($r('app.integer.tabbar_height'))
     .backgroundColor($r('app.color.tabbar_background'))
   }
-  @Builder Title() {
-    Row() {
-      Image($r('app.media.ic_back'))
-        .width($r('app.float.image_size'))
-        .height($r('app.float.image_size'))
-        .margin({
-          left: $r('app.float.image_margin_left'),
-          right: $r('app.float.image_margin_right')
-        })
-        .onClick(() => {
-          router.back();
-        })
 
-      Text("main")
-        .fontSize($r('app.float.title_text_size'))
-        .fontColor($r('app.color.title'))
-        .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
-    }
-    .width(CommonConstants.FULL_WIDTH_PERCENT)
-    .height($r('app.float.title_height'))
-  }
 }

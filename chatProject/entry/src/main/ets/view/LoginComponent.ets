@@ -37,6 +37,7 @@ export struct LoginComponent {
         }
       }) {
         Column() {
+          
           TextInput({ placeholder: $r('app.string.username') })
             .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
             .height($r('app.float.text_input_height'))
@@ -100,17 +101,20 @@ export struct LoginComponent {
           .backgroundColor(isLoginButtonClickable(this.userName, this.password) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
-            let userdata: UserData;
-            let url : string = ''
-            userdata.password = this.password;
-            userdata.username = this.userName;
-            let responseStatus = httpRequestPostUser(url,userdata);//如果返回true则完成post，否则没有完成
-            if(responseStatus){
-              //成功则去到MAIN_PAGE
-              router.pushUrl({
-                url: CommonConstants.MAIN_PAGE_URL
-              });
-            }
+            // let userdata: UserData;
+            // let url : string = ''
+            // userdata.password = this.password;
+            // userdata.username = this.userName;
+            // let responseStatus = httpRequestPostUser(url,userdata);//如果返回true则完成post，否则没有完成
+            // if(responseStatus){
+            //   //成功则去到MAIN_PAGE
+            //   router.pushUrl({
+            //     url: CommonConstants.MAIN_PAGE_URL
+            //   });
+            // }
+            router.pushUrl({
+              url:CommonConstants.MAIN_PAGE_URL
+            });
           })
       }
 
