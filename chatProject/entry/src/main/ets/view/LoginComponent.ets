@@ -1,6 +1,8 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import http from '@ohos.net.http';
+import { UserData } from '../stores/user';
+import { httpRequestPostUser } from '../utils/UserHttpUtil';
 
 /**
  * Login page component.
@@ -10,7 +12,6 @@ export struct LoginComponent {
   @StorageProp('isMinHeight') isMinHeight: boolean = false;
   @State userName: string = '';
   @State password: string = '';
-
 
 
   build() {
@@ -36,6 +37,7 @@ export struct LoginComponent {
         }
       }) {
         Column() {
+          
           TextInput({ placeholder: $r('app.string.username') })
             .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
             .height($r('app.float.text_input_height'))
@@ -99,41 +101,20 @@ export struct LoginComponent {
           .backgroundColor(isLoginButtonClickable(this.userName, this.password) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
-            // let url = "http://localhost:8080/v1/session";
-            // let promise = http.createHttp().request(
-            //   // 请求url地址
-            //   url,
-            //   {
-            //     // 请求方式
-            //     method: http.RequestMethod.POST,
-            //     // 请求的额外数据。
-            //     extraData: {
-            //       "username": "user1",
-            //       "password": "12345678"
-            //     },
-            //     // 可选，默认为60s
-            //     connectTimeout: 60000,
-            //     // 可选，默认为60s
-            //     readTimeout: 60000,
-            //     // 开发者根据自身业务需要添加header字段
-            //     header: {
-            //       'Content-Type': 'application/json'
-            //     }
+            // let userdata: UserData;
+            // let url : string = ''
+            // userdata.password = this.password;
+            // userdata.username = this.userName;
+            // let responseStatus = httpRequestPostUser(url,userdata);//如果返回true则完成post，否则没有完成
+            // if(responseStatus){
+            //   //成功则去到MAIN_PAGE
+            //   router.pushUrl({
+            //     url: CommonConstants.MAIN_PAGE_URL
             //   });
-            // promise.then((data) => {
-            //   if (data.responseCode === http.ResponseCode.OK) {
-            //     console.info('Result:' + data.result);
-            //     console.info('code:' + data.responseCode);
-            //   } router.pushUrl({
-            //     url: CommonConstants.MAIN_PAGE_URL //跳转主页面
-            //   });
-            // }).catch((err) => {
-            //   console.info('error:' + JSON.stringify(err));
-            // });
+            // }
             router.pushUrl({
-              url: CommonConstants.MAIN_PAGE_URL //跳转主页面
+              url:CommonConstants.MAIN_PAGE_URL
             });
-
           })
       }
 

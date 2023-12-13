@@ -117,9 +117,12 @@ export struct RegisterComponent {
             .backgroundColor(isRegisterButtonClickable(this.userName, this.passWord,this.repeatPWD) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
             .onClick(() => {
-              router.pushUrl({
-                url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
-              });
+              // 把用户输入的数据传给后端
+              // router.pushUrl({
+              //   url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
+              // });
+              let url : string = '';
+
             })
         }
       }

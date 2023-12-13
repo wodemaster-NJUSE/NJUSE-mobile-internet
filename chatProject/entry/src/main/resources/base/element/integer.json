@@ -597,23 +597,23 @@
       "value": 24
     },
     {
-      "name": "top_bar_add_button_image_height",
+      "name": "top_bar_settings_button_image_height",
       "value": 24
     },
     {
-      "name": "top_bar_add_button_image_width",
+      "name": "top_bar_settings_button_image_width",
       "value": 24
     },
     {
-      "name": "top_bar_add_button_width",
+      "name": "top_bar_settings_button_width",
       "value": 44
     },
     {
-      "name": "top_bar_add_button_height",
+      "name": "top_bar_settings_button_height",
       "value": 50
     },
     {
-      "name": "top_bar_add_button_padding_right",
+      "name": "top_bar_settings_button_padding_right",
       "value": 24
     },
     {

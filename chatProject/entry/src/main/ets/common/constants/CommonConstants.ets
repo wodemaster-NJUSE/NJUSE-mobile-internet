@@ -310,4 +310,9 @@ export class CommonConstants {
    * 动态界面路由
    */
   static readonly MOMENTS_PAGE_URL: string = 'pages/MomentsPage';
+
+  /**
+   * 设置界面路由
+   */
+  static readonly SETTINGS_PAGE_URL: string = 'pages/SettingsPage';
 }

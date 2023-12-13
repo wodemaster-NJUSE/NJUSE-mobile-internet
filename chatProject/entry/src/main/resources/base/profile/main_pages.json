@@ -9,6 +9,7 @@
     "pages/MainPage",
     "pages/LLMPage",
     "pages/ContactsPage",
-    "pages/MomentsPage"
+    "pages/MomentsPage",
+    "pages/SettingsPage"
   ]
 }
