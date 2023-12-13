@@ -6,6 +6,10 @@ import { CommonConstants } from '../common/constants/CommonConstants'
 export struct AddFriendPage {
   build() {
     Column() {
+      Row()
+        .height(20)
+        .width('100%')
+        .backgroundColor('#ffffff')
       this.Title()
     }
     .width('100%')

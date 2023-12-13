@@ -1,4 +1,3 @@
-
 import { BasicDataSource } from '../viewmodel/BasicDataSource';
 import { MessageBase, ChatContact, TextMessage, ImageMessage, MessageBody } from '../viewmodel/MsgBase';
 import { getMessageListFromJSON } from '../utils/DataFactory';
@@ -62,8 +61,6 @@ class ShareDate {
 
 @Preview
 @Component
-  // 聊天页面
-@Entry
 export struct ChatDetailPage {
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
