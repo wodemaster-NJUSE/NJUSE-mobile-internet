@@ -7,11 +7,12 @@ import {ContactsComponent} from '../view/ContactsComponent';
 export struct ContactsPage {
   build() {
     Column() {
-      ContactsComponent()
+       ContactsComponent()
     }
     .width('100%')
     .backgroundColor($r('app.color.contacts_page_background'))
   }
+
   @Builder Title() {
     Row() {
       Image($r('app.media.ic_back'))
