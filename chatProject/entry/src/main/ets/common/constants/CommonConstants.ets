@@ -315,4 +315,9 @@ export class CommonConstants {
    * 设置界面路由
    */
   static readonly SETTINGS_PAGE_URL: string = 'pages/SettingsPage';
+
+  /**
+   * 添加好友页面路由
+   */
+  static readonly ADD_FRIEND_PAGE_URL: string = 'pages/AddFriendsPage';
 }

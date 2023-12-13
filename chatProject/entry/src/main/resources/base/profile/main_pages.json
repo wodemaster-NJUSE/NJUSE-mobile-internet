@@ -10,6 +10,7 @@
     "pages/LLMPage",
     "pages/ContactsPage",
     "pages/MomentsPage",
-    "pages/SettingsPage"
+    "pages/SettingsPage",
+    "pages/AddFriendsPage"
   ]
 }
