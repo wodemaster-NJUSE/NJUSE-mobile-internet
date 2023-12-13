@@ -63,7 +63,6 @@ class ShareDate {
 @Preview
 @Component
   // 聊天页面
-@Entry
 export struct ChatDetailPage {
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
@@ -81,7 +80,7 @@ export struct ChatDetailPage {
   @State userFriendName: string = '';
   @State listHeight: number = 0;
   @State want: Want | undefined = undefined;
-  wantParams: WantModel = new WantModel("./resources/images/photo0.jpg", "111", 0);
+  wantParams: WantModel = new WantModel("src/main/resources/images/photo0.jpg", "111", 0);
   wantFileParams: WantFileModel = new WantFileModel();
   @State imageFile: image.PixelMap | undefined = undefined;
   @State imageSize: number = 90960;
