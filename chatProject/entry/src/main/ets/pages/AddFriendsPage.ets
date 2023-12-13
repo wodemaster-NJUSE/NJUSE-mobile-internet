@@ -22,9 +22,7 @@ export struct AddFriendPage {
           right: $r('app.float.image_margin_right')
         })
         .onClick(() => {
-          router.pushUrl({
-            url: CommonConstants.CONTACTS_PAGE_URL
-          })
+          router.back()
         })
 
       Text('添加好友界面')
