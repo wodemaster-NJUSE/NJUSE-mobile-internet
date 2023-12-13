@@ -315,6 +315,14 @@ export class CommonConstants {
    * 设置界面路由
    */
   static readonly SETTINGS_PAGE_URL: string = 'pages/SettingsPage';
+  /**
+   * 设置聊天列表路由
+   */
+  static readonly CHAT_LIST_PAGE_URL: string = 'pages/ChatListPage';
+  /**
+   * 设置聊天细节路由
+   */
+  static readonly CHAT_DETAIL_PAGE_URL: string = 'pages/ChatDetailPage'
 
   /**
    * 添加好友页面路由
