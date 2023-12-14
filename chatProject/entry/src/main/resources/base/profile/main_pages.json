@@ -12,7 +12,9 @@
     "pages/MomentsPage",
     "pages/SettingsPage",
     "pages/ChatListPage",
-    "pages/ChatDetailPage",
-    "pages/AddFriendsPage"
+    "pages/AddFriendsPage",
+    "pages/Detail",
+    "pages/FullImagePage",
+    "pages/DiscoverPage"
   ]
 }

@@ -325,7 +325,17 @@ export class CommonConstants {
   static readonly CHAT_DETAIL_PAGE_URL: string = 'pages/ChatDetailPage'
 
   /**
-   * 添加好友页面路由
+   * 设置好友页面路由
    */
   static readonly ADD_FRIEND_PAGE_URL: string = 'pages/AddFriendsPage';
+
+  /**
+   * 设置整张图片界面路由
+   */
+  static readonly FULL_IMAGE_PAGE_URL: string = 'pages/FullImagePage'
+
+  /**
+   * 设置发现界面路由
+   */
+  static readonly DISCOVER_PAGE_URL: string = 'pages/DiscoverPage'
 }

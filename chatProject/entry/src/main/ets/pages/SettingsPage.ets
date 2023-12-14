@@ -5,7 +5,7 @@ import { SettingsComponent } from '../view/SettingsComponent';
 
 @Entry
 @Component
-export struct MomentsPage {
+export struct SettingsPage {
   build() {
     Column() {
       SettingsComponent()
