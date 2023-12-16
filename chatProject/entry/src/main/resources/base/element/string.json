@@ -388,6 +388,18 @@
     {
       "name": "friendMomentsPage_prompt_message",
       "value": "当前无法链接网络，可检查网络设置是否正常。"
+    },
+    {
+      "name": "profile_picture",
+      "value": "头像"
+    },
+    {
+      "name": "nickname",
+      "value": "昵称"
+    },
+    {
+      "name": "signature",
+      "value": "签名"
     }
   ]
 }

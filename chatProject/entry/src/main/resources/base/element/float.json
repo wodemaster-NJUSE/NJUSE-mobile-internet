@@ -275,6 +275,10 @@
     {
       "name": "user_grid_row_margin",
       "value": "12vp"
+    },
+    {
+      "name": "setting_page_padding",
+      "value":"12vp"
     }
   ]
 }

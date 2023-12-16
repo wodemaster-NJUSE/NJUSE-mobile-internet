@@ -21,6 +21,7 @@ const CHAT_COMMUNITY = 'chatCommunity';
 const LIST_SPACE: number = 16; // 列表默认间隔
 const LAYOUT_WEIGHT: number = 1; // 自动分配剩余空间
 
+@Entry
 @Component
 export struct DiscoverPage {
   // private settingViewData: Array< Array<SettingViewData>> = [
