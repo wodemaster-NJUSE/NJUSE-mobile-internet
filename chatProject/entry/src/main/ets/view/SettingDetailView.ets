@@ -3,8 +3,17 @@ import { CommonConstants } from '../common/constants/CommonConstants'
 
 @Entry
 @Component
-struct SettingDetailView {
+export struct SettingDetailView {
+  // 标题
   title = null
+  // 文本内容，即提示
+  inputPlaceholder = null
+  // 最大输入长度
+  maxInputLength = null
+  // 点击保存后，与后端交互的 URL
+  pushUrl = null
+
+
   build() {
     Column() {
       // 顶层栏
@@ -26,9 +35,34 @@ struct SettingDetailView {
           .fontSize($r('app.float.title_text_size'))
           .fontColor($r('app.color.title'))
           .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
+          .layoutWeight(1)
+
+        // 保存修改
+        Button("保存")
+          .fontSize($r('app.float.setting_detail_view_font_size'))
+          .backgroundColor($r('app.color.setting_detail_view_save_button'))
+          .margin({
+            right : $r('app.float.setting_detail_view_save_margin')
+          })
+          .onClick(() => {
+            router.back()
+          })
+          // todo 对前端数据的修改
+          // todo 与后端的通信
       }
       .width(CommonConstants.FULL_WIDTH_PERCENT)
       .height($r('app.float.title_height'))
+
+      // 输入框
+      TextInput({placeholder : this.inputPlaceholder})
+        .backgroundColor($r('app.color.setting_text_background'))
+        .width(CommonConstants.NINETY_WIDTH_PERCENT)
+        .maxLength(this.maxInputLength)
+      // 下划线
+      Row()
+        .width(CommonConstants.NINETY_WIDTH_PERCENT)
+        .backgroundColor($r('app.color.setting_detail_view_save_button'))
+        .height('1')
     }
   }
 }

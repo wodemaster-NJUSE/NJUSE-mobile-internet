@@ -283,6 +283,9 @@
     },{
       "name": "setting_content",
       "value": "#FF333333"
+    },{
+      "name": "setting_detail_view_save_button",
+      "value": "#FF22DD00"
     }
 
   ]

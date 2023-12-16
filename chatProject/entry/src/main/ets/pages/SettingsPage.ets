@@ -1,13 +1,13 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
-import { SettingsComponent } from '../view/SettingsComponent';
+import {User} from 'ets/model/UserModel'
 
 
 @Entry
 @Component
 struct SettingsPage {
   scroller: Scroller = new Scroller();
-  user = new User()
+  user : User = new User($r('app.media.profilePicture01'),"张三","李四吃饱了","武装直升机");
 
   build() {
     Column() {
@@ -59,25 +59,29 @@ struct SettingsPage {
         ListItem() {
           settingItem({
             title : "头像",
-            imageContent : this.user.profilePicture
+            imageContent : this.user.profilePicture,
+            pushUrl : CommonConstants.SETTING_PROFILE_PICTURE_PAGE_URL
           })
         }
         ListItem() {
           settingItem({
-            title : "昵称",
-            textContent : this.user.userName
+            title : "用户名",
+            textContent : this.user.userName,
+            pushUrl : CommonConstants.SETTING_USERNAME_PAGE_URL
           })
         }
         ListItem() {
           settingItem({
             title : "签名",
-            textContent : this.user.signature
+            textContent : this.user.signature,
+            pushUrl : CommonConstants.SETTING_SIGNATURE_PAGE_URL
           })
         }
         ListItem() {
           settingItem({
             title : "性别",
-            textContent : this.user.gender
+            textContent : this.user.gender,
+            pushUrl : CommonConstants.SETTING_GENDER_PAGE_URL
           })
         }
       }
@@ -125,18 +129,28 @@ struct settingItem {
 
   build() {
     Row() {
+      // 设置项
       Text(this.title)
         .fontSize($r('app.integer.setting_page_attribute_font_size'))
         .layoutWeight(2)
+      // 设置项的当前文字内容
       Text(this.textContent)
         .fontSize($r('app.integer.setting_page_content_font_size'))
         .layoutWeight(8)
         .fontColor($r('app.color.setting_content'))
         .textAlign(TextAlign.End)
-      Image(this.imageContent)
-        .align(Alignment.End)
-        .opacity($r('app.float.setting_menu_arrow_opacity'))
-        .objectFit(ImageFit.Contain)
+      // 设置项的当前图片内容
+      if (this.imageContent != null) {
+        Image(this.imageContent)
+          .align(Alignment.End)
+          .opacity($r('app.float.setting_menu_arrow_opacity'))
+          .objectFit(ImageFit.Contain)
+          .size({
+            height : '48vp',
+            width : '48vp'
+          })
+      }
+      // 右箭头
       Image($r('app.media.right_arrow'))
         .height($r('app.integer.setting_menu_arrow_height'))
         .width($r('app.integer.setting_menu_arrow_width'))
@@ -145,6 +159,11 @@ struct settingItem {
         .objectFit(ImageFit.Contain)
         .margin({left : $r('app.float.setting_page_padding')})
     }
+    .onClick(() => {
+      router.pushUrl({
+        url: this.pushUrl
+      })
+    })
     .padding({
       left : $r('app.float.setting_page_padding'),
       right : $r('app.float.setting_page_padding'),
@@ -156,9 +175,3 @@ struct settingItem {
   }
 }
 
-class User {
-  userName = "张三"
-  signature = "李四吃饱了"
-  gender = "性别数量，超越你的想象"
-  profilePicture = null
-}

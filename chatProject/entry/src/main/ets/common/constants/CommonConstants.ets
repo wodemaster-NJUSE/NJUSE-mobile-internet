@@ -236,6 +236,12 @@ export class CommonConstants {
    */
   static readonly FULL_WIDTH_PERCENT: string = '100%';
 
+  // 90% 宽
+  static readonly NINETY_WIDTH_PERCENT: string = '90%';
+
+  // 80% 宽
+  static readonly EIGHTY_WIDTH_PERCENT: string = '80%';
+
   /**
    * Percent of the registration success page width.
    */
@@ -338,4 +344,13 @@ export class CommonConstants {
    * 设置发现界面路由
    */
   static readonly DISCOVER_PAGE_URL: string = 'pages/DiscoverPage'
+
+  // 设置头像界面
+  static readonly SETTING_PROFILE_PICTURE_PAGE_URL: string = 'pages/settingPages/SettingProfilePicturePage'
+  // 设置用户名界面
+  static readonly SETTING_USERNAME_PAGE_URL: string = 'pages/settingPages/SettingUsernamePage'
+  // 设置签名界面
+  static readonly SETTING_SIGNATURE_PAGE_URL: string = 'pages/settingPages/SettingSignaturePage'
+  // 设置性别界面
+  static readonly SETTING_GENDER_PAGE_URL: string = 'pages/settingPages/SettingGenderPage'
 }
