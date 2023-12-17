@@ -1,4 +1,3 @@
-
 import { ChatContact, ChatModel } from '../viewmodel/MsgBase';
 import Logger from '../utils/Logger';
 import router from '@ohos.router';

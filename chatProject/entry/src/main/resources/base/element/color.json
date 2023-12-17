@@ -255,23 +255,28 @@
     {
       "name": "detail_body_background",
       "value": "#F1F3F5"
-    },{
+    },
+    {
       "name": "detail_item_message_background",
       "value": "#D0E9F3"
-    },{
+    },
+    {
       "name": "detail_item_message_image_background",
       "value": "#FFFFFF"
-    },{
+    },
+    {
       "name": "detail_item_message_image_font",
       "value": "#000"
     },
     {
       "name": "detail_item_background",
       "value": "#FFFFFF"
-    },{
+    },
+    {
       "name": "chat_list_divider_color",
       "value": "#f3f3f3"
-    },{
+    },
+    {
       "name": "search_outline_background_color",
       "value": "#ffffff"
     }

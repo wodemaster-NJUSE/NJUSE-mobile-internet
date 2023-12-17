@@ -1,37 +1,38 @@
 import hiTraceMeter from '@ohos.hiTraceMeter';
-import { makeDataLocal, makeDataList } from '../utils/DataFactory';
+import { makeDataLocal, makeDataList } from '../utils/ContactsDataFactory';
 import Constants from '../utils/Constants';
-import { ChatModel } from '../viewmodel/MsgBase';
-import { ChatListData } from '../viewmodel/ChatListDataSource';
-import { ChatView, ReusableChatView } from '../view/ChatView';
-import { OptLayoutChatView, ReusableOptLayoutChatView } from '../view/OptLayoutChatView';
+import { ContactModel } from '../viewmodel/ContactBase';
+import { ContactsListData } from '../viewmodel/ContactsListDataSource';
+import { ContactsView, ReusableContactsView } from  '../view/ContactsView';
+import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../view/OptLayoutContactsView';
 import Logger from '../utils/Logger';
 import effectKit from '@ohos.effectKit';
 
-const TAG: string = 'ChatListDisplayView';
+
+const TAG: string = 'ContactsListDisplayView';
 // 搜索框中搜索栏的ID
 const ID_SEARCH: string = 'search';
 // 删除item后，下方的item顶上来的动画的播放时间
 const DELETE_ANIMATION_DURATION: number = 500;
-const ABOUT_TO_APPEAR_TRACE: string = 'ChatListPage_AboutToAppear_HiTrace';
+const ABOUT_TO_APPEAR_TRACE: string = 'ContactsListPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 3; // aboutToAppear 中使用的 taskId
-const REUSE_ID: string = 'ChatListPage_ReuseId';
+const REUSE_ID: string = 'ContactsListPage_ReuseId';
 
 class Message {
-  chatItem: ChatModel;
+  contactItem: ContactModel;
 
-  constructor(chatItem: ChatModel) {
-    this.chatItem = chatItem;
+  constructor(contactItem: ContactModel) {
+    this.contactItem = contactItem;
   }
 }
 @Entry
 @Preview
 @Component
-export struct ChatListDisplayView {
+export struct ContactsListDisplayView {
   // 懒加载的数据列表
-  private chatListLazy = new ChatListData();
+  private contactsListLazy = new ContactsListData();
   // 普通加载的数据列表
-  @State chatListArray: Array<ChatModel> = new Array<ChatModel>();
+  @State contactsListArray: Array<ContactModel> = new Array<ContactModel>();
   // 是否使用懒加载
   @StorageLink('lazy_for_each') lazyForEach: boolean | undefined = AppStorage.Get('lazy_for_each');
   // 是否复用列表中的子组件
@@ -44,50 +45,51 @@ export struct ChatListDisplayView {
 
   // 非布局优化的列表item加载数据
   @Builder
-  chatViewBuilder(msg: ChatModel) {
+  ContactsViewBuilder(msg: ContactModel) {
     // reusable component
     if (this.reusable) {
-      ReusableChatView(new Message(msg))
-       // .reuseId(REUSE_ID)
+      ReusableContactsView(new Message(msg))
+      // .reuseId(REUSE_ID)
     } else {
-      ChatView(new Message(msg))
+      ContactsView(new Message(msg))
     }
   }
 
   // 布局优化的列表item加载数据
   @Builder
-  OptChatViewBuilder(msg: ChatModel) {
+  OptContactsViewBuilder(msg: ContactModel) {
     // reusable component
     if (this.reusable) {
-      ReusableOptLayoutChatView(new Message(msg))
-        //.reuseId(REUSE_ID)
+      ReusableOptLayoutContactsView(new Message(msg))
+      //.reuseId(REUSE_ID)
     } else {
-      OptLayoutChatView(new Message(msg))
+      OptLayoutContactsView(new Message(msg))
     }
   }
 
-  // List的item左划时显示的删除按钮
-  @Builder
-  deleteAction(msg: ChatModel) {
-    Row() {
-      Image(($r('app.media.icon_delete')))
-        .onClick(() => {
-          animateTo({ duration: DELETE_ANIMATION_DURATION }, () => {
-            if (this.lazyForEach) {
-              this.chatListLazy.deleteData(msg);
-            } else {
-              let index = this.chatListArray.indexOf(msg);
-              this.chatListArray.splice(index, 1);
-            }
-          })
-        })
-        .width($r('app.integer.chat_list_delete_width'))
-        .height($r('app.integer.chat_list_delete_height'))
-    }
-    .width($r('app.integer.chat_list_page_delete_row_width'))
-    .height($r('app.string.layout_100'))
-    .justifyContent(FlexAlign.SpaceEvenly)
-  }
+  // TODO-联系人：删除好友功能
+  // // List的item左划时显示的删除按钮
+  // @Builder
+  // deleteAction(msg: ChatModel) {
+  //   Row() {
+  //     Image(($r('app.media.icon_delete')))
+  //       .onClick(() => {
+  //         animateTo({ duration: DELETE_ANIMATION_DURATION }, () => {
+  //           if (this.lazyForEach) {
+  //             this.contactsListLazy.deleteData(msg);
+  //           } else {
+  //             let index = this.chatListArray.indexOf(msg);
+  //             this.chatListArray.splice(index, 1);
+  //           }
+  //         })
+  //       })
+  //       .width($r('app.integer.chat_list_delete_width'))
+  //       .height($r('app.integer.chat_list_delete_height'))
+  //   }
+  //   .width($r('app.integer.chat_list_page_delete_row_width'))
+  //   .height($r('app.string.layout_100'))
+  //   .justifyContent(FlexAlign.SpaceEvenly)
+  // }
 
   build() {
     Column() {
@@ -118,37 +120,37 @@ export struct ChatListDisplayView {
       List() {
         if (this.lazyForEach) {
           // 懒加载加载数据
-          LazyForEach(this.chatListLazy, (msg: ChatModel) => {
+          LazyForEach(this.contactsListLazy, (msg: ContactModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptChatViewBuilder(msg);
+                this.OptContactsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
-                this.chatViewBuilder(msg);
+                this.ContactsViewBuilder(msg);
               }
             }
-           // .transition( TransitionEffect.OPACITY) // 删除item后，List显示的最后一个item顶上来的动画 TransitionEffect.OPACITY
-            .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
-              end: this.deleteAction(msg),
-            })
-          }, (msg: ChatModel) => msg.user.userId)
+            // .transition( TransitionEffect.OPACITY) // 删除item后，List显示的最后一个item顶上来的动画 TransitionEffect.OPACITY
+            // .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
+            //   end: this.deleteAction(msg),
+            // })
+          }, (msg: ContactModel) => msg.userId)
         } else {
-          ForEach(this.chatListArray, (msg: ChatModel) => {
+          ForEach(this.contactsListArray, (msg: ContactModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptChatViewBuilder(msg);
+                this.OptContactsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
-                this.chatViewBuilder(msg);
+                this.ContactsViewBuilder(msg);
               }
             }
             //.transition(TransitionEffect.OPACITY) // 删除item后，List显示的最后一个item顶上来的动画
-            .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
-              end: this.deleteAction(msg),
-            })
-          }, (msg: ChatModel) => msg.user.userId)
+            // .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
+            //   end: this.deleteAction(msg),
+            // })
+          }, (msg: ContactModel) => msg.userId)
         }
       }
       .backgroundColor(Color.White)
@@ -166,11 +168,11 @@ export struct ChatListDisplayView {
   }
 
   async aboutToAppear(): Promise<void> {
-    Logger.info(TAG, "ChatListPage aboutToAppear");
+    Logger.info(TAG, "ContactsListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     //this.controller.stopEditing();
-    await makeDataLocal(this.chatListLazy);
-    await makeDataList(this.chatListArray);
+    await makeDataLocal(this.contactsListLazy);
+    await makeDataList(this.contactsListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }
