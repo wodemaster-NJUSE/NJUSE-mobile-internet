@@ -6,7 +6,7 @@
 export class User {
 
   // 用户头像
-  profilePicture = $r('app.media.profilePicture01')
+  profilePicture : Resource = $r('app.media.profilePicture01')
 
   // 用户名
   userName : string = "李四"

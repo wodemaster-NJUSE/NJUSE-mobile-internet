@@ -1,4 +1,5 @@
 import router from '@ohos.router'
+import url from '@ohos.url'
 import { CommonConstants } from '../common/constants/CommonConstants'
 
 @Entry
@@ -12,6 +13,8 @@ export struct SettingDetailView {
   maxInputLength = null
   // 点击保存后，与后端交互的 URL
   pushUrl = null
+
+  returnValue : string
 
 
   build() {
@@ -37,15 +40,20 @@ export struct SettingDetailView {
           .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
           .layoutWeight(1)
 
-        // 保存修改
-        Button("保存")
+        // 暂存修改
+        Button("确定")
           .fontSize($r('app.float.setting_detail_view_font_size'))
           .backgroundColor($r('app.color.setting_detail_view_save_button'))
           .margin({
             right : $r('app.float.setting_detail_view_save_margin')
           })
           .onClick(() => {
-            router.back()
+            router.back({
+              url: CommonConstants.SETTINGS_PAGE_URL,
+              params: {
+                newTextValue: this.returnValue
+              }
+            })
           })
           // todo 对前端数据的修改
           // todo 与后端的通信
@@ -58,6 +66,7 @@ export struct SettingDetailView {
         .backgroundColor($r('app.color.setting_text_background'))
         .width(CommonConstants.NINETY_WIDTH_PERCENT)
         .maxLength(this.maxInputLength)
+        .onChange((value : string) => this.returnValue = value)
       // 下划线
       Row()
         .width(CommonConstants.NINETY_WIDTH_PERCENT)

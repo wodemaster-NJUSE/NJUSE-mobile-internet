@@ -1,4 +1,4 @@
-import { SettingDetailView } from '../../view/SettingDetailView';
+import { SettingDetailView } from '../../viewmodel/SettingDetailViewModel';
 
 @Entry
 @Component
