@@ -1070,6 +1070,14 @@
       "value": 64
     },
     {
+      "name": "setting_page_attribute_font_size",
+      "value": 16
+    },
+    {
+      "name": "setting_page_content_font_size",
+      "value": 12
+    },
+    {
       "name": "contact_view_image_width",
       "value": 48
     },

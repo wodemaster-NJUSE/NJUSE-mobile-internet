@@ -13,8 +13,6 @@
  * limitations under the License.
  */
 import { ChatDetailPage } from './ChatDetailPage'
-
-
 @Entry
 @Component
 struct Detail {

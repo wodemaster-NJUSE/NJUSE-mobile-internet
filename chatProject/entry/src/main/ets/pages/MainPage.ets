@@ -15,12 +15,13 @@
 
 
 import { ContactsPage } from './ContactsPage';
-import { MomentsPage } from './MomentsPage';
 import { LLMPage } from './LLMPage';
 import { TopBar } from '../viewmodel/TopBar';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import router from '@ohos.router';
 import { ChatListDisplayView } from './ChatListPage';
+import { DiscoverPage } from './DiscoverPage';
+
 
 const TAB_INDEX_0: number = 0;
 const TAB_INDEX_1: number = 1;
@@ -91,7 +92,7 @@ struct Index {
         $r('app.string.LLM')));
 
       TabContent() {
-        MomentsPage()
+        DiscoverPage()
       }
       .tabBar(this.TabBuilder(TAB_INDEX_3,
         $r('app.media.findIconNormal'),
@@ -118,3 +119,4 @@ struct Index {
   }
 
 }
+
