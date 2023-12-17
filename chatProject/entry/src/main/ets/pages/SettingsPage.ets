@@ -1,6 +1,6 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
-import {User} from 'ets/model/UserModel'
+import {User} from '../model/UserModel'
 
 
 @Entry

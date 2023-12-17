@@ -23,13 +23,17 @@ import { CommonConstants } from '../common/constants/CommonConstants';
  * @param url URL for initiating an HTTP request.
  * @param params Params for initiating an HTTP request.
  */
-export function httpRequestGetUser(url: string): Promise<ResponseUserResult> {
+export function httpRequestGetUser(url: string, userdata:UserData): Promise<ResponseUserResult> {
   //
   let httpRequest = http.createHttp();
   let responseResult = httpRequest.request(url, {
     method: http.RequestMethod.GET,//get方法
     header: {
       'Content-Type': 'application/json'
+    },
+    extraData: {
+      'username': userdata.username,
+      'password': userdata.password
     }
   });
   let serverData: ResponseUserResult = new ResponseUserResult();
@@ -40,10 +44,13 @@ export function httpRequestGetUser(url: string): Promise<ResponseUserResult> {
       let result = `${value.result}`;
       let resultJson: ResponseUserResult = JSON.parse(result);
       if (resultJson.code === 'success') {
-        serverData.data = resultJson.data;
+        serverData.data = resultJson.data;// 返回给
+        // 成功返回user对象
+
       }
       serverData.code = resultJson.code;
       serverData.msg = resultJson.msg;
+      // 以上是构造返回给后端的信息
     } else {
       serverData.msg = 'error';
     }

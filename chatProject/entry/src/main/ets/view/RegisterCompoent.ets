@@ -1,5 +1,9 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { User } from '../model/UserModel';
+import { UserData } from '../stores/user';
+import { httpRequestGetUser, httpRequestPostUser } from '../utils/UserHttpUtil';
+
 @Component
 //未标准化
 export struct RegisterComponent {
@@ -121,8 +125,17 @@ export struct RegisterComponent {
               // router.pushUrl({
               //   url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
               // });
-              let url : string = '';
-
+              let userdata: UserData;
+              let url : string = ''
+              userdata.password = this.passWord;
+              userdata.username = this.userName;
+              let status =  httpRequestPostUser(url,userdata)
+              if(status){
+                //成功则去到MAIN_PAGE
+                router.pushUrl({
+                  url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL // 如果注册成功跳转成功界面
+                });
+              }
             })
         }
       }
