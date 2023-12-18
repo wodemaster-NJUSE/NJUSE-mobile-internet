@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void register(String username, String password) {
-        Long uid = userDao.findAll().size() + base;
+        Long uid_long = userDao.findAll().size() + base;
+        String uid =uid_long.toString();
 
         userDao.save(UserEntity.builder().username(username).password(password)
                 .uid(uid).build());
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
      * @return         用户实体
      */
     @Override
-    public UserEntity findByUid(Long uid) {
+    public UserEntity findByUid(String uid) {
         return userDao.findByUid(uid);
     }
 
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
      * @param password 密码
      */
     @Override
-    public void login(Long uid, String password) {
+    public void login(String uid, String password) {
         UserEntity user = userDao.findByUid(uid);
         if (user == null || !password.equals(user.getPassword())) {
             throw new BizException(BizError.INVALID_CREDENTIAL);
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
      * @param username 用户名
      */
     @Override
-    public void editInfo(Long uid, String username){
+    public void editInfo(String uid, String username){
         UserEntity user = userDao.findByUid(uid);
         if(user == null){
             throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "用户不存在");

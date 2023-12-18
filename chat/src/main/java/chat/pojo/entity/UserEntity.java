@@ -29,7 +29,7 @@ public class UserEntity {
     private String password;
     @NotNull
     @Column(unique = true)
-    private Long uid;
+    private String uid;
 
 //    private ArrayList<String> RelationList;
 

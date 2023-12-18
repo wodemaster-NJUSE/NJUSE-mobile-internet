@@ -11,9 +11,9 @@ public class LoginRequest {
 
     @Schema(description = "账号", required = true)
     @NotNull
-    @Min(value = 4, message = "用户名长度必须大于等于 4")
-    @Max(value = 16, message = "用户名长度必须小于等于 16")
-    private Long uid;
+    @Size(min = 4, max = 16, message = "账号长度必须在 4-16 之间")
+    @Pattern(regexp = "^[0-9]*$", message = "账号只能包含数字")
+    private String uid;
 
 
     @Schema(description = "密码", required = true)

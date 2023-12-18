@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class UserVO {
-    private Long uid;
+    private String uid;
 
 }
