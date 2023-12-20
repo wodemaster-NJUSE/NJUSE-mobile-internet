@@ -119,7 +119,7 @@ struct FullImagePage {
                   )
               })
             }.index(this.imageIndex)
-            // .indicator(this.dotIndicator.color(INDICATOR_COLOR))
+            // .indicator(this.dotIndicator.color(INDICATOR_COLOR)) api10
           }.backgroundColor(Color.Black)
           .justifyContent(FlexAlign.Center)
           .width($r('app.string.layout_100_percent'))
