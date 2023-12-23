@@ -617,6 +617,10 @@
       "value": 24
     },
     {
+      "name": "top_bar_process_application_button_padding_right",
+      "value": 80
+    },
+    {
       "name": "top_bar_height",
       "value": 56
     },
@@ -1071,6 +1075,90 @@
     },
     {
       "name": "setting_page_content_font_size",
+      "value": 12
+    },
+    {
+      "name": "contact_view_image_width",
+      "value": 48
+    },
+    {
+      "name": "contact_view_image_height",
+      "value": 48
+    },
+    {
+      "name": "contact_view_image_margin_left",
+      "value": 20
+    },
+    {
+      "name": "contact_view_image_border_radius",
+      "value": 5
+    },
+    {
+      "name": "contact_view_col_padding_right",
+      "value": 12
+    },
+    {
+      "name": "contact_view_user_name_font_size",
+      "value": 16
+    },
+    {
+      "name": "contact_view_user_name_margin_bottom",
+      "value": 3
+    },
+    {
+      "name": "contact_view_row_height",
+      "value": 52
+    },
+    {
+      "name": "contact_view_row_padding_left",
+      "value": 8
+    },
+    {
+      "name": "contact_view_row_padding_right",
+      "value": 10
+    },
+    {
+      "name": "contact_view_row_padding_top",
+      "value": 10
+    },
+    {
+      "name": "contact_view_row_padding_bottom",
+      "value": 10
+    },
+    {
+      "name": "opt_layout_contact_view_profile_picture_width",
+      "value": 40
+    },
+    {
+      "name": "opt_layout_contact_view_profile_picture_height",
+      "value": 40
+    },
+    {
+      "name": "opt_layout_contact_view_profile_picture_radius",
+      "value": 20
+    },
+    {
+      "name": "opt_layout_contact_view_user_name_font_size",
+      "value": 16
+    },
+    {
+      "name": "opt_layout_contact_view_item_height",
+      "value": 64
+    },
+    {
+      "name": "opt_layout_contact_view_item_padding_left",
+      "value": 24
+    },
+    {
+      "name": "opt_layout_contact_view_item_padding_right",
+      "value": 24
+    },
+    {
+      "name": "opt_layout_contact_view_item_padding_top",
+      "value": 12
+    },
+    {
+      "name": "opt_layout_contact_view_item_padding_bottom",
       "value": 12
     }
   ]

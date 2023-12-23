@@ -10,7 +10,13 @@
     "pages/LLMPage",
     "pages/ContactsPage",
     "pages/MomentsPage",
+
     "pages/SettingsPage",
+    "pages/settingPages/SettingProfilePicturePage",
+    "pages/settingPages/SettingUsernamePage",
+    "pages/settingPages/SettingSignaturePage",
+    "pages/settingPages/SettingGenderPage",
+
     "pages/ChatListPage",
     "pages/AddFriendsPage",
     "pages/Detail",

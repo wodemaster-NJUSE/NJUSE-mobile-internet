@@ -1,13 +1,26 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
-import { SettingsComponent } from '../view/SettingsComponent';
+import {User} from '../model/UserModel'
 
 
 @Entry
 @Component
 struct SettingsPage {
   scroller: Scroller = new Scroller();
-  user = new User()
+
+  // 用户类
+  // todo：需要与后端进行通信，包括读取数据与更新数据
+  user : User = new User($r('app.media.profilePicture01'),"张三","李四吃饱了","武装直升机");
+
+  // 这些属性与子组件双向绑定，他们发生更新时，渲染也会发生变化。更新时，记得在代码中写出对 user 对象的更新
+  @State profilePicture : Resource = this.user.profilePicture
+  @State userName : string = this.user.userName
+  @State signature : string = this.user.signature
+  @State gender : string = this.user.gender
+
+
+  param = router.getParams()
+  // newTextValue = this.param['newTextValue']
 
   build() {
     Column() {
@@ -28,62 +41,48 @@ struct SettingsPage {
           .fontSize($r('app.float.title_text_size'))
           .fontColor($r('app.color.title'))
           .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
+          .onClick(() => {
+            // todo：双向绑定测试，通信成功后删除
+            this.userName = "王五"
+            this.user.userName = this.userName
+          })
       }
       .width(CommonConstants.FULL_WIDTH_PERCENT)
       .height($r('app.float.title_height'))
 
       // 设置项
       List({ space: 2 }) {
-        // ListItem示例：昵称
-        // ListItem() {
-        //   Row() {
-        //     Text($r('app.string.nickname'))
-        //       .fontSize($r('app.integer.setting_page_font_size'))
-        //       .layoutWeight(1)
-        //     Image($r('app.media.right_arrow'))
-        //       .height($r('app.integer.setting_menu_arrow_height'))
-        //       .width($r('app.integer.setting_menu_arrow_width'))
-        //       .align(Alignment.End)
-        //       .opacity($r('app.float.setting_menu_arrow_opacity'))
-        //       .objectFit(ImageFit.Contain)
-        //   }
-        //   .padding({
-        //     left : this.universal_margin,
-        //     top : this.universal_margin,
-        //     bottom : this.universal_margin,
-        //   })
-        //   .width($r('app.string.layout_100'))
-        //   .backgroundColor($r("app.color.setting_front"))
-        // }
-
         ListItem() {
-          settingItem({
+          settingImageItem({
             title : "头像",
-            imageContent : this.user.profilePicture
+            imageContent : $profilePicture,
+            pushUrl : CommonConstants.SETTING_PROFILE_PICTURE_PAGE_URL
           })
         }
         ListItem() {
-          settingItem({
-            title : "昵称",
-            textContent : this.user.userName
+          settingTextItem({
+            title : "用户名",
+            textContent : $userName,
+            pushUrl : CommonConstants.SETTING_USERNAME_PAGE_URL
           })
         }
         ListItem() {
-          settingItem({
+          settingTextItem({
             title : "签名",
-            textContent : this.user.signature
+            textContent : $signature,
+            pushUrl : CommonConstants.SETTING_SIGNATURE_PAGE_URL
           })
         }
         ListItem() {
-          settingItem({
+          settingTextItem({
             title : "性别",
-            textContent : this.user.gender
+            textContent : $gender,
+            pushUrl : CommonConstants.SETTING_GENDER_PAGE_URL
           })
         }
       }
       .width($r('app.string.layout_100'))
       .margin({bottom : 12})
-
 
       // 退出登录
       Row() {
@@ -91,9 +90,9 @@ struct SettingsPage {
           .fontSize($r('app.integer.setting_page_attribute_font_size'))
           .onClick(() => {
             // todo: 请先销毁登录时创建的资源！
-            router.pushUrl({
-              url: CommonConstants.LOGIN_PAGE_URL
-            })
+            router.replaceUrl(
+              { url: CommonConstants.LOGIN_PAGE_URL },
+              router.RouterMode.Single,)
           })
           .margin({top : 2, bottom : 2})
       }
@@ -111,32 +110,32 @@ struct SettingsPage {
   }
 }
 
-// 单个设置项
+// 单个文本设置项
 @Component
-struct settingItem {
+struct settingTextItem {
   // 标题
-  title = null
+  title : string
+
   // 文本内容
-  textContent = null
-  // 图片内容
-  imageContent = null
+  @Link
+  textContent : string
+
   // 跳转地址
-  pushUrl = null
+  pushUrl : string
 
   build() {
     Row() {
+      // 设置项
       Text(this.title)
         .fontSize($r('app.integer.setting_page_attribute_font_size'))
         .layoutWeight(2)
+      // 设置项的当前文字内容
       Text(this.textContent)
         .fontSize($r('app.integer.setting_page_content_font_size'))
         .layoutWeight(8)
         .fontColor($r('app.color.setting_content'))
         .textAlign(TextAlign.End)
-      Image(this.imageContent)
-        .align(Alignment.End)
-        .opacity($r('app.float.setting_menu_arrow_opacity'))
-        .objectFit(ImageFit.Contain)
+      // 右箭头
       Image($r('app.media.right_arrow'))
         .height($r('app.integer.setting_menu_arrow_height'))
         .width($r('app.integer.setting_menu_arrow_width'))
@@ -145,6 +144,11 @@ struct settingItem {
         .objectFit(ImageFit.Contain)
         .margin({left : $r('app.float.setting_page_padding')})
     }
+    .onClick(() => {
+      router.pushUrl({
+        url: this.pushUrl
+      })
+    })
     .padding({
       left : $r('app.float.setting_page_padding'),
       right : $r('app.float.setting_page_padding'),
@@ -156,9 +160,55 @@ struct settingItem {
   }
 }
 
-class User {
-  userName = "张三"
-  signature = "李四吃饱了"
-  gender = "性别数量，超越你的想象"
-  profilePicture = null
+// 单个图片设置项
+@Component
+struct settingImageItem {
+  // 标题
+  title : string
+
+  // 图片内容
+  @Link
+  imageContent : Resource
+
+  // 跳转地址
+  pushUrl : string
+
+  build() {
+    Row() {
+      // 设置项
+      Text(this.title)
+        .fontSize($r('app.integer.setting_page_attribute_font_size'))
+        .layoutWeight(2)
+      // 设置项的当前图片内容
+      Image(this.imageContent)
+        .align(Alignment.End)
+        .opacity($r('app.float.setting_menu_arrow_opacity'))
+        .objectFit(ImageFit.Contain)
+        .size({
+          height : '48vp',
+          width : '48vp'
+        })
+      // 右箭头
+      Image($r('app.media.right_arrow'))
+        .height($r('app.integer.setting_menu_arrow_height'))
+        .width($r('app.integer.setting_menu_arrow_width'))
+        .align(Alignment.End)
+        .opacity($r('app.float.setting_menu_arrow_opacity'))
+        .objectFit(ImageFit.Contain)
+        .margin({left : $r('app.float.setting_page_padding')})
+    }
+    .onClick(() => {
+      router.pushUrl({
+        url: this.pushUrl
+      })
+    })
+    .padding({
+      left : $r('app.float.setting_page_padding'),
+      right : $r('app.float.setting_page_padding'),
+      top : $r('app.float.setting_page_padding'),
+      bottom : $r('app.float.setting_page_padding'),
+    })
+    .width($r('app.string.layout_100'))
+    .backgroundColor($r("app.color.setting_front"))
+  }
 }

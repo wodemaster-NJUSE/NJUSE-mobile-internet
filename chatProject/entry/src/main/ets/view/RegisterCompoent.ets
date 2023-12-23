@@ -1,5 +1,15 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { User } from '../model/UserModel';
+import { UserDataGet } from '../stores/user';
+
+import { HttpManager } from '../utils/http/HttpManager';
+//import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
+import http from '@ohos.net.http';
+import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
+
+//import { httpRequestGetUser, httpRequestPostUser } from '../utils/UserHttpUtil';
+
 @Component
 //未标准化
 export struct RegisterComponent {
@@ -117,13 +127,119 @@ export struct RegisterComponent {
             .backgroundColor(isRegisterButtonClickable(this.userName, this.passWord,this.repeatPWD) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
             .onClick(() => {
-              // 把用户输入的数据传给后端
+              // 这个用法是可以的
+              let httpRequest = http.createHttp();
+
+              let url = "http://172.29.4.148:8080/v1/user";
+              let promise = httpRequest.request(
+                // 请求url地址
+                url,
+                {
+                  // 请求方式
+                  method: http.RequestMethod.POST,
+                  // 请求的额外数据。
+                  extraData:{
+                    "username":"user1",
+                    "password":"Ab12345678"
+                  },
+                  // 可选，默认为60s
+                  connectTimeout: 60000,
+                  // 可选，默认为60s
+                  readTimeout: 60000,
+                  // 开发者根据自身业务需要添加header字段
+                  header: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+              promise.then((data) => {
+                if (data.responseCode === http.ResponseCode.OK) {
+                  console.info('Result:' + data.result);
+                  console.info('code:' + data.responseCode);
+                      router.pushUrl({
+                        url: CommonConstants.MAIN_PAGE_URL,
+                      });
+                }
+              }).catch((err) => {
+                console.info('error:' + JSON.stringify(err));
+              });
+
+              // //把用户输入的数据传给后端
               // router.pushUrl({
               //   url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
               // });
-              let url : string = '';
+
+              // 创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
+             // let user1 : UserDataGet;//接收传过来的数据
+              //
+              // const requestOptions: RequestOptions = {
+              //   url: 'https://172.29.4.148:8080/v1/user',
+              //   method: RequestMethod.POST,
+              //   header: {
+              //     'Content-Type': 'application/json'
+              //   },
+              //   extraData: JSON.stringify({
+              //     username: 'user1',
+              //     password: 'Ab12345678'
+              //   })
+              // };
+              //
+              // // 调用HttpManager的request方法，发起POST请求
+              // HttpManager.getInstance().request<UserDataGet>(requestOptions)
+              //   .then((result) => {
+              //     console.info(JSON.stringify(result));//输出用户信息并跳转
+              //     // 构造用户对象并跳转
+              //     user1 = new UserDataGet(result.id,result.username,result.password,result.uid)
+              //
+              //     router.pushUrl({
+              //       url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
+              //     });
+              //
+              //   })
+              //   .catch((err) => {
+              //     console.error(JSON.stringify(err));
+              //   });
+              //创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
+              // let user1: UserDataGet; // 接收传过来的数据
+              // const requestOptions: RequestOptions = {
+              //   url: 'https://172.29.4.148:8080/v1/user',
+              //   method: RequestMethod.POST,
+              //   header: {
+              //     'Content-Type': 'application/json',
+              //   },
+              //   extraData: JSON.stringify({
+              //     username: 'user1',
+              //     password: 'Ab1234567',
+              //   }),
+              // };
+              //
+              // // 调用HttpManager的request方法，发起POST请求
+              // HttpManager.getInstance()
+              //   .request<UserDataGet>(requestOptions)
+              //   .then((result) => {
+              //     console.info('header: ' + JSON.stringify(requestOptions.header));
+              //
+              //     console.info(JSON.stringify(result)); // 输出用户信息并跳转
+              //
+              //     // 构造用户对象并跳转
+              //     user1 = new UserDataGet(result.id, result.username, result.password, result.uid);
+              //
+              //     // 确保在请求成功后再跳转
+              //     router.pushUrl({
+              //       url: CommonConstants.MAIN_PAGE_URL,
+              //     });
+              //   })
+              //   .catch((err) => {
+              //     console.error('Error during registration:', JSON.stringify(err));
+              //     // 在此处可以添加更多错误处理逻辑，例如向用户显示错误信息
+              //
+              //     // 输出服务端返回的详细错误信息
+              //     if (err.response) {
+              //       console.error('Server Response:', JSON.stringify(err.response));
+              //     }
+              //   });
 
             })
+
         }
       }
     }
