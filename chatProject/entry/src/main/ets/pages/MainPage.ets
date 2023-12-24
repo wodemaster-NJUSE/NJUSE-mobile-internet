@@ -16,7 +16,6 @@
 
 import { ContactsPage } from './ContactsPage';
 import { LLMPage } from './LLMPage';
-import { TopBar } from '../viewmodel/TopBar';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import router from '@ohos.router';
 import { ChatListDisplayView } from './chatPages/ChatListPage';

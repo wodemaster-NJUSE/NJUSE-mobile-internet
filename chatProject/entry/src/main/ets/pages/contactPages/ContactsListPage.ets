@@ -161,7 +161,7 @@ export struct ContactsListDisplayView {
         startMargin: $r('app.integer.chat_list_page_start_margin'),
         endMargin: $r('app.integer.opt_layout_chat_view_item_padding_right')
       })
-      .height($r('app.string.layout_92'))
+      .height($r('app.string.layout_82'))
       .width($r('app.string.layout_100'))
       .cachedCount(this.listCachedCount ? Constants.CACHED_COUNT : Constants.CACHED_COUNT_0) // 缓存列表数量
     }
