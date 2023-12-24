@@ -19,8 +19,9 @@ import { LLMPage } from './LLMPage';
 import { TopBar } from '../viewmodel/TopBar';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import router from '@ohos.router';
-import { ChatListDisplayView } from './ChatListPage';
+import { ChatListDisplayView } from './chatPages/ChatListPage';
 import { DiscoverPage } from './DiscoverPage';
+import { ChatPage } from './ChatPage';
 
 
 const TAB_INDEX_0: number = 0;
@@ -66,8 +67,9 @@ struct Index {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
         Column() {
-          TopBar()//组件自上而下装配，直到填满tabcontent
-          ChatListDisplayView()  //暂时不添加聊天展示
+          ChatPage()
+          // TopBar()//组件自上而下装配，直到填满tabcontent
+          // ChatListDisplayView()  //暂时不添加聊天展示
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,

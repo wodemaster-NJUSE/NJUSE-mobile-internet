@@ -9,7 +9,7 @@ import { UserDataGet } from '../stores/user';
 @Component
 struct RegistrationSuccessPage {
   private params = router.getParams() as Record<string, Object>;
-  uid : string | Resource = this.params.chatName as string | Resource;
+  uid : string | Resource = this.params.uid as string | Resource;
   build() {
 
     Column() {
@@ -22,7 +22,7 @@ struct RegistrationSuccessPage {
             .width($r('app.float.registration_success_logo_width'))
             .height($r('app.float.registration_success_logo_height'))
 
-          Text($r('app.string.register_success_text')+"你的uid是"+ this.uid+" 请用uid登录")
+          Text("注册成功，你的uid是"+ this.uid)
             .width($r('app.float.register_success_text_width'))
             .height($r('app.float.register_success_text_height'))
             .textAlign(TextAlign.Center)

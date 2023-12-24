@@ -1,7 +1,7 @@
 import Logger from '../utils/Logger';
 import { ChatModel, ChatContact } from '../viewmodel/MsgBase';
 import router from '@ohos.router';
-import PageConstants from '../utils/PageConstants';
+import { CommonConstants } from '../common/constants/CommonConstants';
 
 const TAG: string = 'ChatList_ChatView';
 
@@ -118,7 +118,7 @@ struct OptLayoutChatView {
     })
     .onClick(() => {
       router.pushUrl({
-        url: PageConstants.DETAIL_PAGE,
+        url: CommonConstants.DETAIL_PAGE_URL,
         params: {
           chatName: this.chatItem.user.userName,
           chatId: this.chatItem.user.userId,

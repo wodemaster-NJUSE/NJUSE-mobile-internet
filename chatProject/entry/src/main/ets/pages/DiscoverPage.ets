@@ -4,7 +4,7 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 import Constants from '../utils/Constants';
 
 // 引入设置项组件
-import { SettingItemView } from './MomentsSettingPage';
+import { SettingItemView } from './momentPages/MomentsSettingPage';
 
 // 设置项的数据类
 class SettingViewData {

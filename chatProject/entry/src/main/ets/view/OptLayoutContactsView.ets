@@ -2,7 +2,6 @@ import Logger from '../utils/Logger';
 import { ChatContact } from '../viewmodel/MsgBase';
 import { ChatModel} from '../viewmodel/MsgBase'
 import router from '@ohos.router';
-import PageConstants from '../utils/PageConstants';
 
 const TAG: string = 'ContactsList_ContactsView';
 

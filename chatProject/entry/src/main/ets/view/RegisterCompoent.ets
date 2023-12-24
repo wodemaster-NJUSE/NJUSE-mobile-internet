@@ -7,6 +7,7 @@ import { HttpManager } from '../utils/http/HttpManager';
 //import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import http from '@ohos.net.http';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
+import { ResponseResult } from '../utils/http/HttpCore';
 
 //import { httpRequestGetUser, httpRequestPostUser } from '../utils/UserHttpUtil';
 
@@ -143,16 +144,14 @@ export struct RegisterComponent {
               };
 
               // 调用HttpManager的request方法，发起POST请求
-              HttpManager.getInstance().request<UserDataGet>(requestOptions)
+              HttpManager.getInstance().request<ResponseResult>(requestOptions)
                 .then((result) => {
-                  console.info(JSON.stringify(result));//输出用户信息并跳转
-                  // 构造用户对象并跳转
-                  user1 = new UserDataGet(result.id,result.username,result.password,result.uid)
+                  console.info(JSON.stringify(result.data));//输出用户信息并跳转
 
                   router.pushUrl({
                     url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                     params :{
-                      uid : user1.uid
+                      uid : JSON.parse(JSON.stringify(result.data)).uid
                     }
                   });
                 })

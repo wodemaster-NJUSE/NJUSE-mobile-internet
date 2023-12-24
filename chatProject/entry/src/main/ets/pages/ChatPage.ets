@@ -1,14 +1,15 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
-import { ContactsListDisplayView } from './contactPages/ContactsListPage';
+import { ChatListDisplayView } from './chatPages/ChatListPage';
+
 
 @Entry
 @Component
-export struct ContactsPage {
+export struct ChatPage {
   build() {
     Column() {
       this.TopBar()
-      ContactsListDisplayView()
+      ChatListDisplayView()
     }
     .width('100%')
     .backgroundColor($r('app.color.contacts_page_background'))
@@ -16,7 +17,7 @@ export struct ContactsPage {
 
   @Builder TopBar() {
     Stack({ alignContent: Alignment.End }) {
-      Text('联系人')
+      Text($r('app.string.chat'))
         .fontSize($r('app.integer.top_bar_font_size'))
         .fontColor($r('app.color.top_bar_font_color'))
         .fontWeight(FontWeight.Bold)
@@ -25,26 +26,8 @@ export struct ContactsPage {
         .padding({ left: $r('app.integer.top_bar_text_padding_left') })
         .textAlign(TextAlign.Start)
 
-      // 处理好友申请按钮(图片未选)
       Stack() {
-        Image($r('app.media.add'))
-          .height($r('app.integer.top_bar_settings_button_image_height'))
-          .width($r('app.integer.top_bar_settings_button_image_width'))
-      }
-      .height($r('app.integer.top_bar_height'))
-      .width($r('app.integer.top_bar_settings_button_width'))
-      .padding({
-        right: $r('app.integer.top_bar_process_application_button_padding_right')
-      })
-      .onClick(() => {
-        router.pushUrl({
-          url: CommonConstants.ADD_FRIEND_PAGE_URL
-        })
-      })
-
-      // 添加好友按钮
-      Stack() {
-        Image($r('app.media.add'))
+        Image($r('app.media.settings'))
           .height($r('app.integer.top_bar_settings_button_image_height'))
           .width($r('app.integer.top_bar_settings_button_image_width'))
       }
@@ -55,10 +38,11 @@ export struct ContactsPage {
       })
       .onClick(() => {
         router.pushUrl({
-          url: CommonConstants.ADD_FRIEND_PAGE_URL
+          url: CommonConstants.SETTINGS_PAGE_URL
         })
       })
     }
+    .margin({ top: '12vp' })
     .backgroundColor($r('app.color.top_bar_background_color'))
     .height($r('app.integer.top_bar_height'))
     .width($r('app.string.layout_100'))

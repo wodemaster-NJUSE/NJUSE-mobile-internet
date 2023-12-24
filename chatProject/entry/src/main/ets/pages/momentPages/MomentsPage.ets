@@ -18,11 +18,11 @@ import hiTraceMeter from '@ohos.hiTraceMeter';
 import http from '@ohos.net.http';
 import taskpool from '@ohos.taskpool';
 import promptAction from '@ohos.promptAction';
-import { ChatContact, FriendMoment } from '../viewmodel/MsgBase';
-import FriendMomentJsonUrl from '../utils/FriendMomentJsonUrl';
-import Logger from '../utils/Logger';
-import { BasicDataSource } from '../viewmodel/BasicDataSource';
-import { CommonConstants } from '../common/constants/CommonConstants';
+import { ChatContact, FriendMoment } from '../../viewmodel/MsgBase';
+import FriendMomentJsonUrl from '../../utils/FriendMomentJsonUrl';
+import Logger from '../../utils/Logger';
+import { BasicDataSource } from '../../viewmodel/BasicDataSource';
+import { CommonConstants } from '../../common/constants/CommonConstants';
 
 const TAG: string = 'entry_MomentsPage';
 const ABOUT_TO_APPEAR_TRACE: string = 'FriendsPage_AboutToAppear_HiTrace';

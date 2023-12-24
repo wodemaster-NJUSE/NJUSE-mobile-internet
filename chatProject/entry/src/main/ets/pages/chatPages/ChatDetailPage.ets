@@ -1,15 +1,15 @@
-import { BasicDataSource } from '../viewmodel/BasicDataSource';
-import { MessageBase, ChatContact, TextMessage, ImageMessage, MessageBody } from '../viewmodel/MsgBase';
-import { getMessageListFromJSON } from '../utils/DataFactory';
+import { BasicDataSource } from '../../viewmodel/BasicDataSource';
+import { MessageBase, ChatContact, TextMessage, ImageMessage, MessageBody } from '../../viewmodel/MsgBase';
+import { getMessageListFromJSON } from '../../utils/DataFactory';
 import router from '@ohos.router';
-import { ImageTextMessage, FileMessage } from '../viewmodel/MsgBase';
+import { ImageTextMessage, FileMessage } from '../../viewmodel/MsgBase';
 import image from '@ohos.multimedia.image';
-import Constants from '../utils/Constants';
+import Constants from '../../utils/Constants';
 import hiTraceMeter from '@ohos.hiTraceMeter';
 import Want from '@ohos.app.ability.Want';
-import Logger from '../utils/Logger';
+import Logger from '../../utils/Logger';
 import fs from '@ohos.file.fs';
-import { ShareDate, WantFileModel, WantModel } from '../model/Want';
+import { ShareDate, WantFileModel, WantModel } from '../../model/Want';
 
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 1; // aboutToAppear 中使用的 taskId

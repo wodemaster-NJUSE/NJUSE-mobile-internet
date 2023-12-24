@@ -1,12 +1,12 @@
 import hiTraceMeter from '@ohos.hiTraceMeter';
-import { makeDataLocal, makeDataList } from '../utils/DataFactory';
-import Constants from '../utils/Constants';
-import { ContactsView, ReusableContactsView } from  '../view/ContactsView';
-import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../view/OptLayoutContactsView';
-import Logger from '../utils/Logger';
+import { makeDataLocal, makeDataList } from '../../utils/DataFactory';
+import Constants from '../../utils/Constants';
+import { ContactsView, ReusableContactsView } from '../../view/ContactsView';
+import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../../view/OptLayoutContactsView';
+import Logger from '../../utils/Logger';
 import effectKit from '@ohos.effectKit';
-import { ChatModel } from '../viewmodel/MsgBase';
-import { ChatListData } from '../viewmodel/ChatListDataSource';
+import { ChatModel } from '../../viewmodel/MsgBase';
+import { ChatListData } from '../../viewmodel/ChatListDataSource';
 
 
 const TAG: string = 'ContactsListDisplayView';
