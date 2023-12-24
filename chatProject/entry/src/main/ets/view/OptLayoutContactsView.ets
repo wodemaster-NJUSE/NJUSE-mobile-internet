@@ -2,6 +2,7 @@ import Logger from '../utils/Logger';
 import { ChatContact } from '../viewmodel/MsgBase';
 import { ChatModel} from '../viewmodel/MsgBase'
 import router from '@ohos.router';
+import { CommonConstants } from '../common/constants/CommonConstants';
 
 const TAG: string = 'ContactsList_ContactsView';
 
@@ -117,22 +118,23 @@ export struct OptLayoutContactsView {
       bottom: $r('app.integer.opt_layout_contact_view_item_padding_bottom')
     })
     // TODO-联系人：跳转到好友设置界面
-    // .onClick(() => {
-    //   router.pushUrl({
-    //     url: PageConstants.DETAIL_PAGE,
-    //     params: {
-    //       chatName: this.contactItem.user.userName,
-    //       chatId: this.contactItem.user.userId,
-    //       chatImg: this.contactItem.user.userImage,
-    //       lastMsg: this.contactItem.lastMsg
-    //     }
-    //   }, (err) => {
-    //     if (err) {
-    //       Logger.error(`pushUrl failed, code is ${err.code}, message is ${err.message}`);
-    //       return;
-    //     }
-    //     Logger.info('pushUrl success');
-    //   })
-    // })
+    .onClick(() => {
+      // 进入好友详情页
+      router.pushUrl({
+        url: CommonConstants.FRIEND_DETAIL_PAGE_URL,
+        params: {
+          chatName: this.contactItem.user.userName,
+          chatId: this.contactItem.user.userId,
+          chatImg: this.contactItem.user.userImage,
+          lastMsg: this.contactItem.lastMsg
+        }
+      }, (err) => {
+        if (err) {
+          console.error(`pushUrl failed, code is ${err.code}, message is ${err.message}`);
+          return;
+        }
+        console.info('pushUrl success');
+      })
+    })
   }
 }

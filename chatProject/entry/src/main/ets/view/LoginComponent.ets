@@ -1,6 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
-import { UserDataGet, UserDataPost, UserEntity } from '../stores/user';
+import { UserDataGet, UserDataPost } from '../stores/user';
 import { HttpManager } from '../utils/http/HttpManager';
 //import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import http from '@ohos.net.http';
@@ -134,49 +134,50 @@ export struct LoginComponent {
             //     console.error('注册失败', error);
             //   });
 
+            // ------------
             //创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
-            let user1: UserDataGet; // 接收传过来的数据
-            const requestOptions: RequestOptions = {
-              url: 'http://172.29.4.148:8080/v1/user',
-              method: RequestMethod.POST,
-              header: {
-                'Content-Type': 'application/json',
-              },
-              extraData: JSON.stringify({
-                username: 'user1',
-                password: 'Ab1234567',
-              }),
-            };
-
-            // 调用HttpManager的request方法，发起POST请求
-            HttpManager.getInstance()
-              .request<UserEntity>(requestOptions)
-              .then((result) => {
-                console.info(JSON.stringify(result)); // 输出用户信息并跳转
-
-                // 构造用户对象并跳转
-                user1 = new UserEntity(null);
-
-                // 确保在请求成功后再跳转
-                router.pushUrl({
-                  url: CommonConstants.MAIN_PAGE_URL,
-                  params:{
-                    // 把用户实体传过去
-                    userEntity : user1
-                  }
-                });
-              })
-              .catch((err) => {
-                console.error('Error during registration:', JSON.stringify(err));
-                // 在此处可以添加更多错误处理逻辑，例如向用户显示错误信息
-                // 输出服务端返回的详细错误信息
-                if (err.response) {
-                  console.error('Server Response:', JSON.stringify(err.response));
-                }
-              });
+            // let user1: UserDataGet; // 接收传过来的数据
+            // const requestOptions: RequestOptions = {
+            //   url: 'http://172.29.4.148:8080/v1/user',
+            //   method: RequestMethod.POST,
+            //   header: {
+            //     'Content-Type': 'application/json',
+            //   },
+            //   extraData: JSON.stringify({
+            //     username: 'user1',
+            //     password: 'Ab1234567',
+            //   }),
+            // };
+            //
+            // // 调用HttpManager的request方法，发起POST请求
+            // HttpManager.getInstance()
+            //   .request<UserDataGet>(requestOptions)
+            //   .then((result) => {
+            //     console.info(JSON.stringify(result)); // 输出用户信息并跳转
+            //
+            //     // 构造用户对象并跳转
+            //     user1 = new UserDataGet(result.id, result.username, result.password, result.uid);
+            //
+            //     // 确保在请求成功后再跳转
+            //     router.pushUrl({
+            //       url: CommonConstants.MAIN_PAGE_URL,
+            //     });
+            //   })
+            //   .catch((err) => {
+            //     console.error('Error during registration:', JSON.stringify(err));
+            //     // 在此处可以添加更多错误处理逻辑，例如向用户显示错误信息
+            //
+            //     // 输出服务端返回的详细错误信息
+            //     if (err.response) {
+            //       console.error('Server Response:', JSON.stringify(err.response));
+            //     }
+            //   });
 
 
 
+            router.pushUrl({
+              url:CommonConstants.MAIN_PAGE_URL
+            });
           })
       }
 
