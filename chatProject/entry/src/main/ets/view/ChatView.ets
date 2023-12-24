@@ -23,7 +23,7 @@ struct ReusableChatView {
 
 @Component
 struct ChatView {
-  private chatItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);
+  private chatItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);// 聊天对象数据，最后一条信息，最后一个信息的时间，未读信息数量
   @StorageLink('image_sync_load') imageSyncLoad: boolean | undefined = AppStorage.Get('image_sync_load');
 
   build() {

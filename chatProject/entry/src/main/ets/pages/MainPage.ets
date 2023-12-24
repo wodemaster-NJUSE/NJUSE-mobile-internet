@@ -15,10 +15,10 @@
 
 
 import { ContactsPage } from './ContactsPage';
-import { LLMPage } from './LLMPage';
-import { CommonConstants } from '../common/constants/CommonConstants';
+import { LLMPage } from './LLMPage'
 import router from '@ohos.router';
 import { ChatListDisplayView } from './chatPages/ChatListPage';
+
 import { DiscoverPage } from './DiscoverPage';
 import { ChatPage } from './ChatPage';
 
@@ -67,8 +67,7 @@ struct Index {
       TabContent() {
         Column() {
           ChatPage()
-          // TopBar()//组件自上而下装配，直到填满tabcontent
-          // ChatListDisplayView()  //暂时不添加聊天展示
+
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,

@@ -14,7 +14,7 @@ export struct ContactsPage {
           // 设置项组件
           this.ContactSettingItemView()
         }
-        .backgroundColor($r('app.color.contacts_page_new_friend'))
+        .backgroundColor('#FFEEEEEE')
         .borderRadius($r('app.integer.setting_menu_border_radius'))
         .height($r('app.integer.setting_other_menu_list_height'))
         .onClick(() => {

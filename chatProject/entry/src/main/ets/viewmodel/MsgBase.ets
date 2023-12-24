@@ -14,6 +14,7 @@
  */
 
 import image from '@ohos.multimedia.image';
+import { BasicDataSource } from './BasicDataSource';
 
 /**
  * 聊天list中item对象
@@ -190,5 +191,27 @@ export class FriendMoment {
 
   toString(): string {
     return this.id + '  ' + this.user.toString() + '  ' + this.text + '  ' + this.time;
+  }
+}
+
+export class ChatDetailData extends BasicDataSource<MessageBase> {
+  msgList: Array<MessageBase> = [];
+
+  public totalCount(): number {
+    return this.msgList.length;
+  }
+
+  public getData(index: number): MessageBase {
+    return this.msgList[index];
+  }
+
+  public addData(index: number, data: MessageBase): void {
+    this.msgList.splice(index, 0, data);
+    this.notifyDataAdd(index);
+  }
+
+  public pushData(data: MessageBase): void {
+    this.msgList.push(data);
+    this.notifyDataAdd(this.msgList.length - 1);
   }
 }

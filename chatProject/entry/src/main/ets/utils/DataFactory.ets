@@ -54,10 +54,12 @@ export async function makeDataLocal(listData: ChatListData): Promise<void> {
 export async function makeDataList(listData: Array<ChatModel>): Promise<void> {
   Logger.info(TAG, 'makeDataList');
   hiTraceMeter.startTrace(MAKE_DATA_LIST_TRACE, MAKE_DATA_LIST_TRACE_ID);
+
   let chatModelMockData = await getChatModelObjFromJSON();
   for (let i = 0; i < Constants.DATA_MOCK_COUNT; i++) {
     listData.push(chatModelMockData[i]);
   }
+
   hiTraceMeter.finishTrace(MAKE_DATA_LIST_TRACE, MAKE_DATA_LIST_TRACE_ID);
 }
 
