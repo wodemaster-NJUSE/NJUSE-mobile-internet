@@ -8,6 +8,7 @@ export struct ContactsPage {
   build() {
     Column() {
       this.TopBar()
+
       List() {
         ListItem() {
           // 设置项组件
@@ -17,7 +18,7 @@ export struct ContactsPage {
         .borderRadius($r('app.integer.setting_menu_border_radius'))
         .height($r('app.integer.setting_other_menu_list_height'))
         .onClick(() => {
-          router.pushUrl({ url: CommonConstants.ADD_FRIEND_PAGE_URL })
+          router.pushUrl({ url: CommonConstants.NEW_FRIENDS_PAGE_URL })
         })
       }
       .padding({ left: $r('app.integer.setting_padding_left'), right: $r('app.integer.setting_padding_left') })

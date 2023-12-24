@@ -162,7 +162,7 @@ export class CommonConstants {
   static readonly LIST_SIZE: number = 2;
 
   /**
-   * Title font weight.
+   * TopBar font weight.
    */
   static readonly TITLE_FONT_WEIGHT: number = 500;
 
@@ -363,7 +363,15 @@ export class CommonConstants {
   /**
    * 设置聊天细节界面
    */
-  static readonly DETAIL_PAGE_URL: string = 'pages/chatPages/Detail';
+  static readonly DETAIL_PAGE_URL: string = 'pages/chatPages/Detail'
 
+  /**
+   * 设置好友申请处理界面
+   */
+  static readonly NEW_FRIENDS_PAGE_URL: string = 'pages/contactPages/NewFriendsPage'
 
+  /**
+   * 设置好友详情界面
+   */
+  static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/FriendDetailPage'
 }

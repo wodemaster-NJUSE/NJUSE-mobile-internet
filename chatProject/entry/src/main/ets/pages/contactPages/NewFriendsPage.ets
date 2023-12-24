@@ -1,36 +1,16 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../common/constants/CommonConstants'
 
+
 @Entry
 @Component
-export struct AddFriendsPage {
-  @State submitValue: string = ''
-  search_placeholder: string = '请输入您要搜索的UID'
-
+export struct NewFriendsPage {
   build() {
-    Column() {
+    Column(){
       this.TopBar()
 
-      // 搜索框
-      Text('submitValue:' + this.submitValue).fontSize(18).margin(15)
-      Search({placeholder: this.search_placeholder})
-        .searchButton('搜索')
-        .width('90%')
-        .height(40)
-        .backgroundColor('#F5F5F5')
-        .placeholderColor(Color.Gray)
-        .placeholderFont({size: 14, weight: 400})
-        .textFont({size: 14,weight: 400})
-        .onSubmit((value: string) => {
-          this.submitValue = value
-        })
-        .margin(20)
-
+      
     }
-    .width('100%')
-    .backgroundColor('#ffffff')
-
-    // TODO-联系人: 展示搜索结果
   }
 
   // 顶部导航栏
@@ -47,7 +27,7 @@ export struct AddFriendsPage {
           router.back()
         })
 
-      Text('添加好友')
+      Text('新的朋友')
         .fontSize(26)
         .fontColor('#182431')
         .width('30%')
@@ -62,6 +42,4 @@ export struct AddFriendsPage {
     .height($r('app.float.title_height'))
     .justifyContent(FlexAlign.SpaceBetween)
   }
-
-
 }

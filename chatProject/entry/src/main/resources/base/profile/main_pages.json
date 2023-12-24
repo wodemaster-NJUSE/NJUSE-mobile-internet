@@ -9,16 +9,22 @@
     "pages/MainPage",
     "pages/LLMPage",
     "pages/ContactsPage",
-    "pages/momentPages/MomentsPage",
+    "pages/DiscoverPage",
+
+
     "pages/settingPages/SettingsPage",
     "pages/settingPages/SettingProfilePicturePage",
     "pages/settingPages/SettingUsernamePage",
     "pages/settingPages/SettingSignaturePage",
     "pages/settingPages/SettingGenderPage",
+
     "pages/chatPages/ChatListPage",
-    "pages/contactPages/AddFriendsPage",
     "pages/chatPages/Detail",
+
+    "pages/contactPages/AddFriendsPage",
+    "pages/contactPages/NewFriendsPage",
+
     "pages/momentPages/FullImagePage",
-    "pages/DiscoverPage"
+    "pages/momentPages/MomentsPage"
   ]
 }
