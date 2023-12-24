@@ -165,7 +165,6 @@ export struct LoginComponent {
               .catch((err) => {
                 console.error('Error during registration:', JSON.stringify(err));
                 // 在此处可以添加更多错误处理逻辑，例如向用户显示错误信息
-
                 // 输出服务端返回的详细错误信息
                 if (err.response) {
                   console.error('Server Response:', JSON.stringify(err.response));

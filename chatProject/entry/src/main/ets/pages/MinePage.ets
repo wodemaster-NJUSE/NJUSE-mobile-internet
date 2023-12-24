@@ -39,7 +39,7 @@ struct MinePage {
                 .height($r('app.float.user_profile_image_height'))
                 .objectFit(ImageFit.Contain)
 
-              Text($r('app.string.user_nickname'))
+              Text("hhh")
                 .textAlign(TextAlign.Center)
                 .fontWeight(CommonConstants.NICKNAME_FONT_WEIGHT)
                 .fontSize($r('app.float.nickname_font_size'))
