@@ -66,11 +66,15 @@
     },
     {
       "name": "contacts_page_background",
-      "value": "#f1f3f5"
+      "value": "#ffffff"
     },
     {
       "name": "moments_page_background",
       "value": "#f1f3f5"
+    },
+    {
+      "name": "contacts_page_new_friend",
+      "value": "#FFEEEEEE"
     },
     {
       "name": "register_success_text_font",

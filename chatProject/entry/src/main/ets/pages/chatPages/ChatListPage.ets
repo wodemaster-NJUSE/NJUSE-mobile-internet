@@ -56,10 +56,6 @@ export struct ChatListDisplayView {
     }
   }
 
-  @Builder
-  chatModelListBuilder(arr : Array<ChatModel>){
-    this.chatListLazy;
-  }
 
   // 布局优化的列表item加载数据
   @Builder
