@@ -7,10 +7,9 @@ import { ChatView, ReusableChatView } from '../../view/ChatView';
 import { OptLayoutChatView, ReusableOptLayoutChatView } from '../../view/OptLayoutChatView';
 import Logger from '../../utils/Logger';
 import effectKit from '@ohos.effectKit';
+import router from '@ohos.router';
 
 const TAG: string = 'ChatListDisplayView';
-// 搜索框中搜索栏的ID
-const ID_SEARCH: string = 'search';
 // 删除item后，下方的item顶上来的动画的播放时间
 const DELETE_ANIMATION_DURATION: number = 500;
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatListPage_AboutToAppear_HiTrace';
@@ -28,6 +27,9 @@ class Message {
 @Preview
 @Component
 export struct ChatListDisplayView {
+  // 通过router传入参数ChatModel list来展示
+  private params = router.getParams() as Array<ChatModel>;
+
   // 懒加载的数据列表
   private chatListLazy = new ChatListData();
   // 普通加载的数据列表
@@ -52,6 +54,11 @@ export struct ChatListDisplayView {
     } else {
       ChatView(new Message(msg))
     }
+  }
+
+  @Builder
+  chatModelListBuilder(arr : Array<ChatModel>){
+    this.chatListLazy;
   }
 
   // 布局优化的列表item加载数据
@@ -168,9 +175,16 @@ export struct ChatListDisplayView {
   async aboutToAppear(): Promise<void> {
     Logger.info(TAG, "ChatListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
-    //this.controller.stopEditing();
-    await makeDataLocal(this.chatListLazy);
-    await makeDataList(this.chatListArray);
+
+    // 填充真数据
+    for (let i = 0; i < this.params.length; i++) {
+      this.chatListLazy.pushData(this.params[i]);
+      this.chatListArray.push(this.params[i])
+    }
+
+    // 假数据填充
+    // await makeDataLocal(this.chatListLazy);
+    // await makeDataList(this.chatListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }

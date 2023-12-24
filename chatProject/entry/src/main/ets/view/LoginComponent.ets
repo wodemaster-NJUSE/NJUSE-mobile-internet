@@ -160,6 +160,9 @@ export struct LoginComponent {
                 // 确保在请求成功后再跳转
                 router.pushUrl({
                   url: CommonConstants.MAIN_PAGE_URL,
+                  params:{
+                    // 把用户实体传过去
+                  }
                 });
               })
               .catch((err) => {

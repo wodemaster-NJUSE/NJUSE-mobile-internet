@@ -1,5 +1,5 @@
-import { BasicDataSource } from '../../viewmodel/BasicDataSource';
-import { MessageBase, ChatContact, TextMessage, ImageMessage, MessageBody } from '../../viewmodel/MsgBase';
+
+import { MessageBase, ChatContact, TextMessage, ImageMessage, MessageBody, ChatDetailData } from '../../viewmodel/MsgBase';
 import { getMessageListFromJSON } from '../../utils/DataFactory';
 import router from '@ohos.router';
 import { ImageTextMessage, FileMessage } from '../../viewmodel/MsgBase';
@@ -37,9 +37,11 @@ export struct ChatDetailPage {
   @State userMyselfName: string = '';
   @State userFriendName: string = '';
   @State listHeight: number = 0;
+
   @State want: Want | undefined = undefined;
   wantParams: WantModel = new WantModel("src/main/resources/images/photo0.jpg", "111", 0);
   wantFileParams: WantFileModel = new WantFileModel();
+
   @State imageFile: image.PixelMap | undefined = undefined;
   @State imageSize: number = 90960;
   private params = router.getParams() as Record<string, Object>;
@@ -380,24 +382,3 @@ export struct ChatItemView {
   }
 }
 
-class ChatDetailData extends BasicDataSource<MessageBase> {
-  msgList: Array<MessageBase> = [];
-
-  public totalCount(): number {
-    return this.msgList.length;
-  }
-
-  public getData(index: number): MessageBase {
-    return this.msgList[index];
-  }
-
-  public addData(index: number, data: MessageBase): void {
-    this.msgList.splice(index, 0, data);
-    this.notifyDataAdd(index);
-  }
-
-  public pushData(data: MessageBase): void {
-    this.msgList.push(data);
-    this.notifyDataAdd(this.msgList.length - 1);
-  }
-}

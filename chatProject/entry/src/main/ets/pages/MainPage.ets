@@ -16,12 +16,10 @@
 
 import { ContactsPage } from './ContactsPage';
 import { LLMPage } from './LLMPage';
-import { TopBar } from '../viewmodel/TopBar';
-import { CommonConstants } from '../common/constants/CommonConstants';
-import router from '@ohos.router';
-import { ChatListDisplayView } from './chatPages/ChatListPage';
+
 import { DiscoverPage } from './DiscoverPage';
 import { ChatPage } from './ChatPage';
+import { UserEntity } from '../stores/user';
 
 
 const TAB_INDEX_0: number = 0;
@@ -35,6 +33,7 @@ const TABBAR_SEPARATE_LINE = 0.05;
 @Entry
 @Component
 struct Index {
+  // userEntity : UserEntity;
   @StorageLink('page_layout') page_layout: boolean | undefined = AppStorage.Get('page_layout'); // AppStorage中key对应的属性建立双向数据同步
   @State currentIndex: number = TAB_INDEX_0; // tabBar初始选中的位置
   @State message: Resource = $r('app.string.chat');
@@ -68,8 +67,7 @@ struct Index {
       TabContent() {
         Column() {
           ChatPage()
-          // TopBar()//组件自上而下装配，直到填满tabcontent
-          // ChatListDisplayView()  //暂时不添加聊天展示
+
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,
