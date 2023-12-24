@@ -18,43 +18,39 @@
     },
     {
       "name": "username",
-      "value": "Phone number/Email address/Username"
+      "value": "用户名"
     },
     {
       "name": "password",
-      "value": "Password"
+      "value": "密码"
     },
     {
       "name": "login",
-      "value": "Login"
+      "value": "登录"
     },
     {
       "name": "register",
-      "value": "Register"
+      "value": "注册"
     },
     {
       "name": "jump_mine_page_text",
-      "value": "Click to go to my page"
+      "value": "点击跳转我的界面"
     },
     {
       "name": "register_success_text",
-      "value": "Register success"
+      "value": "注册成功"
     },
     {
       "name": "problem_encountered",
-      "value": "Problem encountered"
+      "value": "出现问题"
     },
     {
       "name": "privacy_statement",
-      "value": "Privacy statement"
+      "value": "隐私说明"
     },
     {
       "name": "mine_page_title",
-      "value": "My"
-    },
-    {
-      "name": "user_nickname",
-      "value": "Han Meimei"
+      "value": "我的"
     },
     {
       "name": "component_list_item_text",

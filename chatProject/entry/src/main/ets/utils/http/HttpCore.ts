@@ -36,7 +36,6 @@ export class HttpCore {
 
 
   private sendRequest(requestOption: RequestOptions): Promise<http.HttpResponse> {
-
     // 每一个httpRequest对应一个HTTP请求任务，不可复用
     let httpRequest = http.createHttp();
     let resolveFunction, rejectFunction;

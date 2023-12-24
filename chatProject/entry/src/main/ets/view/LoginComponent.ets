@@ -4,7 +4,7 @@ import { UserDataGet, UserDataPost } from '../stores/user';
 import { HttpManager } from '../utils/http/HttpManager';
 //import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import http from '@ohos.net.http';
-import { RequestOptions } from '../utils/http/RequestOptions';
+import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 
 /**
  * Login page component.
@@ -137,8 +137,8 @@ export struct LoginComponent {
             //创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
             let user1: UserDataGet; // 接收传过来的数据
             const requestOptions: RequestOptions = {
-              url: 'https://172.29.4.148:8080/v1/user',
-              method: http.RequestMethod.POST,
+              url: 'http://172.29.4.148:8080/v1/user',
+              method: RequestMethod.POST,
               header: {
                 'Content-Type': 'application/json',
               },
