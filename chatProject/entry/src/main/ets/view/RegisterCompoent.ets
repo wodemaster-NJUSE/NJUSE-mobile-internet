@@ -125,9 +125,7 @@ export struct RegisterComponent {
       }
     }
     //对用户属性进行处理，并且进行界面跳转，符合就跳转到成功界面，失败界面提示
-
   }
-
 }
 function isRegisterButtonClickable(userName: string, password: string, repeatPWD:string): boolean {
   return userName !== '' && password !== '' && repeatPWD !== '';
