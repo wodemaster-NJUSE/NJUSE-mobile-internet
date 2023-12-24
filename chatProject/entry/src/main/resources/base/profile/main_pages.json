@@ -23,6 +23,7 @@
 
     "pages/contactPages/AddFriendsPage",
     "pages/contactPages/NewFriendsPage",
+    "pages/contactPages/FriendDetailPage",
 
     "pages/momentPages/FullImagePage",
     "pages/momentPages/MomentsPage"

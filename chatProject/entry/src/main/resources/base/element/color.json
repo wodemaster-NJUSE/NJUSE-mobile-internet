@@ -283,19 +283,22 @@
     {
       "name": "search_outline_background_color",
       "value": "#ffffff"
-    },{
+    },
+    {
       "name": "setting_front",
       "value": "#ffffff"
-    },{
+    },
+    {
       "name": "setting_background",
       "value": "#f1f3f5"
-    },{
+    },
+    {
       "name": "setting_content",
       "value": "#FF333333"
-    },{
+    },
+    {
       "name": "setting_detail_view_save_button",
       "value": "#FF22DD00"
     }
-
   ]
 }
