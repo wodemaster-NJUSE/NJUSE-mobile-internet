@@ -1,6 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
-import { UserDataGet, UserDataPost } from '../stores/user';
+import { UserDataGet, UserDataPost, UserEntity } from '../stores/user';
 import { HttpManager } from '../utils/http/HttpManager';
 //import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import http from '@ohos.net.http';
@@ -150,18 +150,19 @@ export struct LoginComponent {
 
             // 调用HttpManager的request方法，发起POST请求
             HttpManager.getInstance()
-              .request<UserDataGet>(requestOptions)
+              .request<UserEntity>(requestOptions)
               .then((result) => {
                 console.info(JSON.stringify(result)); // 输出用户信息并跳转
 
                 // 构造用户对象并跳转
-                user1 = new UserDataGet(result.id, result.username, result.password, result.uid);
+                user1 = new UserEntity(null);
 
                 // 确保在请求成功后再跳转
                 router.pushUrl({
                   url: CommonConstants.MAIN_PAGE_URL,
                   params:{
                     // 把用户实体传过去
+                    userEntity : user1
                   }
                 });
               })
@@ -176,9 +177,6 @@ export struct LoginComponent {
 
 
 
-            // router.pushUrl({
-            //   url:CommonConstants.MAIN_PAGE_URL
-            // });
           })
       }
 

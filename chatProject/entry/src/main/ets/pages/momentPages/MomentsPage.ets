@@ -265,6 +265,7 @@ struct OneMoment {
             .margin({ left: $r('app.integer.friendMomentsPage_thumbsup_margin_left') })
             .onClick(() => {
               this.liked = !this.liked
+              // 在这里更新点赞数
             })
           MomentHandler({
             imageStr: $r('app.media.ic_message'),

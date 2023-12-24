@@ -1,11 +1,13 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
+import { UserEntity } from '../stores/user';
 import { ChatListDisplayView } from './chatPages/ChatListPage';
 
 
 @Entry
 @Component
 export struct ChatPage {
+
   build() {
     Column() {
       this.TopBar()

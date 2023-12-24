@@ -171,7 +171,7 @@ export struct ChatListDisplayView {
   async aboutToAppear(): Promise<void> {
     Logger.info(TAG, "ChatListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
-
+    // uid ->  Array<ChatModel>
     // 填充真数据
     for (let i = 0; i < this.params.length; i++) {
       this.chatListLazy.pushData(this.params[i]);

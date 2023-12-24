@@ -21,6 +21,7 @@ import { ChatListDisplayView } from './chatPages/ChatListPage';
 
 import { DiscoverPage } from './DiscoverPage';
 import { ChatPage } from './ChatPage';
+import { UserEntity } from '../stores/user';
 
 
 const TAB_INDEX_0: number = 0;
@@ -30,10 +31,20 @@ const TAB_INDEX_3: number = 3;
 // divider组件的strokWidth为1
 const DIVIDER_LINE_STROKWIDTH: number = 1;
 const TABBAR_SEPARATE_LINE = 0.05;
+let pageStorage: LocalStorage = new LocalStorage();
+
+pageStorage.set('pageTitle', 'My Awesome Page');
+
+let title: string = pageStorage.get('pageTitle');
 
 @Entry
 @Component
 struct Index {
+
+  // login 跳转到main界面把构造好的userEntity传入
+  private params = router.getParams() as UserEntity;
+   userEntity: UserEntity  = new UserEntity(this.params);
+
   @StorageLink('page_layout') page_layout: boolean | undefined = AppStorage.Get('page_layout'); // AppStorage中key对应的属性建立双向数据同步
   @State currentIndex: number = TAB_INDEX_0; // tabBar初始选中的位置
   @State message: Resource = $r('app.string.chat');
@@ -67,7 +78,6 @@ struct Index {
       TabContent() {
         Column() {
           ChatPage()
-
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,

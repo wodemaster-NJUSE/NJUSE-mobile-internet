@@ -63,6 +63,7 @@ export struct DiscoverPage {
             .id(CHAT_COMMUNITY)
             .onClick(() => {
               router.pushUrl({ url: CommonConstants.MOMENTS_PAGE_URL })
+              
             })
         }
         .backgroundColor($r('app.color.setting_text_background'))
