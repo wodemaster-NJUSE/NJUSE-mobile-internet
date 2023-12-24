@@ -25,6 +25,10 @@
       "value": "#99182431"
     },
     {
+      "name": "tab_bar_separator_line_color",
+      "value": "#182431"
+    },
+    {
       "name": "login_btn_normal",
       "value": "#66007DFF"
     },
@@ -62,11 +66,15 @@
     },
     {
       "name": "contacts_page_background",
-      "value": "#f1f3f5"
+      "value": "#ffffff"
     },
     {
       "name": "moments_page_background",
       "value": "#f1f3f5"
+    },
+    {
+      "name": "contacts_page_new_friend",
+      "value": "#FFEEEEEE"
     },
     {
       "name": "register_success_text_font",
@@ -96,5 +104,198 @@
       "name": "input_border_color",
       "value": "#33000000"
     },
+    {
+      "name": "title_font_color",
+      "value": "#182431"
+    },
+    {
+      "name": "friends_page_search_border_color",
+      "value": "#33182431"
+    },
+    {
+      "name": "friends_page_search_icon_color",
+      "value": "#007DFF"
+    },
+    {
+      "name": "friends_page_background",
+      "value": "#ffffff"
+    },
+    {
+      "name": "friends_page_divider_color",
+      "value": "#0c000000"
+    },
+    {
+      "name": "tabbar_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "tabbar_font_color_normal",
+      "value": "#182431"
+    },
+    {
+      "name": "tabbar_font_color_selected",
+      "value": "#007DFF"
+    },
+    {
+      "name": "setting_column_color",
+      "value": "#cccccc"
+    },
+    {
+      "name": "setting_text_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "setting_text_color",
+      "value": "#99182431"
+    },
+    {
+      "name": "setting_divider_color",
+      "value": "#0c000000"
+    },
+    {
+      "name": "discover_page_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "divider_color",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "customDialog_list_divider_color",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "customDialog_list_backgroundColor",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "customDialog_Toggle_selectedColor",
+      "value": "#007DFF"
+    },
+    {
+      "name": "customDialog_Toggle_switchPointColor",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "customDialog_ToggleComponent_fontColor",
+      "value": "#182431"
+    },
+    {
+      "name": "customDialog_Prompt_Text_fontColor",
+      "value": "#182431"
+    },
+    {
+      "name": "customDialog_diaLogDivider_fontColor",
+      "value": "#182431"
+    },
+    {
+      "name": "friends_page_text_color",
+      "value": "#000000"
+    },
+    {
+      "name": "top_bar_background_color",
+      "value": "#ffffff"
+    },
+    {
+      "name": "discovery_bar_title_color",
+      "value": "#182431"
+    },
+    {
+      "name": "discovery_bar_background_color",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "top_bar_font_color",
+      "value": "#182431"
+    },
+    {
+      "name": "ic_album",
+      "value": "#31D25D"
+    },
+    {
+      "name": "ic_collect",
+      "value": "#F9C541"
+    },
+    {
+      "name": "ic_wallet",
+      "value": "#FA6400"
+    },
+    {
+      "name": "ic_cards",
+      "value": "#FA6400"
+    },
+    {
+      "name": "ic_emoji",
+      "value": "#F9A035"
+    },
+    {
+      "name": "ic_settings",
+      "value": "#007DFF"
+    },
+    {
+      "name": "ic_record",
+      "value": "#2D3DDF"
+    },
+    {
+      "name": "process_color",
+      "value": "#32C5FF"
+    },
+    {
+      "name": "unread_msg_tip",
+      "value": "#ea6055"
+    },
+    {
+      "name": "last_msg",
+      "value": "#999999"
+    },
+    {
+      "name": "unread_msg",
+      "value": "#ea6055"
+    },
+    {
+      "name": "detail_divider",
+      "value": "#f3f3f3"
+    },
+    {
+      "name": "detail_body_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "detail_item_message_background",
+      "value": "#D0E9F3"
+    },
+    {
+      "name": "detail_item_message_image_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "detail_item_message_image_font",
+      "value": "#000"
+    },
+    {
+      "name": "detail_item_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "chat_list_divider_color",
+      "value": "#f3f3f3"
+    },
+    {
+      "name": "search_outline_background_color",
+      "value": "#ffffff"
+    },{
+      "name": "setting_front",
+      "value": "#ffffff"
+    },{
+      "name": "setting_background",
+      "value": "#f1f3f5"
+    },{
+      "name": "setting_content",
+      "value": "#FF333333"
+    },{
+      "name": "setting_detail_view_save_button",
+      "value": "#FF22DD00"
+    }
+
   ]
 }

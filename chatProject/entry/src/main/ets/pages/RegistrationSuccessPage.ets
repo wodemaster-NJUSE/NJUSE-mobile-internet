@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { UserDataGet } from '../stores/user';
 
 /**
  * Page shows registration successful.
@@ -7,7 +8,10 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 @Entry
 @Component
 struct RegistrationSuccessPage {
+  private params = router.getParams() as Record<string, Object>;
+  uid : string | Resource = this.params.uid as string | Resource;
   build() {
+
     Column() {
       this.Title()
 
@@ -18,7 +22,7 @@ struct RegistrationSuccessPage {
             .width($r('app.float.registration_success_logo_width'))
             .height($r('app.float.registration_success_logo_height'))
 
-          Text($r('app.string.register_success_text'))
+          Text("注册成功，你的uid是"+ this.uid)
             .width($r('app.float.register_success_text_width'))
             .height($r('app.float.register_success_text_height'))
             .textAlign(TextAlign.Center)

@@ -1,7 +1,7 @@
 {
   "src": [
+    "pages/ChatPage",
     "pages/LoginPage",
-    "pages/MinePage",
     "pages/RegistrationSuccessPage",
     "pages/PrivacyPage",
     "pages/CustomerServicePage",
@@ -9,6 +9,16 @@
     "pages/MainPage",
     "pages/LLMPage",
     "pages/ContactsPage",
-    "pages/MomentsPage"
+    "pages/momentPages/MomentsPage",
+    "pages/settingPages/SettingsPage",
+    "pages/settingPages/SettingProfilePicturePage",
+    "pages/settingPages/SettingUsernamePage",
+    "pages/settingPages/SettingSignaturePage",
+    "pages/settingPages/SettingGenderPage",
+    "pages/chatPages/ChatListPage",
+    "pages/contactPages/AddFriendsPage",
+    "pages/chatPages/Detail",
+    "pages/momentPages/FullImagePage",
+    "pages/DiscoverPage"
   ]
 }

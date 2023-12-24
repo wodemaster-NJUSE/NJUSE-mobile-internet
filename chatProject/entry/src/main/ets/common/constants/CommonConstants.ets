@@ -187,11 +187,6 @@ export class CommonConstants {
   static readonly NICKNAME_FONT_WEIGHT: number = 500;
 
   /**
-   * Mine page url.
-   */
-  static readonly MINE_PAGE_URL: string = 'pages/MinePage';
-
-  /**
    * Registration success page url.
    */
   static readonly REGISTRATION_SUCCESS_PAGE_URL: string = 'pages/RegistrationSuccessPage';
@@ -235,6 +230,12 @@ export class CommonConstants {
    * Full percent of the width.
    */
   static readonly FULL_WIDTH_PERCENT: string = '100%';
+
+  // 90% 宽
+  static readonly NINETY_WIDTH_PERCENT: string = '90%';
+
+  // 80% 宽
+  static readonly EIGHTY_WIDTH_PERCENT: string = '80%';
 
   /**
    * Percent of the registration success page width.
@@ -309,5 +310,60 @@ export class CommonConstants {
   /**
    * 动态界面路由
    */
-  static readonly MOMENTS_PAGE_URL: string = 'pages/MomentsPage';
+  static readonly MOMENTS_PAGE_URL: string = 'pages/momentPages/MomentsPage';
+
+  /**
+   * 设置界面路由
+   */
+  static readonly SETTINGS_PAGE_URL: string = 'pages/settingPages/SettingsPage';
+  /**
+   * 设置聊天列表路由
+   */
+  static readonly CHAT_LIST_PAGE_URL: string = 'pages/chatPages/ChatListPage';
+  /**
+   * 设置聊天细节路由
+   */
+  static readonly CHAT_DETAIL_PAGE_URL: string = 'pages/chatPages/ChatDetailPage'
+
+  /**
+   * 设置好友页面路由
+   */
+  static readonly ADD_FRIEND_PAGE_URL: string = 'pages/contactPages/AddFriendsPage';
+
+  /**
+   * 设置整张图片界面路由
+   */
+  static readonly FULL_IMAGE_PAGE_URL: string = 'pages/momentPages/FullImagePage'
+
+  /**
+   * 设置发现界面路由
+   */
+  static readonly DISCOVER_PAGE_URL: string = 'pages/DiscoverPage'
+
+  /**
+   * 设置头像界面
+   */
+  static readonly SETTING_PROFILE_PICTURE_PAGE_URL: string = 'pages/settingPages/SettingProfilePicturePage'
+
+  /**
+   * 设置用户名界面
+   */
+  static readonly SETTING_USERNAME_PAGE_URL: string = 'pages/settingPages/SettingUsernamePage'
+
+  /**
+   * 设置签名界面
+   */
+  static readonly SETTING_SIGNATURE_PAGE_URL: string = 'pages/settingPages/SettingSignaturePage'
+
+  /**
+   * 设置性别界面
+   */
+  static readonly SETTING_GENDER_PAGE_URL: string = 'pages/settingPages/SettingGenderPage'
+
+  /**
+   * 设置聊天细节界面
+   */
+  static readonly DETAIL_PAGE_URL: string = 'pages/chatPages/Detail';
+
+
 }

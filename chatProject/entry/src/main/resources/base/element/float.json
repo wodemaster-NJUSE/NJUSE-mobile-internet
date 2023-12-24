@@ -1,6 +1,34 @@
 {
   "float": [
     {
+      "name": "customDialog_list_friction",
+      "value": "0.5"
+    },
+    {
+      "name": "customDialog_list_Divider",
+      "value": "0.5"
+    },
+    {
+      "name": "customDialog_diaLogDivider_strokeWidth",
+      "value": "0.5"
+    },
+    {
+      "name": "setting_menu_arrow_opacity",
+      "value": "0.38"
+    },
+    {
+      "name": "opacity_zero_point_six",
+      "value": "0.6"
+    },
+    {
+      "name": "top_bar_separator_line_height",
+      "value": "0.5"
+    },
+    {
+      "name": "search_inline_border_width",
+      "value": "1.5"
+    },
+    {
       "name": "username_padding_left",
       "value": "0vp"
     },
@@ -130,7 +158,7 @@
     },
     {
       "name": "register_success_text_width",
-      "value": "200vp"
+      "value": "600vp"
     },
     {
       "name": "register_success_text_height",
@@ -246,6 +274,18 @@
     },
     {
       "name": "user_grid_row_margin",
+      "value": "12vp"
+    },
+    {
+      "name": "setting_page_padding",
+      "value":"12vp"
+    },
+    {
+      "name" : "setting_detail_view_font_size",
+      "value": "16fp"
+    },
+    {
+      "name" : "setting_detail_view_save_margin",
       "value": "12vp"
     }
   ]
