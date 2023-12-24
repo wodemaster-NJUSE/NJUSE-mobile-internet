@@ -6,6 +6,9 @@ import { ContactsListData } from  '../viewmodel/ContactsListDataSource'
 import Constants from './Constants';
 import { ChatModel, FriendMoment } from '../viewmodel/MsgBase';
 
+// TODO-暂时弃用
+
+
 const TAG: string = 'ContactsList_DataFactory';
 const MOCK_DATA_FILE_DIR: string = 'mockChatModelData.json';
 const MAKE_DATA_LOCAL_TRACE: string = 'ContactsList_MakeDataLocal_HiTrace';

@@ -2,6 +2,8 @@ import { BasicDataSource } from './BasicDataSource'
 import { ContactModel } from './ContactBase'
 import Logger from '../utils/Logger'
 
+// TODO-暂时弃用
+
 const TAG: string = 'ContactsList_Data'
 
 export class ContactsListData extends BasicDataSource<ContactModel> {

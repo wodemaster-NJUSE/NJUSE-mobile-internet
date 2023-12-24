@@ -101,19 +101,19 @@ export struct LoginComponent {
           .backgroundColor(isLoginButtonClickable(this.userName, this.password) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
-            let userdata: UserData;
-            let url : string = ''
-            let responseStatus = httpRequestGetUser(url,userdata);//如果返回true则完成get，否则没有完成
-            if(responseStatus){
-              //成功则去到MAIN_PAGE
-              router.pushUrl({
-                // 这里还需要传递usermodel来构建相应的界面
-                url: CommonConstants.MAIN_PAGE_URL
-              });
-            }
-            // router.pushUrl({
-            //   url:CommonConstants.MAIN_PAGE_URL
-            // });
+            // let userdata: UserData;
+            // let url : string = ''
+            // let responseStatus = httpRequestGetUser(url,userdata);//如果返回true则完成get，否则没有完成
+            // if(responseStatus){
+            //   //成功则去到MAIN_PAGE
+            //   router.pushUrl({
+            //     // 这里还需要传递usermodel来构建相应的界面
+            //     url: CommonConstants.MAIN_PAGE_URL
+            //   });
+            // }
+            router.pushUrl({
+              url:CommonConstants.MAIN_PAGE_URL
+            });
           })
       }
 

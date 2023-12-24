@@ -121,21 +121,21 @@ export struct RegisterComponent {
             .backgroundColor(isRegisterButtonClickable(this.userName, this.passWord,this.repeatPWD) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
             .onClick(() => {
-              // 把用户输入的数据传给后端
-              // router.pushUrl({
-              //   url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
-              // });
-              let userdata: UserData;
-              let url : string = ''
-              userdata.password = this.passWord;
-              userdata.username = this.userName;
-              let status =  httpRequestPostUser(url,userdata)
-              if(status){
-                //成功则去到MAIN_PAGE
-                router.pushUrl({
-                  url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL // 如果注册成功跳转成功界面
-                });
-              }
+             // 把用户输入的数据传给后端
+              router.pushUrl({
+                url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL
+              });
+            //   let userdata: UserData;
+            //   let url : string = ''
+            //   userdata.password = this.passWord;
+            //   userdata.username = this.userName;
+            //   let status =  httpRequestPostUser(url,userdata)
+            //   if(status){
+            //     //成功则去到MAIN_PAGE
+            //     router.pushUrl({
+            //       url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL // 如果注册成功跳转成功界面
+            //     });
+            //   }
             })
         }
       }

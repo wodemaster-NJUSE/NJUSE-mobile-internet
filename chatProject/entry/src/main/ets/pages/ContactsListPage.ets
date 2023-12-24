@@ -1,12 +1,12 @@
 import hiTraceMeter from '@ohos.hiTraceMeter';
-import { makeDataLocal, makeDataList } from '../utils/ContactsDataFactory';
+import { makeDataLocal, makeDataList } from '../utils/DataFactory';
 import Constants from '../utils/Constants';
-import { ContactModel } from '../viewmodel/ContactBase';
-import { ContactsListData } from '../viewmodel/ContactsListDataSource';
 import { ContactsView, ReusableContactsView } from  '../view/ContactsView';
 import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../view/OptLayoutContactsView';
 import Logger from '../utils/Logger';
 import effectKit from '@ohos.effectKit';
+import { ChatModel } from '../viewmodel/MsgBase';
+import { ChatListData } from '../viewmodel/ChatListDataSource';
 
 
 const TAG: string = 'ContactsListDisplayView';
@@ -19,9 +19,9 @@ const ABOUT_TO_APPEAR_TRACE_ID: number = 3; // aboutToAppear 中使用的 taskId
 const REUSE_ID: string = 'ContactsListPage_ReuseId';
 
 class Message {
-  contactItem: ContactModel;
+  contactItem: ChatModel;
 
-  constructor(contactItem: ContactModel) {
+  constructor(contactItem: ChatModel) {
     this.contactItem = contactItem;
   }
 }
@@ -30,9 +30,9 @@ class Message {
 @Component
 export struct ContactsListDisplayView {
   // 懒加载的数据列表
-  private contactsListLazy = new ContactsListData();
+  private contactsListLazy = new ChatListData();
   // 普通加载的数据列表
-  @State contactsListArray: Array<ContactModel> = new Array<ContactModel>();
+  @State contactsListArray: Array<ChatModel> = new Array<ChatModel>();
   // 是否使用懒加载
   @StorageLink('lazy_for_each') lazyForEach: boolean | undefined = AppStorage.Get('lazy_for_each');
   // 是否复用列表中的子组件
@@ -45,7 +45,7 @@ export struct ContactsListDisplayView {
 
   // 非布局优化的列表item加载数据
   @Builder
-  ContactsViewBuilder(msg: ContactModel) {
+  ContactsViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
       ReusableContactsView(new Message(msg))
@@ -57,7 +57,7 @@ export struct ContactsListDisplayView {
 
   // 布局优化的列表item加载数据
   @Builder
-  OptContactsViewBuilder(msg: ContactModel) {
+  OptContactsViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
       ReusableOptLayoutContactsView(new Message(msg))
@@ -120,7 +120,7 @@ export struct ContactsListDisplayView {
       List() {
         if (this.lazyForEach) {
           // 懒加载加载数据
-          LazyForEach(this.contactsListLazy, (msg: ContactModel) => {
+          LazyForEach(this.contactsListLazy, (msg: ChatModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
@@ -134,9 +134,9 @@ export struct ContactsListDisplayView {
             // .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
             //   end: this.deleteAction(msg),
             // })
-          }, (msg: ContactModel) => msg.userId)
+          }, (msg: ChatModel) => msg.user.userId)
         } else {
-          ForEach(this.contactsListArray, (msg: ContactModel) => {
+          ForEach(this.contactsListArray, (msg: ChatModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
@@ -150,7 +150,7 @@ export struct ContactsListDisplayView {
             // .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
             //   end: this.deleteAction(msg),
             // })
-          }, (msg: ContactModel) => msg.userId)
+          }, (msg: ChatModel) => msg.user.userId)
         }
       }
       .backgroundColor(Color.White)
