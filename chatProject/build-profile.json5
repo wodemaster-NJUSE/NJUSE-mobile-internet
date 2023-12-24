@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.cer",
+          "storePassword": "0000001B9C225140B5879EE3D02236C18090AF7EBA07BE98E196612211FDF430D32E19CA0E37AF615755AA",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BF666488FF68C8F4CE1FD0567BB0B0BA828216E0704D3A218AF85A01C9D29AC73A00B397BA9A185",
+          "profile": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [

@@ -9,6 +9,7 @@ import hiTraceMeter from '@ohos.hiTraceMeter';
 import Want from '@ohos.app.ability.Want';
 import Logger from '../utils/Logger';
 import fs from '@ohos.file.fs';
+import { ShareDate, WantFileModel, WantModel } from '../model/Want';
 
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 1; // aboutToAppear 中使用的 taskId
@@ -17,47 +18,6 @@ const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
 
-export class WantModel {
-  srcImage: string = '';
-  textContent: string = '';
-  senderId: number = 0;
-
-  constructor(srcImage?: string, text?: string, senderId?: number) {
-    if (srcImage !== undefined) {
-      this.srcImage = srcImage;
-    }
-    if (text !== undefined) {
-      this.textContent = text;
-    }
-    if (senderId !== undefined) {
-      this.senderId = senderId;
-    }
-  }
-
-  toString(): string {
-    return this.srcImage + "  " + this.textContent + "  " + this.senderId;
-  }
-}
-
-export class WantFileModel {
-  fdImage: number = 0;
-  kindId: number = 0;
-
-  constructor(fdImage?: number, kindId?: number) {
-    if (fdImage !== undefined) {
-      this.fdImage = fdImage;
-    }
-
-    if (kindId !== undefined) {
-      this.kindId = kindId;
-    }
-  }
-}
-
-class ShareDate {
-  type: string = '';
-  value: number = 0;
-}
 
 @Preview
 @Component
@@ -184,7 +144,7 @@ export struct ChatDetailPage {
         //     this.msgLength = this.chatDetailData.totalCount();
         //     this.scroller.scrollToIndex(this.msgLength - 1);
         //   })
-        // 去除表情输入
+        //
         Image($r('app.media.input_add'))
           .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
           .width($r('app.integer.opt_layout_chat_view_item_padding_right'))

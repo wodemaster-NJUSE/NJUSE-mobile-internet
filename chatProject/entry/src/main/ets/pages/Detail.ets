@@ -18,6 +18,7 @@ import { ChatDetailPage } from './ChatDetailPage'
 struct Detail {
   build() {
     Column() {
+      // 单独查看一个聊天界面
       ChatDetailPage()
     }
   }
