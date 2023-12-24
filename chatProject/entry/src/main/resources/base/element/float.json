@@ -158,7 +158,7 @@
     },
     {
       "name": "register_success_text_width",
-      "value": "200vp"
+      "value": "600vp"
     },
     {
       "name": "register_success_text_height",

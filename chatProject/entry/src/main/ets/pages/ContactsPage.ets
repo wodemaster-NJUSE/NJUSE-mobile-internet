@@ -1,7 +1,6 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
-import {ContactsComponent} from '../view/ContactsComponent';
-import { ContactsListDisplayView } from './ContactsListPage';
+import { ContactsListDisplayView } from './contactPages/ContactsListPage';
 
 @Entry
 @Component
@@ -10,7 +9,6 @@ export struct ContactsPage {
     Column() {
       this.TopBar()
       ContactsListDisplayView()
-      // ContactsComponent()
     }
     .width('100%')
     .backgroundColor($r('app.color.contacts_page_background'))

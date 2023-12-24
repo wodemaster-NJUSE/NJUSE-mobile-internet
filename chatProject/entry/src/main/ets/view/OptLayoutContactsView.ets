@@ -1,7 +1,7 @@
 import Logger from '../utils/Logger';
-import { ContactModel } from '../viewmodel/ContactBase';
+import { ChatContact } from '../viewmodel/MsgBase';
+import { ChatModel} from '../viewmodel/MsgBase'
 import router from '@ohos.router';
-import PageConstants from '../utils/PageConstants';
 
 const TAG: string = 'ContactsList_ContactsView';
 
@@ -11,10 +11,10 @@ const TAG: string = 'ContactsList_ContactsView';
 // @Reusable
 @Component
 export struct ReusableOptLayoutContactsView {
-  @State contactItem: ContactModel = new ContactModel('', '', '');
+  @State contactItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);
 
   aboutToReuse(params: Record<string, Object>): void {
-    this.contactItem = params.contactItem as ContactModel;
+    this.contactItem = params.contactItem as ChatModel;
     Logger.info(TAG, 'aboutToReuse=' + this.contactItem.toString());
   }
 
@@ -29,12 +29,12 @@ export struct ReusableOptLayoutContactsView {
 @Preview
 @Component
 export struct OptLayoutContactsView {
-  private contactItem: ContactModel = new ContactModel('', '', '');
+  private contactItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);
   @StorageLink('image_sync_load') imageSyncLoad: boolean | undefined = AppStorage.Get('image_sync_load');
 
   build() {
     RelativeContainer() {
-      Image(this.contactItem.userImage)
+      Image(this.contactItem.user.userImage)
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
         .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
         .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
@@ -71,7 +71,7 @@ export struct OptLayoutContactsView {
       //   .id('badge')
       // }
 
-      Text(this.contactItem.userName)
+      Text(this.contactItem.user.userName)
         .fontColor($r('app.color.top_bar_font_color'))
         .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
         .lineHeight($r('app.integer.layout_22'))

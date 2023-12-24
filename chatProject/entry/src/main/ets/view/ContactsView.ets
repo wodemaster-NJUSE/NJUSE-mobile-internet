@@ -1,6 +1,7 @@
-import { ContactModel} from '../viewmodel/ContactBase'
+import { ChatModel} from '../viewmodel/MsgBase'
 import Logger from '../utils/Logger';
 import router from '@ohos.router';
+import { ChatContact } from '../viewmodel/MsgBase';
 
 const TAG: string = 'ContactsList_ContactsView';
 
@@ -8,10 +9,10 @@ const TAG: string = 'ContactsList_ContactsView';
 @Component
 export struct ReusableContactsView {
   // 联系人列表单个项
-  @State contactItem: ContactModel = new ContactModel('', '', '');
+  @State contactItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);
 
   aboutToReuse(params: Record<string, Object>): void {
-    this.contactItem = params.contactItem as ContactModel;
+    this.contactItem = params.contactItem as ChatModel;
     Logger.info(TAG, 'aboutToReuse=' + this.contactItem.toString());
   }
 
@@ -22,7 +23,7 @@ export struct ReusableContactsView {
 
 @Component
 export struct ContactsView {
-  private contactItem: ContactModel = new ContactModel('', '', '');
+  private contactItem: ChatModel = new ChatModel(new ChatContact('', ''), '', '', 0);
   @StorageLink('image_sync_load') imageSyncLoad: boolean | undefined = AppStorage.Get('image_sync_load');
 
   build() {
@@ -30,7 +31,7 @@ export struct ContactsView {
       Column() {
         Stack({ alignContent: Alignment.TopEnd }) {
           // 用户头像
-          Image(this.contactItem.userImage)
+          Image(this.contactItem.user.userImage)
             .width($r('app.integer.contact_view_image_width'))
             .height($r('app.integer.contact_view_image_height'))
             .margin({ left: $r('app.integer.contact_view_image_margin_left') })
@@ -58,7 +59,7 @@ export struct ContactsView {
 
       // 对方用户名
       Column() {
-        Text(this.contactItem.userName)
+        Text(this.contactItem.user.userName)
           .fontColor(Color.Black)
           .fontSize($r('app.integer.contact_view_user_name_font_size'))
           .margin({ bottom: $r('app.integer.contact_view_user_name_margin_bottom') })

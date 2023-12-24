@@ -1,5 +1,7 @@
 import image from '@ohos.multimedia.image';
 
+// TODO-暂时弃用
+
 /**
  * 联系人list中item对象
  * @param user 用户名

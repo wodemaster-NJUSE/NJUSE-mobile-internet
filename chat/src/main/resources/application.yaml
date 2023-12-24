@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chat
+    username: root
+    password: Abc750621
+
+
+  jpa:
+    show-sql: true #在控制台显示sql语句 便于调试
+    database: mysql
+    hibernate:
+      ddl-auto: update
+
+
+
+#sa-token:
+##   token-name: token
+##   # 30 days
+##   timeout: 2592000
+##   # no expiration
+##   activity-timeout: -1
+##   # multi login
+##   is-concurrent: true
+##   is-share: true
+#  token-style: uuid #配置 sa-token 生成 Token 时的风格，这里是使用 UUID 作为 Token。
+#  is-log: true #开启 sa-token 的日志记录功能，记录登录注销等操作的日志

@@ -19,7 +19,7 @@ export class HttpCore {
             reject(new Error('Invalid data type'));
 
           } else {
-            let bean: T = JSON.parse(response.result);
+            let bean: T = JSON.parse(response.result) as T;
             if (bean) {
               resolve(bean);
             } else {
@@ -97,4 +97,28 @@ export class HttpCore {
 }
 
 export const httpCore = new HttpCore();
+
+export class ResponseResult {
+  /**
+   * Code returned by the network request: success, fail.
+   */
+  code: string;
+
+  /**
+   * Message returned by the network request.
+   */
+  // msg: string | Resource;
+  msg : string;
+
+  /**
+   * Data returned by the network request.
+   */
+  data: string;
+
+  constructor() {
+    this.code = '';
+    this.msg = '';
+    this.data = '';
+  }
+}
 
