@@ -6,7 +6,6 @@ import { ChatListData } from '../../viewmodel/ChatListDataSource';
 import { ChatView, ReusableChatView } from '../../view/ChatView';
 import { OptLayoutChatView, ReusableOptLayoutChatView } from '../../view/OptLayoutChatView';
 import Logger from '../../utils/Logger';
-import effectKit from '@ohos.effectKit';
 import router from '@ohos.router';
 
 const TAG: string = 'ChatListDisplayView';
@@ -40,21 +39,8 @@ export struct ChatListDisplayView {
   @StorageLink('reusable') reusable: boolean | undefined = AppStorage.Get('reusable');
   // 列表数据是否缓存
   @StorageLink('list_cached_count') listCachedCount: boolean | undefined = AppStorage.Get('list_cached_count');
-  // 是否使用布局优化
+  // 是否使用布局优化-弃用
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
-  controller: SearchController = new SearchController();
-
-  // 非布局优化的列表item加载数据
-  @Builder
-  chatViewBuilder(msg: ChatModel) {
-    // reusable component
-    if (this.reusable) {
-      ReusableChatView(new Message(msg))
-       // .reuseId(REUSE_ID)
-    } else {
-      ChatView(new Message(msg))
-    }
-  }
 
 
   // 布局优化的列表item加载数据
@@ -94,42 +80,13 @@ export struct ChatListDisplayView {
 
   build() {
     Column() {
-      // 搜索栏准备用别的方法实现
-      // Row() {
-      //   Search({ placeholder: "搜索..." })// api9不支持使用resource标志string?
-      //     // .enableKeyboardOnFocus(false) //是否调用键盘
-      //     .placeholderFont({ size: $r('app.integer.search_font_size') })
-      //     .searchIcon({ src: $r('app.media.search_svg'), size: $r('app.integer.search_svg_height') })
-      //     .placeholderColor($r('app.string.search_inline_border_color'))
-      //     .backgroundColor(Color.White)
-      //     .height($r('app.integer.search_inline_height'))
-      //     .margin({left: $r('app.integer.search_inline_margin'), right: $r('app.integer.search_inline_margin')})
-      //     .textFont({ size: $r('app.integer.search_font_size') })
-      //     .border({
-      //       width: $r('app.integer.search_inline_border_width'),
-      //       color: $r('app.string.search_inline_border_color')
-      //     })
-      //     .borderRadius($r('app.integer.search_border_radius'))
-      //     .id(ID_SEARCH)
-      // }
-      // .alignItems(VerticalAlign.Center)
-      // .justifyContent(FlexAlign.Center)
-      // .height($r('app.integer.search_outline_height'))
-      // .width($r('app.string.layout_100'))
-      // .backgroundColor($r('app.color.search_outline_background_color'))
 
       List() {
         if (this.lazyForEach) {
           // 懒加载加载数据
           LazyForEach(this.chatListLazy, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.OptChatViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.chatViewBuilder(msg);
-              }
+              this.OptChatViewBuilder(msg);
             }
            // .transition( TransitionEffect.OPACITY) // 删除item后，List显示的最后一个item顶上来的动画 TransitionEffect.OPACITY
             .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
@@ -139,13 +96,7 @@ export struct ChatListDisplayView {
         } else {
           ForEach(this.chatListArray, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.OptChatViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.chatViewBuilder(msg);
-              }
+              this.OptChatViewBuilder(msg);
             }
             //.transition(TransitionEffect.OPACITY) // 删除item后，List显示的最后一个item顶上来的动画
             .swipeAction({ // 用于设置ListItem的划出组件，end是ListItem向左划动时item右边的组件（List垂直布局时）或ListItem向上划动时item下方的组件（List水平布局时）
@@ -178,7 +129,7 @@ export struct ChatListDisplayView {
       this.chatListArray.push(this.params[i])
     }
 
-    // 假数据填充
+    // // 假数据填充
     // await makeDataLocal(this.chatListLazy);
     // await makeDataList(this.chatListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);

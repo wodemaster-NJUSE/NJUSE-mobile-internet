@@ -40,7 +40,7 @@ export struct NewFriendsListDisplayView {
   @StorageLink('reusable') reusable: boolean | undefined = AppStorage.Get('reusable');
   // 列表数据是否缓存
   @StorageLink('list_cached_count') listCachedCount: boolean | undefined = AppStorage.Get('list_cached_count');
-  // 是否使用布局优化
+  // 是否使用布局优化-弃用
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
 
   //页面传参

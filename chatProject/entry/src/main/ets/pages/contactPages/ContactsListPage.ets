@@ -39,7 +39,7 @@ export struct ContactsListDisplayView {
   @StorageLink('reusable') reusable: boolean | undefined = AppStorage.Get('reusable');
   // 列表数据是否缓存
   @StorageLink('list_cached_count') listCachedCount: boolean | undefined = AppStorage.Get('list_cached_count');
-  // 是否使用布局优化
+  // 是否使用布局优化-弃用
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
 
   // 布局优化的列表item加载数据
@@ -80,7 +80,7 @@ export struct ContactsListDisplayView {
         startMargin: $r('app.integer.contact_list_page_start_margin'),
         endMargin: $r('app.integer.contact_list_page_end_margin')
       })
-      .height($r('app.string.layout_82'))
+      .height('82%')
       .width($r('app.string.layout_100'))
       .cachedCount(this.listCachedCount ? Constants.CACHED_COUNT : Constants.CACHED_COUNT_0) // 缓存列表数量
     }

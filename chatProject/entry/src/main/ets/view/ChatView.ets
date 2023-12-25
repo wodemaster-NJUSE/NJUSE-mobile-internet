@@ -3,6 +3,8 @@ import Logger from '../utils/Logger';
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 
+// 已弃用
+
 const TAG: string = 'ChatList_ChatView';
 
 // @Reusable
