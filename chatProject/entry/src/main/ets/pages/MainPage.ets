@@ -67,7 +67,6 @@ struct Index {
       TabContent() {
         Column() {
           ChatPage()
-
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,

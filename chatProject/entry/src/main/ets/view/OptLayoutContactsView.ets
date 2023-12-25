@@ -117,7 +117,6 @@ export struct OptLayoutContactsView {
       top: $r('app.integer.opt_layout_contact_view_item_padding_top'),
       bottom: $r('app.integer.opt_layout_contact_view_item_padding_bottom')
     })
-    // TODO-联系人：跳转到好友设置界面
     .onClick(() => {
       // 进入好友详情页
       router.pushUrl({

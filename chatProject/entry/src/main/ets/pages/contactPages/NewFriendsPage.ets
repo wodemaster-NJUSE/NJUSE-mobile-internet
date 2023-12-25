@@ -1,5 +1,6 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../common/constants/CommonConstants'
+import { NewFriendsListDisplayView } from './NewFriendsListPage'
 
 
 @Entry
@@ -9,7 +10,7 @@ export struct NewFriendsPage {
     Column(){
       this.TopBar()
 
-      
+      NewFriendsListDisplayView({test: true})
     }
   }
 

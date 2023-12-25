@@ -47,6 +47,10 @@ export struct FriendDetailPage {
           .width(110)
           .backgroundColor('#FFFA0404')
           .fontSize(18)
+          .onClick(() => {
+            // TODO-联系人: 删除好友实现
+          //   @ohos.arkui.advanced.Dialog（弹出框）
+          })
       }
       .width(CommonConstants.FULL_WIDTH_PERCENT)
       .height('48vp')

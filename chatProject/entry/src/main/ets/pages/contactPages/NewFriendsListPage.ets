@@ -4,19 +4,19 @@ import Constants from '../../utils/Constants';
 import { ContactsView, ReusableContactsView } from '../../view/ContactsView';
 import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../../view/OptLayoutContactsView';
 import Logger from '../../utils/Logger';
-import effectKit from '@ohos.effectKit';
 import { ChatModel } from '../../viewmodel/MsgBase';
 import { ChatListData } from '../../viewmodel/ChatListDataSource';
+import { NewFriendsView, ReusableNewFriendsView } from '../../view/NewFriendsView';
 
 
-const TAG: string = 'ContactsListDisplayView';
+const TAG: string = 'NewFriendsListDisplayView';
 // 搜索框中搜索栏的ID
 const ID_SEARCH: string = 'search';
 // 删除item后，下方的item顶上来的动画的播放时间
 const DELETE_ANIMATION_DURATION: number = 500;
-const ABOUT_TO_APPEAR_TRACE: string = 'ContactsListPage_AboutToAppear_HiTrace';
+const ABOUT_TO_APPEAR_TRACE: string = 'NewFriendsListPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 3; // aboutToAppear 中使用的 taskId
-const REUSE_ID: string = 'ContactsListPage_ReuseId';
+const REUSE_ID: string = 'NewFriendsListPage_ReuseId';
 
 class Message {
   contactItem: ChatModel;
@@ -25,14 +25,15 @@ class Message {
     this.contactItem = contactItem;
   }
 }
+
 @Entry
 @Preview
 @Component
-export struct ContactsListDisplayView {
+export struct NewFriendsListDisplayView {
   // 懒加载的数据列表
-  private contactsListLazy = new ChatListData();
+  private newFriendsListLazy = new ChatListData();
   // 普通加载的数据列表
-  @State contactsListArray: Array<ChatModel> = new Array<ChatModel>();
+  @State newFriendsListArray: Array<ChatModel> = new Array<ChatModel>();
   // 是否使用懒加载
   @StorageLink('lazy_for_each') lazyForEach: boolean | undefined = AppStorage.Get('lazy_for_each');
   // 是否复用列表中的子组件
@@ -42,23 +43,25 @@ export struct ContactsListDisplayView {
   // 是否使用布局优化
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
 
-
+  //页面传参
+  private test: boolean = false;
 
   // 非布局优化的列表item加载数据
   @Builder
-  ContactsViewBuilder(msg: ChatModel) {
+  NewFriendsViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
-      ReusableContactsView(new Message(msg))
+      ReusableNewFriendsView(new Message(msg))
       // .reuseId(REUSE_ID)
     } else {
-      ContactsView(new Message(msg))
+      NewFriendsView(new Message(msg))
     }
   }
 
   // 布局优化的列表item加载数据
+  // TODO-联系人: OptLayoutNewFriendsView
   @Builder
-  OptContactsViewBuilder(msg: ChatModel) {
+  OptNewFriendsViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
       ReusableOptLayoutContactsView(new Message(msg))
@@ -73,26 +76,26 @@ export struct ContactsListDisplayView {
       List() {
         if (this.lazyForEach) {
           // 懒加载加载数据
-          LazyForEach(this.contactsListLazy, (msg: ChatModel) => {
+          LazyForEach(this.newFriendsListLazy, (msg: ChatModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptContactsViewBuilder(msg);
+                this.OptNewFriendsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
-                this.ContactsViewBuilder(msg);
+                this.NewFriendsViewBuilder(msg);
               }
             }
           }, (msg: ChatModel) => msg.user.userId)
         } else {
-          ForEach(this.contactsListArray, (msg: ChatModel) => {
+          ForEach(this.newFriendsListArray, (msg: ChatModel) => {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptContactsViewBuilder(msg);
+                this.OptNewFriendsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
-                this.ContactsViewBuilder(msg);
+                this.NewFriendsViewBuilder(msg);
               }
             }
           }, (msg: ChatModel) => msg.user.userId)
@@ -116,8 +119,8 @@ export struct ContactsListDisplayView {
     Logger.info(TAG, "ContactsListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     //this.controller.stopEditing();
-    await makeDataLocal(this.contactsListLazy);
-    await makeDataList(this.contactsListArray);
+    await makeDataLocal(this.newFriendsListLazy);
+    await makeDataList(this.newFriendsListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }
