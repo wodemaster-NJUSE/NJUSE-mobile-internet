@@ -4,6 +4,8 @@ import router from '@ohos.router';
 import { ChatContact } from '../viewmodel/MsgBase';
 import { CommonConstants } from '../common/constants/CommonConstants';
 
+// TODO-联系人：已弃用
+
 const TAG: string = 'ContactsList_ContactsView';
 
 // @Reusable
@@ -90,7 +92,6 @@ export struct ContactsView {
     .width($r('app.string.layout_100'))
     .height($r('app.integer.contact_view_row_height'))
     .padding({ left: $r('app.integer.contact_view_row_padding_left'), right: $r('app.integer.contact_view_row_padding_right'), top: $r('app.integer.contact_view_row_padding_top'), bottom: $r('app.integer.contact_view_row_padding_bottom') })
-    // TODO-联系人：跳转到好友设置界面
     .onClick(() => {
       // 进入好友详情页
       router.pushUrl({

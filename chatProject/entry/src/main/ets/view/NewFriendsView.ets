@@ -29,69 +29,72 @@ export struct NewFriendsView {
   @StorageLink('image_sync_load') imageSyncLoad: boolean | undefined = AppStorage.Get('image_sync_load');
 
   build() {
-    Row() {
-      Column() {
-        Stack({ alignContent: Alignment.TopEnd }) {
-          // 用户头像
-          Image(this.contactItem.user.userImage)
-            .width($r('app.integer.contact_view_image_width'))
-            .height($r('app.integer.contact_view_image_height'))
-            .margin({ left: $r('app.integer.contact_view_image_margin_left') })
-            .borderRadius($r('app.integer.contact_view_image_border_radius'))
-            .autoResize(false)
-              // 图片同步加载
-            .syncLoad(this.imageSyncLoad ? true : false)
+    RelativeContainer() {
+      Image(this.contactItem.user.userImage)
+        .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
+        .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
+        .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
+        .margin({
+          top: 10,
+          left: 12
+        })
+        .alignRules({
+          top: { anchor: '__container__', align: VerticalAlign.Top },
+          left: { anchor: '__container__', align: HorizontalAlign.Start }
+        })
+        .syncLoad(this.imageSyncLoad ? true : false)
+        .id("figure")
 
-          // // 红点消息大于0条时渲染红点
-          // if (this.contactItem.unreadMsgCount > 0){
-          //   Text(`${this.contactItem.unreadMsgCount}`)
-          //     .borderRadius($r('app.integer.chat_view_unread_border_radius'))
-          //     .width($r('app.integer.chat_view_unread_width'))
-          //     .height($r('app.integer.chat_view_unread_height'))
-          //     .backgroundColor($r('app.color.unread_msg'))
-          //     .fontSize($r('app.integer.chat_view_unread_font_size'))
-          //     .textAlign(TextAlign.Center)
-          //     .fontColor(Color.White)
-          //     .margin({ top: $r('app.integer.chat_view_unread_margin_top'), right: $r('app.integer.chat_view_unread_margin_right') })
-          // }
-        }
-      }
-      .layoutWeight(1)
-      .padding({ right: $r('app.integer.contact_view_col_padding_right') })
+      Text(this.contactItem.user.userName)
+        .fontColor($r('app.color.top_bar_font_color'))
+        .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
+        .lineHeight($r('app.integer.layout_22'))
+        .fontWeight(450)
+        .margin({ top: $r('app.integer.layout_10'), left: $r('app.integer.contact_view_row_height') })
+        .alignRules({
+          top: { anchor: '__container__', align: VerticalAlign.Top },
+          left: { anchor: '__container__', align: HorizontalAlign.Start }
+        })
+        .id('user')
 
-      // 对方用户名
-      Column() {
-        Text(this.contactItem.user.userName)
-          .fontColor(Color.Black)
-          .fontSize($r('app.integer.contact_view_user_name_font_size'))
-          .margin({ bottom: $r('app.integer.contact_view_user_name_margin_bottom') })
-        // Text(this.contactItem.lastMsg)
-        //   .fontColor($r('app.color.last_msg'))
-        //   .maxLines(1)
-        //   .fontSize($r('app.integer.chat_view_user_msg_font_size'))
-        //   .margin({ top: $r('app.integer.chat_view_user_msg_margin_top') })
-      }
-      .alignItems(HorizontalAlign.Start)
-      .layoutWeight(5)
-
-      // TODO-联系人: 同意/拒绝按钮
-
-      // // 最后一条消息时间
-      // Column() {
-      //   Text(this.contactItem.lastTime)
-      //     .width($r('app.integer.chat_view_time_width'))
-      //     .fontColor($r('app.color.last_msg'))
-      //     .textAlign(TextAlign.End)
-      //     .maxLines(1)
-      //     .fontSize($r('app.integer.chat_view_time_font_size'))
-      //     .margin({ right: $r('app.integer.chat_view_time_margin_right'), bottom: $r('app.integer.chat_view_time_margin_bottom') })
-      // }
-      // .padding({ left: $r('app.integer.chat_view_time_col_padding_left') })
-      // .alignItems(HorizontalAlign.End)
-      // .layoutWeight(1)
+      Text('这是个性签名')
+        .fontColor(Color.Gray)
+        .fontSize($r('app.integer.text_font_14'))
+        .lineHeight($r('app.integer.layout_19'))
+        .maxLines(1)
+        .margin({ top: $r('app.integer.layout_34'), left: 68 })
+        .alignRules({
+          top: { anchor: '__container__', align: VerticalAlign.Top },
+          left: { anchor: '__container__', align: HorizontalAlign.Start }
+        })
+        .id('msg')
     }
-    .width($r('app.string.layout_100'))
-    .height($r('app.integer.contact_view_row_height'))
-    .padding({ left: $r('app.integer.contact_view_row_padding_left'), right: $r('app.integer.contact_view_row_padding_right'), top: $r('app.integer.contact_view_row_padding_top'), bottom: $r('app.integer.contact_view_row_padding_bottom') })
+    .width($r('app.string.layout_100_percent'))
+    .height($r('app.integer.opt_layout_contact_view_item_height'))
+    .backgroundColor(Color.White)
+    .padding({
+      left: $r('app.integer.opt_layout_contact_view_item_padding_left'),
+      right: $r('app.integer.opt_layout_contact_view_item_padding_right'),
+      top: $r('app.integer.opt_layout_contact_view_item_padding_top'),
+      bottom: $r('app.integer.opt_layout_contact_view_item_padding_bottom')
+    })
+    .onClick(() => {
+      // 进入好友详情页
+      router.pushUrl({
+        url: CommonConstants.FRIEND_DETAIL_PAGE_URL,
+        params: {
+          chatName: this.contactItem.user.userName,
+          chatId: this.contactItem.user.userId,
+          chatImg: this.contactItem.user.userImage,
+          lastMsg: this.contactItem.lastMsg
+        }
+      }, (err) => {
+        if (err) {
+          console.error(`pushUrl failed, code is ${err.code}, message is ${err.message}`);
+          return;
+        }
+        console.info('pushUrl success');
+      })
+    })
   }
 }

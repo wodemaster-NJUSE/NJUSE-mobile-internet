@@ -80,7 +80,7 @@ export struct NewFriendsListDisplayView {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptNewFriendsViewBuilder(msg);
+                this.NewFriendsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
                 this.NewFriendsViewBuilder(msg);
@@ -92,7 +92,7 @@ export struct NewFriendsListDisplayView {
             ListItem() {
               if (this.pageLayout) {
                 // 使用布局优化时加载的item
-                this.OptNewFriendsViewBuilder(msg);
+                this.NewFriendsViewBuilder(msg);
               } else {
                 // 不使用布局优化时加载的item
                 this.NewFriendsViewBuilder(msg);

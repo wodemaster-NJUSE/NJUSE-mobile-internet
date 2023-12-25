@@ -39,6 +39,10 @@ export struct OptLayoutContactsView {
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
         .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
         .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
+        .margin({
+          top: 10,
+          left: 12
+        })
         .alignRules({
           top: { anchor: '__container__', align: VerticalAlign.Top },
           left: { anchor: '__container__', align: HorizontalAlign.Start }
@@ -46,67 +50,30 @@ export struct OptLayoutContactsView {
         .syncLoad(this.imageSyncLoad ? true : false)
         .id("figure")
 
-      // if (this.contactItem.unreadMsgCount > 0) { // 红点消息大于0条时渲染红点
-      //   Row() {
-      //     Text(`${this.contactItem.unreadMsgCount}`)
-      //       .borderRadius($r('app.integer.layout_8'))
-      //       .constraintSize({minWidth: $r('app.integer.opt_layout_chat_view_red_dot_width')})
-      //       .height($r('app.integer.opt_layout_chat_view_red_dot_height'))
-      //       .backgroundColor($r('app.color.unread_msg_tip'))
-      //       .fontSize($r('app.integer.text_font_10'))
-      //       .textAlign(TextAlign.Center)
-      //       .fontColor(Color.White)
-      //   }
-      //   .alignItems(VerticalAlign.Center)
-      //   .justifyContent(FlexAlign.Center)
-      //   .borderRadius($r('app.integer.layout_10'))
-      //   .margin({ top: $r('app.integer.layout_minus_8'), left: $r('app.integer.layout_24') })
-      //   .constraintSize({minWidth: $r('app.integer.opt_layout_chat_view_red_dot_container_width')})
-      //   .height($r('app.integer.opt_layout_chat_view_red_dot_container_height'))
-      //   .backgroundColor(Color.White)
-      //   .alignRules({
-      //     top: { anchor: '__container__', align: VerticalAlign.Top },
-      //     left: { anchor: '__container__', align: HorizontalAlign.Start }
-      //   })
-      //   .opacity(this.contactItem.unreadMsgCount > 0 ? 1 : 0)
-      //   .id('badge')
-      // }
-
       Text(this.contactItem.user.userName)
         .fontColor($r('app.color.top_bar_font_color'))
         .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
         .lineHeight($r('app.integer.layout_22'))
-          // .font({ weight: 450 })
         .fontWeight(450)
-        .margin({ top: $r('app.integer.layout_0'), left: $r('app.integer.contact_view_row_height') })
+        .margin({ top: $r('app.integer.layout_10'), left: $r('app.integer.contact_view_row_height') })
         .alignRules({
           top: { anchor: '__container__', align: VerticalAlign.Top },
           left: { anchor: '__container__', align: HorizontalAlign.Start }
         })
         .id('user')
 
-      // Text(this.contactItem.lastTime)
-      //   .fontSize($r('app.integer.opt_layout_chat_view_item_padding_top'))
-      //   .fontColor($r('app.string.search_inline_border_color'))
-      //   .maxLines(1)
-      //   .textAlign(TextAlign.End)
-      //   .margin({ top: $r('app.integer.layout_0'), right: $r('app.integer.layout_0') })
-      //   .alignRules({
-      //     top: { anchor: '__container__', align: VerticalAlign.Top },
-      //     right: { anchor: '__container__', align: HorizontalAlign.End }
-      //   })
-      //   .id('time')
-      // Text(this.contactItem.lastMsg)
-      //   .fontColor($r('app.string.search_inline_border_color'))
-      //   .fontSize($r('app.integer.text_font_14'))
-      //   .lineHeight($r('app.integer.layout_19'))
-      //   .maxLines(1)
-      //   .margin({ top: $r('app.integer.layout_24'), left: $r('app.integer.chat_view_row_height') })
-      //   .alignRules({
-      //     top: { anchor: '__container__', align: VerticalAlign.Top },
-      //     left: { anchor: '__container__', align: HorizontalAlign.Start }
-      //   })
-      //   .id('msg')
+
+      Text('这是个性签名')
+        .fontColor(Color.Gray)
+        .fontSize($r('app.integer.text_font_14'))
+        .lineHeight($r('app.integer.layout_19'))
+        .maxLines(1)
+        .margin({ top: $r('app.integer.layout_34'), left: 68 })
+        .alignRules({
+          top: { anchor: '__container__', align: VerticalAlign.Top },
+          left: { anchor: '__container__', align: HorizontalAlign.Start }
+        })
+        .id('msg')
     }
     .width($r('app.string.layout_100_percent'))
     .height($r('app.integer.opt_layout_contact_view_item_height'))

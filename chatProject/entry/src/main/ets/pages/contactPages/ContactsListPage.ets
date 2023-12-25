@@ -43,18 +43,18 @@ export struct ContactsListDisplayView {
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
 
 
-
-  // 非布局优化的列表item加载数据
-  @Builder
-  ContactsViewBuilder(msg: ChatModel) {
-    // reusable component
-    if (this.reusable) {
-      ReusableContactsView(new Message(msg))
-      // .reuseId(REUSE_ID)
-    } else {
-      ContactsView(new Message(msg))
-    }
-  }
+  // 已弃用
+  // // 非布局优化的列表item加载数据
+  // @Builder
+  // ContactsViewBuilder(msg: ChatModel) {
+  //   // reusable component
+  //   if (this.reusable) {
+  //     ReusableContactsView(new Message(msg))
+  //     // .reuseId(REUSE_ID)
+  //   } else {
+  //     ContactsView(new Message(msg))
+  //   }
+  // }
 
   // 布局优化的列表item加载数据
   @Builder
@@ -75,25 +75,13 @@ export struct ContactsListDisplayView {
           // 懒加载加载数据
           LazyForEach(this.contactsListLazy, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.OptContactsViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.ContactsViewBuilder(msg);
-              }
+              this.OptContactsViewBuilder(msg);
             }
           }, (msg: ChatModel) => msg.user.userId)
         } else {
           ForEach(this.contactsListArray, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.OptContactsViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.ContactsViewBuilder(msg);
-              }
+              this.OptContactsViewBuilder(msg);
             }
           }, (msg: ChatModel) => msg.user.userId)
         }
@@ -103,8 +91,8 @@ export struct ContactsListDisplayView {
       .divider({
         strokeWidth: $r('app.integer.chat_list_divider_stroke_width'),
         color: $r('app.color.chat_list_divider_color'),
-        startMargin: $r('app.integer.chat_list_page_start_margin'),
-        endMargin: $r('app.integer.opt_layout_chat_view_item_padding_right')
+        startMargin: $r('app.integer.contact_list_page_start_margin'),
+        endMargin: $r('app.integer.contact_list_page_end_margin')
       })
       .height($r('app.string.layout_82'))
       .width($r('app.string.layout_100'))

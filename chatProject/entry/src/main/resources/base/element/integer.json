@@ -733,6 +733,10 @@
       "value": 37
     },
     {
+      "name": "layout_34",
+      "value": 34
+    },
+    {
       "name": "layout_28",
       "value": 28
     },
@@ -759,6 +763,10 @@
     {
       "name": "layout_30",
       "value": 30
+    },
+    {
+      "name": "layout_25",
+      "value": 25
     },
     {
       "name": "layout_24",
@@ -971,7 +979,7 @@
     },
     {
       "name": "chat_view_row_height",
-      "value": 52
+      "value": 50
     },
     {
       "name": "chat_view_row_padding_left",
@@ -1066,6 +1074,14 @@
       "value": 76
     },
     {
+      "name": "contact_list_page_start_margin",
+      "value": 0
+    },
+    {
+      "name": "contact_list_page_end_margin",
+      "value": 0
+    },
+    {
       "name": "chat_list_page_delete_row_width",
       "value": 64
     },
@@ -1107,7 +1123,7 @@
     },
     {
       "name": "contact_view_row_height",
-      "value": 52
+      "value": 68
     },
     {
       "name": "contact_view_row_padding_left",
@@ -1127,19 +1143,19 @@
     },
     {
       "name": "opt_layout_contact_view_profile_picture_width",
-      "value": 40
+      "value": 44
     },
     {
       "name": "opt_layout_contact_view_profile_picture_height",
-      "value": 40
+      "value": 44
     },
     {
       "name": "opt_layout_contact_view_profile_picture_radius",
-      "value": 20
+      "value": 22
     },
     {
       "name": "opt_layout_contact_view_user_name_font_size",
-      "value": 16
+      "value": 18
     },
     {
       "name": "opt_layout_contact_view_item_height",
