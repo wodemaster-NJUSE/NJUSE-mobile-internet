@@ -42,20 +42,6 @@ export struct ContactsListDisplayView {
   // 是否使用布局优化
   @StorageLink('page_layout') pageLayout: boolean | undefined = AppStorage.Get('page_layout');
 
-
-  // 已弃用
-  // // 非布局优化的列表item加载数据
-  // @Builder
-  // ContactsViewBuilder(msg: ChatModel) {
-  //   // reusable component
-  //   if (this.reusable) {
-  //     ReusableContactsView(new Message(msg))
-  //     // .reuseId(REUSE_ID)
-  //   } else {
-  //     ContactsView(new Message(msg))
-  //   }
-  // }
-
   // 布局优化的列表item加载数据
   @Builder
   OptContactsViewBuilder(msg: ChatModel) {

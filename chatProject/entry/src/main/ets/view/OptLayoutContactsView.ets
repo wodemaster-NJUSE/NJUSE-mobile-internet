@@ -63,7 +63,7 @@ export struct OptLayoutContactsView {
         .id('user')
 
 
-      Text('这是个性签名')
+      Text('# 这是个性签名')
         .fontColor(Color.Gray)
         .fontSize($r('app.integer.text_font_14'))
         .lineHeight($r('app.integer.layout_19'))

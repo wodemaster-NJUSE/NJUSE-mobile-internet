@@ -57,7 +57,7 @@ export struct NewFriendsView {
         })
         .id('user')
 
-      Text('这是个性签名')
+      Text('# 这是个性签名')
         .fontColor(Color.Gray)
         .fontSize($r('app.integer.text_font_14'))
         .lineHeight($r('app.integer.layout_19'))
@@ -68,6 +68,30 @@ export struct NewFriendsView {
           left: { anchor: '__container__', align: HorizontalAlign.Start }
         })
         .id('msg')
+
+      Button('同意', {type: ButtonType.Normal, stateEffect: true})
+        .borderRadius(8)
+        .fontSize(14)
+        .fontColor(Color.Black)
+        .backgroundColor(Color.White)
+        .borderWidth(1)
+        .borderColor(Color.Gray)
+        .width(62)
+        .height(30)
+        .margin({
+          top: 17,
+          right: 32
+        })
+        .alignRules({
+          top: {anchor: '__container__', align: VerticalAlign.Top},
+          right: {anchor: '__container__', align: HorizontalAlign.End}
+        })
+        .onClick(() => {
+          // TODO-联系人:同意好友申请
+        })
+        .id('button')
+
+
     }
     .width($r('app.string.layout_100_percent'))
     .height($r('app.integer.opt_layout_contact_view_item_height'))

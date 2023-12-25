@@ -65,9 +65,7 @@ struct Index {
   build() {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
-        Column() {
-          ChatPage()
-        }
+        ChatPage()
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,
         $r('app.media.chatIconNormal'),

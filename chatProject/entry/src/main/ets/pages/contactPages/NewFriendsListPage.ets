@@ -46,7 +46,7 @@ export struct NewFriendsListDisplayView {
   //页面传参
   private test: boolean = false;
 
-  // 非布局优化的列表item加载数据
+  // 布局优化的列表item加载数据
   @Builder
   NewFriendsViewBuilder(msg: ChatModel) {
     // reusable component
@@ -58,19 +58,6 @@ export struct NewFriendsListDisplayView {
     }
   }
 
-  // 布局优化的列表item加载数据
-  // TODO-联系人: OptLayoutNewFriendsView
-  @Builder
-  OptNewFriendsViewBuilder(msg: ChatModel) {
-    // reusable component
-    if (this.reusable) {
-      ReusableOptLayoutContactsView(new Message(msg))
-      //.reuseId(REUSE_ID)
-    } else {
-      OptLayoutContactsView(new Message(msg))
-    }
-  }
-
   build() {
     Column() {
       List() {
@@ -78,25 +65,13 @@ export struct NewFriendsListDisplayView {
           // 懒加载加载数据
           LazyForEach(this.newFriendsListLazy, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.NewFriendsViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.NewFriendsViewBuilder(msg);
-              }
+              this.NewFriendsViewBuilder(msg);
             }
           }, (msg: ChatModel) => msg.user.userId)
         } else {
           ForEach(this.newFriendsListArray, (msg: ChatModel) => {
             ListItem() {
-              if (this.pageLayout) {
-                // 使用布局优化时加载的item
-                this.NewFriendsViewBuilder(msg);
-              } else {
-                // 不使用布局优化时加载的item
-                this.NewFriendsViewBuilder(msg);
-              }
+              this.NewFriendsViewBuilder(msg);
             }
           }, (msg: ChatModel) => msg.user.userId)
         }
@@ -106,10 +81,10 @@ export struct NewFriendsListDisplayView {
       .divider({
         strokeWidth: $r('app.integer.chat_list_divider_stroke_width'),
         color: $r('app.color.chat_list_divider_color'),
-        startMargin: $r('app.integer.chat_list_page_start_margin'),
-        endMargin: $r('app.integer.opt_layout_chat_view_item_padding_right')
+        startMargin: 0,
+        endMargin: 0
       })
-      .height($r('app.string.layout_82'))
+      .height($r('app.string.layout_92'))
       .width($r('app.string.layout_100'))
       .cachedCount(this.listCachedCount ? Constants.CACHED_COUNT : Constants.CACHED_COUNT_0) // 缓存列表数量
     }
