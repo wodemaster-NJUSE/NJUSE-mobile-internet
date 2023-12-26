@@ -9,10 +9,10 @@ export struct NewFriendsView {
 
   build() {
     RelativeContainer() {
-      Image($r('app.media.icon'))
-        .width($r('app.integer.opt_layout_chat_view_profile_picture_width'))
-        .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
-        .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
+      Image(this.contactItem.user.userImage)
+        .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
+        .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
+        .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
         .margin({
           top: 10,
           left: 12
@@ -24,82 +24,85 @@ export struct NewFriendsView {
         .syncLoad(true)
         .id("figure")
 
-      // 红点消息大于0条时渲染红点
-
-        Row() {
-          Text(`2`)
-            .borderRadius($r('app.integer.layout_8'))
-            .constraintSize({minWidth: $r('app.integer.opt_layout_chat_view_red_dot_width')})
-            .height($r('app.integer.opt_layout_chat_view_red_dot_height'))
-            .backgroundColor($r('app.color.unread_msg_tip'))
-            .fontSize($r('app.integer.text_font_10'))
-            .textAlign(TextAlign.Center)
-            .fontColor(Color.White)
-        }
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.Center)
-        .borderRadius($r('app.integer.layout_10'))
-        .margin({ top: 31, right: 18 })
-        .constraintSize({minWidth: $r('app.integer.opt_layout_chat_view_red_dot_container_width')})
-        .height($r('app.integer.opt_layout_chat_view_red_dot_container_height'))
-        .backgroundColor(Color.White)
-        .alignRules({
-          top: { anchor: '__container__', align: VerticalAlign.Top },
-          right: { anchor: '__container__', align: HorizontalAlign.End }
-        })
-        .opacity(1)
-        .id('badge')
-
-
-      // 用户名
       Text('Milo')
         .fontColor($r('app.color.top_bar_font_color'))
-        .fontSize($r('app.integer.opt_layout_chat_view_user_name_font_size'))
+        .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
         .lineHeight($r('app.integer.layout_22'))
         .fontWeight(450)
-        .margin({ top: $r('app.integer.layout_10'), left: $r('app.integer.chat_view_row_height') })
+        .margin({ top: $r('app.integer.layout_10'), left: $r('app.integer.contact_view_row_height') })
         .alignRules({
           top: { anchor: '__container__', align: VerticalAlign.Top },
           left: { anchor: '__container__', align: HorizontalAlign.Start }
         })
         .id('user')
 
-      // 最新消息的时间
-      Text('22:22')
-        .fontSize($r('app.integer.opt_layout_chat_view_item_padding_top'))
-        .fontColor(Color.Gray)
-        .maxLines(1)
-        .textAlign(TextAlign.End)
-        .margin({ top: 14, right: 16 })
-        .alignRules({
-          top: { anchor: '__container__', align: VerticalAlign.Top },
-          right: { anchor: '__container__', align: HorizontalAlign.End }
-        })
-        .id('time')
-
-      // 最新消息
-      Text('# 这是最新消息')
+      Text('# 这是个性签名')
         .fontColor(Color.Gray)
         .fontSize($r('app.integer.text_font_14'))
         .lineHeight($r('app.integer.layout_19'))
         .maxLines(1)
-        .margin({ top: $r('app.integer.layout_34'), left: $r('app.integer.chat_view_row_height') })
+        .margin({ top: $r('app.integer.layout_34'), left: 68 })
         .alignRules({
           top: { anchor: '__container__', align: VerticalAlign.Top },
           left: { anchor: '__container__', align: HorizontalAlign.Start }
         })
         .id('msg')
+
+      if (false) {
+        Button('同意', {type: ButtonType.Normal, stateEffect: true})
+          .borderRadius(8)
+          .fontSize(14)
+          .fontColor(Color.Black)
+          .backgroundColor(Color.White)
+          .borderWidth(1)
+          .borderColor(Color.Gray)
+          .width(62)
+          .height(30)
+          .margin({
+            top: 17,
+            right: 32
+          })
+          .alignRules({
+            top: {anchor: '__container__', align: VerticalAlign.Top},
+            right: {anchor: '__container__', align: HorizontalAlign.End}
+          })
+          .onClick(() => {
+
+
+            // TODO-联系人:同意好友申请
+          })
+          .id('button')
+      } else {
+        Text('已同意')
+          .fontSize(16)
+          .fontColor(Color.Gray)
+          .height(26)
+          .margin({
+            top: 17,
+            right: 32
+          })
+          .alignRules({
+            top: { anchor: '__container__', align: VerticalAlign.Top },
+            right: {anchor: '__container__', align: HorizontalAlign.End}
+          })
+          .id('hasConsent')
+      }
+
+
+
     }
     .width($r('app.string.layout_100_percent'))
-    .height($r('app.integer.opt_layout_chat_view_item_height'))
+    .height($r('app.integer.opt_layout_contact_view_item_height'))
     .backgroundColor(Color.White)
     .padding({
-      left: $r('app.integer.opt_layout_chat_view_item_padding_left'),
-      right: $r('app.integer.opt_layout_chat_view_item_padding_right'),
-      top: $r('app.integer.opt_layout_chat_view_item_padding_top'),
-      bottom: $r('app.integer.opt_layout_chat_view_item_padding_bottom')
+      left: $r('app.integer.opt_layout_contact_view_item_padding_left'),
+      right: $r('app.integer.opt_layout_contact_view_item_padding_right'),
+      top: $r('app.integer.opt_layout_contact_view_item_padding_top'),
+      bottom: $r('app.integer.opt_layout_contact_view_item_padding_bottom')
     })
     .onClick(() => {
+      // 进入好友详情页
 
     })
-}}
+  }
+}
