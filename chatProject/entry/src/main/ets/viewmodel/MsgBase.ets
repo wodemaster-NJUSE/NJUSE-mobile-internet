@@ -216,4 +216,9 @@ export class ChatDetailData extends BasicDataSource<MessageBase> {
     this.msgList.push(data);
     this.notifyDataAdd(this.msgList.length - 1);
   }
+
+  // 为了LLM的加载动画尝试
+  // public deleteData(): void {
+  //
+  // }
 }

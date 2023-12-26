@@ -98,13 +98,13 @@ export struct LLMPage {
 
             // 底部输入框
             Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                TextInput({ placeholder: '', text: this.keyboardStr })
+                TextArea({ placeholder: '', text: this.keyboardStr })
                     .id('bottomTextInput')
                     .height($r('app.integer.search_inline_height'))
                     .layoutWeight(LAYOUT_WEIGHT)
                     .borderRadius($r('app.integer.search_border_radius'))
                     .backgroundColor($r('app.string.chat_detail_input_background'))
-                    .enterKeyType(EnterKeyType.Done)
+                    // .enterKeyType(EnterKeyType.Done)
                     .onChange((value: string) => {
                         this.keyboardStr = value;
                     })
