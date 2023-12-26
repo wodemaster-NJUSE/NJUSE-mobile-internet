@@ -162,7 +162,7 @@ export class ChatContact {
     }
   }
 }
-@Observed
+
 export class FriendMoment {
   id: string
   user: ChatContact
