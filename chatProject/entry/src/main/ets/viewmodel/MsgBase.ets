@@ -22,6 +22,7 @@ import { BasicDataSource } from './BasicDataSource';
  * @param lastMsg 最后一天信息
  * @param time 时间
  */
+@Observed
 export class ChatModel {
   user: ChatContact
   lastMsg: string
@@ -161,7 +162,7 @@ export class ChatContact {
     }
   }
 }
-
+@Observed
 export class FriendMoment {
   id: string
   user: ChatContact
@@ -170,6 +171,7 @@ export class FriendMoment {
   imageList: Array<string> = new Array<string>()
   media: string = '' // media为需要获取的视频url
   mediaPreview: string = '' //mediaPreview为需要获取的视频预览图url
+ // likes : Number  // 点赞数
 
   constructor(id: string, user: ChatContact, text: string, time?: string, list?: Array<string>, media?: string, mediaPreview?: string) {
     this.id = id;

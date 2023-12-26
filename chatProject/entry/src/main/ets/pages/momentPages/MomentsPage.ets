@@ -23,6 +23,9 @@ import FriendMomentJsonUrl from '../../utils/FriendMomentJsonUrl';
 import Logger from '../../utils/Logger';
 import { BasicDataSource } from '../../viewmodel/BasicDataSource';
 import { CommonConstants } from '../../common/constants/CommonConstants';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
 
 const TAG: string = 'entry_MomentsPage';
 const ABOUT_TO_APPEAR_TRACE: string = 'FriendsPage_AboutToAppear_HiTrace';
@@ -37,8 +40,11 @@ const GRID_COLUMN_NUMBER: number = 3; // 九宫格每行图片数
 @Entry
 @Component
 struct MomentsPage {
+  @State uid:string = '';// 传入uid进行http通信
+
   @State itemLength: number = 0;
   @State cachedCountNumber: number = 3; // 懒加载缓存数
+  // 通过填充momentList来展示动态列表
   @StorageLink('momentData') momentData: FriendMomentsData = new FriendMomentsData();
 
   build() {
@@ -80,7 +86,7 @@ struct MomentsPage {
         List({ space: LIST_SPACE }) {
           LazyForEach(this.momentData, (moment: FriendMoment) => {
             ListItem() {
-              OneMoment({ moment: moment })
+              OneMoment({ moment: moment })// 使用OneMoment对单个动态进行渲染
             }
           }, (moment: FriendMoment) => moment.id)
         }
@@ -105,7 +111,7 @@ struct MomentsPage {
   async aboutToAppear(): Promise<void> {
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     Logger.info(TAG, 'aboutToAppear');
-    await this.makeLocalData();
+    await this.makeLocalData();  // 在这里可选假数据填充或者通过uid向http获取真数据
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 
@@ -113,7 +119,41 @@ struct MomentsPage {
   async makeLocalData(): Promise<void> {
     Logger.info(TAG, 'makeLocalData');
     hiTraceMeter.startTrace(MAKE_LOCAL_DATA_TRACE, MAKE_LOCAL_DATA_TRACE_ID);
-    let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
+    /**
+     * 假数据填充
+     */
+    // let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
+
+    /**
+     * 真数据请求
+     */
+    let friendMomentArray: Array<FriendMoment> = []
+
+    const requestOptions: RequestOptions = {
+      url: "http://172.29.4.148:8080/v1/register", //TODO: url change
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      extraData: {
+        "uid" : this.uid
+      }
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        if(result.code == '200') {
+          // 成功返回
+          console.info(JSON.stringify(result.data)); //信息
+          Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
+
+
     if (friendMomentArray) {
       for (let i = 0; i < friendMomentArray.length; i++) {
         this.momentData.pushData(friendMomentArray[i]);
@@ -125,12 +165,10 @@ struct MomentsPage {
           duration: PROMPT_DURATION
         });
       } catch (error) {
-        // let message = (error as BusinessError).message;
-        // let code = (error as BusinessError).code;
-        // Logger.info(`showToast args error code is ${code}, message is ${message}`);
         Logger.info('cannot contact with internet')
       }
     }
+
     hiTraceMeter.finishTrace(MAKE_LOCAL_DATA_TRACE, MAKE_LOCAL_DATA_TRACE_ID);
   }
 }
@@ -265,6 +303,7 @@ struct OneMoment {
             .margin({ left: $r('app.integer.friendMomentsPage_thumbsup_margin_left') })
             .onClick(() => {
               this.liked = !this.liked
+              //TODO: 在这里更新点赞数
             })
           MomentHandler({
             imageStr: $r('app.media.ic_message'),
@@ -303,6 +342,7 @@ class FriendMomentsData extends BasicDataSource<FriendMoment> {
     // 判断组件是否已经缓存到最后一项数据了
     if (index == this.momentList.length - 1) {
       // 目前json文件只有3个，所以对3取余后加一实现循环获取3个json
+      // TODO:动态真数据填充 
       getFriendMomentByTaskPool(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[this.getJsonIndex % 3]);
       this.getJsonIndex++;
     }

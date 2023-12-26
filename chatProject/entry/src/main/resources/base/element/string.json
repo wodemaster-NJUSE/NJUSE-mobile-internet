@@ -18,7 +18,7 @@
     },
     {
       "name": "username",
-      "value": "用户名"
+      "value": "uid"
     },
     {
       "name": "password",

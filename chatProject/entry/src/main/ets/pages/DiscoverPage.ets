@@ -24,6 +24,7 @@ const LAYOUT_WEIGHT: number = 1; // 自动分配剩余空间
 @Entry
 @Component
 export struct DiscoverPage {
+  uid:string;
   // private settingViewData: Array< Array<SettingViewData>> = [
   //   [new SettingViewData($r('app.media.icon_de_scan'), $r('app.string.scan')),
   //       new SettingViewData($r('app.media.icon_de_shake'), $r('app.string.shake'))],
@@ -62,7 +63,14 @@ export struct DiscoverPage {
           SettingItemView(new SettingViewData($r('app.media.circle'), $r('app.string.circle')))
             .id(CHAT_COMMUNITY)
             .onClick(() => {
-              router.pushUrl({ url: CommonConstants.MOMENTS_PAGE_URL })
+              router.pushUrl({
+                url: CommonConstants.MOMENTS_PAGE_URL ,
+                params:{
+                  // 这里传入数据生成动态界面
+                  uid:this.uid
+                }
+              })
+
             })
         }
         .backgroundColor($r('app.color.setting_text_background'))

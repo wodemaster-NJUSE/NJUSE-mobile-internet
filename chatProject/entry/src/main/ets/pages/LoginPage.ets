@@ -47,18 +47,6 @@ struct LoginPage {
    @Builder Title() {
     Row() {
 
-      // 没必要的返回按钮
-      // Image($r('app.media.ic_back'))
-      //   .width($r('app.float.image_size'))
-      //   .height($r('app.float.image_size'))
-      //   .margin({
-      //     left: $r('app.float.image_margin_left'),
-      //     right: $r('app.float.image_margin_right')
-      //   })
-      //   .onClick(() => {
-      //     router.back();
-      //   })
-
        Text("登录")
         .fontSize($r('app.float.title_text_size'))
         .fontColor($r('app.color.title'))
