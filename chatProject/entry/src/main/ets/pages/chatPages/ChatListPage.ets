@@ -8,6 +8,9 @@ import { OptLayoutChatView, ReusableOptLayoutChatView } from '../../view/OptLayo
 import Logger from '../../utils/Logger';
 import effectKit from '@ohos.effectKit';
 import router from '@ohos.router';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
 
 const TAG: string = 'ChatListDisplayView';
 // 删除item后，下方的item顶上来的动画的播放时间
@@ -28,6 +31,8 @@ class Message {
 @Component
 export struct ChatListDisplayView {
   // 通过router传入参数ChatModel list来展示
+  @State uid:string;
+
   private params = router.getParams() as Array<ChatModel>;
 
   // 懒加载的数据列表
@@ -171,11 +176,38 @@ export struct ChatListDisplayView {
   async aboutToAppear(): Promise<void> {
     Logger.info(TAG, "ChatListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
-    // uid ->  Array<ChatModel>
-    // 填充真数据
-    for (let i = 0; i < this.params.length; i++) {
-      this.chatListLazy.pushData(this.params[i]);
-      this.chatListArray.push(this.params[i])
+    /**
+     * uid ->  Array<ChatModel>,填充真数据
+     */
+    let chatModels :  Array<ChatModel> =  [];
+
+    const requestOptions: RequestOptions = {
+      url: "http://172.29.4.148:8080/v1/register", //TODO: url change
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      extraData: {
+        "uid" : this.uid
+      }
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        if(result.code == '200') {
+          // 成功返回
+          console.info(JSON.stringify(result.data)); //信息
+          Object.assign(chatModels,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
+    // 把获得的数据放入当前展示的列表中
+    for (let i = 0; i < chatModels.length; i++) {
+      this.chatListLazy.pushData(chatModels[i]);
+      this.chatListArray.push(chatModels[i])
     }
 
     // 假数据填充
