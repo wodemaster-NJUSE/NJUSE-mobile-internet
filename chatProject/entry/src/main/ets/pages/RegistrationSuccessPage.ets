@@ -1,6 +1,5 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
-import { UserDataGet } from '../stores/user';
 
 /**
  * Page shows registration successful.

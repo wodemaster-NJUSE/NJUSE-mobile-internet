@@ -31,19 +31,16 @@ const TAB_INDEX_3: number = 3;
 // divider组件的strokWidth为1
 const DIVIDER_LINE_STROKWIDTH: number = 1;
 const TABBAR_SEPARATE_LINE = 0.05;
-let pageStorage: LocalStorage = new LocalStorage();
 
-pageStorage.set('pageTitle', 'My Awesome Page');
-
-let title: string = pageStorage.get('pageTitle');
 
 @Entry
 @Component
 struct Index {
 
-  // login 跳转到main界面把构造好的userEntity传入
-  private params = router.getParams() as UserEntity;
-   userEntity: UserEntity  = new UserEntity(this.params);
+  // login 跳转到main界面把uid传入
+  private params = router.getParams() as Record<string, Object>;
+  uid : string  = this.params.uid as string ;
+
 
   @StorageLink('page_layout') page_layout: boolean | undefined = AppStorage.Get('page_layout'); // AppStorage中key对应的属性建立双向数据同步
   @State currentIndex: number = TAB_INDEX_0; // tabBar初始选中的位置
@@ -77,7 +74,7 @@ struct Index {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
         Column() {
-          ChatPage()
+          ChatPage({uid : this.uid})
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,
@@ -86,7 +83,7 @@ struct Index {
         $r('app.string.chat')));
 
       TabContent() {
-        ContactsPage()
+        ContactsPage({uid:this.uid})
       }
       .tabBar(this.TabBuilder(TAB_INDEX_1,
         $r('app.media.contactIconNormal'),
@@ -102,14 +99,12 @@ struct Index {
         $r('app.string.LLM')));
 
       TabContent() {
-        DiscoverPage()
+        DiscoverPage({uid:this.uid})
       }
       .tabBar(this.TabBuilder(TAB_INDEX_3,
         $r('app.media.findIconNormal'),
         $r('app.media.findIconSelected'),
         $r('app.string.moment')));
-
-
     }
     .onChange((index: number) => {
       this.currentIndex = index;

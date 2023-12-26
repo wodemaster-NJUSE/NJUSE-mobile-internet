@@ -1,7 +1,7 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { User } from '../model/UserModel';
-import { UserDataGet } from '../stores/user';
+
 
 import { HttpManager } from '../utils/http/HttpManager';
 //import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
@@ -129,17 +129,16 @@ export struct RegisterComponent {
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
             .onClick(() => {
               // 创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
-             let user1 : UserDataGet;//接收传过来的数据
 
               const requestOptions: RequestOptions = {
-                url: "http://172.29.4.148:8080/v1/user",
+                url: "http://172.29.4.148:8080/v1/register",
                 method: RequestMethod.POST,
                 header: {
                   'Content-Type': 'application/json'
                 },
                 extraData: {
-                  "username":"user1",
-                  "password":"Ab12345678"
+                  "username": this.userName,
+                  "password": this.passWord
                 }
               };
 
@@ -151,7 +150,7 @@ export struct RegisterComponent {
                   router.pushUrl({
                     url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                     params :{
-                      uid : JSON.parse(JSON.stringify(result.data)).uid
+                      uid : JSON.parse(JSON.stringify(result.data)).uid  //只需要获取一个uid即可
                     }
                   });
                 })
