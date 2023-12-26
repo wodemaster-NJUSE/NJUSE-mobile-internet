@@ -129,40 +129,41 @@ export struct ChatListDisplayView {
     /**
      * uid ->  Array<ChatModel>,填充真数据
      */
-    let chatModels :  Array<ChatModel> =  [];
-
-    const requestOptions: RequestOptions = {
-      url: "http://172.29.4.148:8080/v1/register", //TODO: url change
-      method: RequestMethod.GET,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      extraData: {
-        "uid" : this.uid
-      }
-    };
-
+    // let chatModels :  Array<ChatModel> =  [];
     //
-    HttpManager.getInstance().request<ResponseResult>(requestOptions)
-      .then((result) => {
-        if(result.code == '200') {
-          // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
-          Object.assign(chatModels,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
-        }
-      })
-      .catch((err) => {
-        console.error(JSON.stringify(err));
-      });
-    // 把获得的数据放入当前展示的列表中
-    for (let i = 0; i < chatModels.length; i++) {
-      this.chatListLazy.pushData(chatModels[i]);
-      this.chatListArray.push(chatModels[i])
-    }
+    // const requestOptions: RequestOptions = {
+    //   url: "http://172.29.4.148:8080/v1/register", //TODO: url change
+    //   method: RequestMethod.GET,
+    //   header: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   extraData: {
+    //     "uid" : this.uid
+    //   }
+    // };
+    //
+    // //
+    // HttpManager.getInstance().request<ResponseResult>(requestOptions)
+    //   .then((result) => {
+    //     if(result.code == '200') {
+    //       // 成功返回
+    //       console.info(JSON.stringify(result.data)); //信息
+    //       Object.assign(chatModels,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(JSON.stringify(err));
+    //   });
+    // // 把获得的数据放入当前展示的列表中
+    // for (let i = 0; i < chatModels.length; i++) {
+    //   this.chatListLazy.pushData(chatModels[i]);
+    //   this.chatListArray.push(chatModels[i])
+    // }
 
-    // // 假数据填充
-    // await makeDataLocal(this.chatListLazy);
-    // await makeDataList(this.chatListArray);
+    // 假数据填充
+    await makeDataLocal(this.chatListLazy);
+    await makeDataList(this.chatListArray);
+
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }

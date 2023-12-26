@@ -37,6 +37,9 @@ export struct LLMPage {
     @State userFriendName: string = '';
     @State listHeight: number = 0;
 
+    // 设置发送按钮
+    @State sendState: boolean = false;
+
     build() {
         Column() {
             // 顶部导航栏
@@ -101,7 +104,7 @@ export struct LLMPage {
                     .layoutWeight(LAYOUT_WEIGHT)
                     .borderRadius($r('app.integer.search_border_radius'))
                     .backgroundColor($r('app.string.chat_detail_input_background'))
-                    .enterKeyType(EnterKeyType.Send)
+                    .enterKeyType(EnterKeyType.Done)
                     .onChange((value: string) => {
                         this.keyboardStr = value;
                     })
@@ -117,21 +120,21 @@ export struct LLMPage {
 
                         // 本地渲染后发送到后端
                         const requestOptions: RequestOptions = {
-                            url: "http://172.29.4.148:8080/",// TODO-大语言url
+                            url: "http://172.29.4.148:8080/LLM/send",// TODO-大语言url
                             method: RequestMethod.POST,
                             header: {
                                 'Content-Type': 'application/json'
                             },
                             extraData: {
                                 //"uid" : this.myUid, // 通过uid,message 进行通信
-                                "message" : this.keyboardStr
+                                "question" : this.keyboardStr
                             }
                         };
 
                         // 调用HttpManager的request方法，发起POST请求
                         HttpManager.getInstance().request<ResponseResult>(requestOptions)
                             .then((result) => {
-                                console.info(JSON.stringify(result.data));//输出用户信息并跳转
+                                console.info('LLM_response' + JSON.stringify(result.data));//输出用户信息并跳转
                                 // 获得大语言模型返回数据
                                 this.todayDate = new Date();
                                 msg = new TextMessage(JSON.parse(JSON.stringify(result.data)));// 解析返回数据
@@ -173,5 +176,9 @@ export struct LLMPage {
         .padding({ bottom: px2vp((this.keyboardHeight)) })
         .backgroundColor($r('app.color.detail_body_background'))
         .height($r('app.string.layout_100'))
+    }
+
+    @Builder LLMResponse() {
+
     }
 }

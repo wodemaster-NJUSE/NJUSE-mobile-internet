@@ -13,6 +13,9 @@ export class HttpCore {
    */
   request<T>(requestOption: RequestOptions): Promise<T> {
     return new Promise<T>((resolve, reject) => {
+      //----test
+      console.info('http_core_send:' + requestOption.url + '' + requestOption.method.toString())
+      //----
       this.sendRequest(requestOption)
         .then((response) => {
           if (typeof response.result !== 'string') {
