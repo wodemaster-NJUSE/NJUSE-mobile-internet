@@ -137,8 +137,8 @@ export struct ChatDetailPage {
           })
         Image($r('app.media.input_emoji'))
           .id('chatExpression')
-          .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
-          .width($r('app.integer.opt_layout_chat_view_item_padding_right'))
+          .height(24)
+          .width(24)
           .margin({ left: $r('app.integer.search_font_size'), right: $r('app.integer.search_font_size') })
           .onClick(() => {
             let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
@@ -151,8 +151,8 @@ export struct ChatDetailPage {
           })
 
         Image($r('app.media.input_add'))
-          .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
-          .width($r('app.integer.opt_layout_chat_view_item_padding_right'))
+          .height(24)
+          .width(24)
           .margin({ right: $r('app.integer.search_font_size') })
       }
       .borderRadius({
