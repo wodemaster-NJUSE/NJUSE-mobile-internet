@@ -108,12 +108,12 @@ export struct ChatDetailPage {
 
       // 底部输入框
       Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-        // Image($r('app.media.chatting_mode_voice'))
-        //   .height($r('app.integer.opt_layout_chat_view_voice_image_width'))
-        //   .margin({
-        //     left: $r('app.integer.search_font_size'),
-        //     right: $r('app.integer.search_font_size')
-        //   })
+        Image($r('app.media.chatting_mode_voice'))
+          .height($r('app.integer.opt_layout_chat_view_voice_image_width'))
+          .margin({
+            left: $r('app.integer.search_font_size'),
+            right: $r('app.integer.search_font_size')
+          })
         // 去掉语音输入图标
         TextInput({ placeholder: '', text: this.keyboardStr })
           .id('bottomTextInput')
@@ -135,21 +135,21 @@ export struct ChatDetailPage {
             this.scroller.scrollToIndex(this.msgLength - 1);
             this.keyboardStr = '';
           })
-        // Image($r('app.media.input_emoji'))
-        //   .id('chatExpression')
-        //   .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
-        //   .width($r('app.integer.opt_layout_chat_view_item_padding_right'))
-        //   .margin({ left: $r('app.integer.search_font_size'), right: $r('app.integer.search_font_size') })
-        //   .onClick(() => {
-        //     let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
-        //     let msg = new ImageMessage(40, 50, imageStr);
-        //     let msgBody = new MessageBase(this.chatDetailData.totalCount()
-        //       .toString(), this.userMyself, this.userFriend, msg, 2);
-        //     this.chatDetailData.pushData(msgBody);
-        //     this.msgLength = this.chatDetailData.totalCount();
-        //     this.scroller.scrollToIndex(this.msgLength - 1);
-        //   })
-        //
+        Image($r('app.media.input_emoji'))
+          .id('chatExpression')
+          .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
+          .width($r('app.integer.opt_layout_chat_view_item_padding_right'))
+          .margin({ left: $r('app.integer.search_font_size'), right: $r('app.integer.search_font_size') })
+          .onClick(() => {
+            let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
+            let msg = new ImageMessage(40, 50, imageStr);
+            let msgBody = new MessageBase(this.chatDetailData.totalCount()
+              .toString(), this.userMyself, this.userFriend, msg, 2);
+            this.chatDetailData.pushData(msgBody);
+            this.msgLength = this.chatDetailData.totalCount();
+            this.scroller.scrollToIndex(this.msgLength - 1);
+          })
+
         Image($r('app.media.input_add'))
           .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
           .width($r('app.integer.opt_layout_chat_view_item_padding_right'))

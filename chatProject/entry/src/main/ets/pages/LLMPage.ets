@@ -5,6 +5,7 @@ import {CommonConstants} from '../common/constants/CommonConstants';
 @Entry
 @Component
 export struct LLMPage {
+    uid:string;
     build() {
         Column() {
 
