@@ -3,7 +3,6 @@ import { makeDataLocal, makeDataList } from '../../utils/DataFactory';
 import Constants from '../../utils/Constants';
 import { ChatModel } from '../../viewmodel/MsgBase';
 import { ChatListData } from '../../viewmodel/ChatListDataSource';
-import { ChatView, ReusableChatView } from '../../view/ChatView';
 import { OptLayoutChatView, ReusableOptLayoutChatView } from '../../view/OptLayoutChatView';
 import Logger from '../../utils/Logger';
 import router from '@ohos.router';
