@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.cer",
+          "storePassword": "0000001B974AB2C17661918F6056F8CA101813B5DDF78B743A0BA6FD66D7B4D8F748B977EC6ABCEE63A14D",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BCA767386EEA45258B0BF9FCE488C51870FF780D13EDEC2466A09F3329F1C28D9DCE834BEE627BA",
+          "profile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [

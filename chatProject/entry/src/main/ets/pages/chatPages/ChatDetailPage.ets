@@ -57,8 +57,11 @@ export struct ChatDetailPage {
         Row() {
           Image($r('app.media.ic_back'))//原为chat_detail_back
             .id('returnBtn')
-            .height($r('app.integer.opt_layout_chat_view_item_padding_right'))
-            .width($r('app.integer.opt_layout_chat_view_item_padding_right'))
+            .height(24)
+            .width(24)
+            .margin({
+              left: 14
+            })
             .onClick(() => {
               router.back();
             })

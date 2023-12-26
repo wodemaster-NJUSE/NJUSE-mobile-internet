@@ -104,48 +104,51 @@ export struct LoginComponent {
           .backgroundColor(isLoginButtonClickable(this.uid, this.password) ?
             $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
           .onClick(() => {
-            // ------------
-            //创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
-            // 根据uid登录
-            const requestOptions: RequestOptions = {
-              url: 'http://172.29.4.148:8080/v1/login',
-              method: RequestMethod.POST,
-              header: {
-                'Content-Type': 'application/json',
-              },
-              extraData: JSON.stringify({
-                uid: this.uid,
-                password: this.password,
-              }),
-            };
-            // // 调用HttpManager的request方法，发起POST请求
-            HttpManager.getInstance().request<ResponseResult>(requestOptions)
-              .then((result) => {
-                console.info(JSON.stringify(result.data));//输出用户信息并跳转
-                if(result.code  == '200') {
-                  // 成功登录
-                  let userentity: UserEntity = new UserEntity(JSON.parse(JSON.stringify(result.data))
-                    .id, JSON.parse(JSON.stringify(result.data)).username, JSON.parse(JSON.stringify(result.data))
-                    .password, JSON.parse(JSON.stringify(result.data)).uid);
+            // // ------------
+            // //创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
+            // // 根据uid登录
+            // const requestOptions: RequestOptions = {
+            //   url: 'http://172.29.4.148:8080/v1/login',
+            //   method: RequestMethod.POST,
+            //   header: {
+            //     'Content-Type': 'application/json',
+            //   },
+            //   extraData: JSON.stringify({
+            //     uid: this.uid,
+            //     password: this.password,
+            //   }),
+            // };
+            // // // 调用HttpManager的request方法，发起POST请求
+            // HttpManager.getInstance().request<ResponseResult>(requestOptions)
+            //   .then((result) => {
+            //     console.info(JSON.stringify(result.data));//输出用户信息并跳转
+            //     if(result.code  == '200') {
+            //       // 成功登录
+            //       let userentity: UserEntity = new UserEntity(JSON.parse(JSON.stringify(result.data))
+            //         .id, JSON.parse(JSON.stringify(result.data)).username, JSON.parse(JSON.stringify(result.data))
+            //         .password, JSON.parse(JSON.stringify(result.data)).uid);
+            //
+            //       router.pushUrl({
+            //         url: CommonConstants.MAIN_PAGE_URL,
+            //         params: {
+            //           uid: JSON.parse(JSON.stringify(result.data)).uid
+            //         }
+            //
+            //       });
+            //     }
+            //   })
+            //   .catch((err) => {
+            //     console.error(JSON.stringify(err));
+            //   });
 
-                  router.pushUrl({
-                    url: CommonConstants.MAIN_PAGE_URL,
-                    params: {
-                      uid: JSON.parse(JSON.stringify(result.data)).uid
-                    }
-
-                  });
-                }
-              })
-              .catch((err) => {
-                console.error(JSON.stringify(err));
-              });
 
 
-
-            // router.pushUrl({
-            //   url:CommonConstants.MAIN_PAGE_URL
-            // });
+            router.pushUrl({
+              url:CommonConstants.MAIN_PAGE_URL,
+              params: {
+                          uid: 10001
+                        }
+            });
           })
       }
 

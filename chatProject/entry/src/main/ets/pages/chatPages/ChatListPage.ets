@@ -29,7 +29,7 @@ class Message {
 @Component
 export struct ChatListDisplayView {
   // 通过router传入参数ChatModel list来展示
-  @State uid:string;
+  @State uid:string = '';
 
   private params = router.getParams() as Array<ChatModel>;
 
