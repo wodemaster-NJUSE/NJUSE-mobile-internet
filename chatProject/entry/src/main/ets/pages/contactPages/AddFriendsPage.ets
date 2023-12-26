@@ -5,7 +5,9 @@ import { CommonConstants } from '../../common/constants/CommonConstants'
 @Component
 export struct AddFriendsPage {
   @State submitValue: string = ''
+  // 根据状态切换展示信息
   @State private searchState : number = 0;
+  // '添加好友'按钮状态
   @State private send: boolean = false;
   search_placeholder: string = '请输入您要搜索的UID'
 
