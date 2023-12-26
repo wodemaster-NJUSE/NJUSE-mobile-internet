@@ -150,10 +150,11 @@ export struct ChatDetailPage {
             this.scroller.scrollToIndex(this.msgLength - 1);
           })
 
-        Image($r('app.media.input_add'))
+        Text('发送')
           .height(24)
           .width(24)
-          .margin({ right: $r('app.integer.search_font_size') })
+          .fontColor("#007DFF")
+          .margin({ right: 16 })
       }
       .borderRadius({
         topLeft: $r('app.integer.search_border_radius'),
