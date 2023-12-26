@@ -91,7 +91,7 @@ struct Index {
         $r('app.string.contacts')));
 
       TabContent() {
-        LLMPage({uid : this.uid})
+        LLMPage({myUid : this.uid})
       }
       .tabBar(this.TabBuilder(TAB_INDEX_2,
         $r('app.media.profileIconNormal'),

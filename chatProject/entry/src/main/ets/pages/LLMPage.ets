@@ -37,11 +37,6 @@ export struct LLMPage {
     @State userFriendName: string = '';
     @State listHeight: number = 0;
 
-    // private params = router.getParams() as Record<string, Object>;
-    // chatId: number = this.params.chatId as number;
-    // chatName: string | Resource = this.params.chatName as string | Resource;
-    // chatImg: string | Resource = this.params.chatImg as string | Resource;
-    // lastMsg: string | Resource = this.params.lastMsg as string | Resource;
     build() {
         Column() {
             // 顶部导航栏
@@ -122,7 +117,7 @@ export struct LLMPage {
 
                         // 本地渲染后发送到后端
                         const requestOptions: RequestOptions = {
-                            url: "http://172.29.4.148:8080/",// 大语言url
+                            url: "http://172.29.4.148:8080/",// TODO-大语言url
                             method: RequestMethod.POST,
                             header: {
                                 'Content-Type': 'application/json'

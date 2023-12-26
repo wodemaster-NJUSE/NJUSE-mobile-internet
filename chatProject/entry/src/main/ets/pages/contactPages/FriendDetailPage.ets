@@ -56,7 +56,6 @@ export struct FriendDetailPage {
       .height('48vp')
       .backgroundColor('#f1f3f5')
       .justifyContent(FlexAlign.SpaceAround)
-
     }
     .width($r('app.string.layout_100'))
     .height($r('app.string.layout_100'))
@@ -106,6 +105,12 @@ export struct FriendDetailPage {
         settingTextItem({
           title : "用户名",
           textContent : this.chatName,
+        })
+      }
+      ListItem() {
+        settingTextItem({
+          title : "个性签名",
+          textContent : "# 这是个性签名~",
         })
       }
       ListItem() {
