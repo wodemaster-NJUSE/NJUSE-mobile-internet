@@ -108,8 +108,14 @@ export struct LLMPage {
                     .onChange((value: string) => {
                         this.keyboardStr = value;
                     })
-                    .onSubmit(() => {
-
+                Text('发送')
+                    .height(24)
+                    .width(52)
+                    .backgroundColor(Color.Blue)// 蓝色
+                    .fontColor(Color.White)
+                    .margin({ right: 16 })
+                    .onClick(() => {
+                        // 渲染用户发言
                         this.todayDate = new Date();
                         let msg = new TextMessage(this.keyboardStr);
                         let msgBody = new MessageBase(this.chatDetailData.totalCount()
@@ -118,7 +124,7 @@ export struct LLMPage {
                         this.msgLength = this.chatDetailData.totalCount();
                         this.scroller.scrollToIndex(this.msgLength - 1);
 
-                        // 本地渲染后发送到后端
+                        // 渲染LLM发言
                         const requestOptions: RequestOptions = {
                             url: "http://172.29.4.148:8080/LLM/send",// TODO-大语言url
                             method: RequestMethod.POST,
@@ -145,22 +151,8 @@ export struct LLMPage {
                             .catch((err) => {
                                 console.error(JSON.stringify(err));
                             });
-                        this.keyboardStr = '';// 刷新输入栏
-                    })
-                Text('发送')
-                    .height(24)
-                    .width(52)
-                    .backgroundColor(Color.Blue)// 蓝色
-                    .fontColor(Color.White)
-                    .margin({ right: 16 })
-                    .onClick(() => {
-                        this.todayDate = new Date();
-                        let msg = new TextMessage(this.keyboardStr);
-                        let msgBody = new MessageBase(this.chatDetailData.totalCount()
-                            .toString(), this.userMyself, this.gpt, msg, 1, this.todayDate.getSeconds());
-                        this.chatDetailData.pushData(msgBody);
-                        this.msgLength = this.chatDetailData.totalCount();
-                        this.scroller.scrollToIndex(this.msgLength - 1);
+
+                        // 清除聊天框
                         this.keyboardStr = '';
                     })
 
@@ -176,9 +168,5 @@ export struct LLMPage {
         .padding({ bottom: px2vp((this.keyboardHeight)) })
         .backgroundColor($r('app.color.detail_body_background'))
         .height($r('app.string.layout_100'))
-    }
-
-    @Builder LLMResponse() {
-
     }
 }
