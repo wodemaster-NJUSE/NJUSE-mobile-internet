@@ -1,7 +1,9 @@
 import router from '@ohos.router';
 import {CommonConstants} from '../common/constants/CommonConstants';
 import { WantFileModel, WantModel } from '../model/Want';
-import { ChatContact, ChatDetailData, ImageMessage, MessageBase, TextMessage } from '../viewmodel/MsgBase';
+import { ChatContact, ChatDetailData, ImageMessage,
+    ImageTextMessage,
+    MessageBase, TextMessage } from '../viewmodel/MsgBase';
 import Want from '@ohos.app.ability.Want';
 import image from '@ohos.multimedia.image';
 import { ChatItemView } from './chatPages/ChatItemView';
@@ -30,12 +32,15 @@ export struct LLMPage {
     msgBody = new MessageBase('1', this.userMyself, this.gpt, this.msgAnother, 1, this.todayDate.getSeconds());
     // 消息体构造：消息id，来自，去往，消息，消息类型（文本，图片，文本加图片，网络图片），日期
     @State keyboardStr: string = '';// 键盘输入
-    private chatDetailData = new ChatDetailData();// 根据这个来构造细节聊天界面，通过 msgList 来对界面进行渲染
+    @State private chatDetailData: ChatDetailData = new ChatDetailData();// 根据这个来构造细节聊天界面，通过 msgList 来对界面进行渲染
     private scroller: Scroller = new Scroller();
     @State wantId: number = 0;
     @State userMyselfName: string = '';
     @State userFriendName: string = '';
     @State listHeight: number = 0;
+
+    // 设置列表项的键值
+    index_count: number = 1;
 
     // 设置发送按钮
     @State sendState: boolean = false;
@@ -82,7 +87,7 @@ export struct LLMPage {
             List({ scroller: this.scroller, initialIndex: this.msgLength - 1 }) {
                 LazyForEach(this.chatDetailData, (msg: MessageBase) => {
                     ListItem() {
-                        ChatItemView({ msg: msg });// 通过这个来渲染每个MsgBody
+                        this.LLMChatItemView(msg);
                     }
                 }, (msg: MessageBase) => msg.msgId)
             }
@@ -104,35 +109,44 @@ export struct LLMPage {
                     .layoutWeight(LAYOUT_WEIGHT)
                     .borderRadius($r('app.integer.search_border_radius'))
                     .backgroundColor($r('app.string.chat_detail_input_background'))
-                    // .enterKeyType(EnterKeyType.Done)
                     .onChange((value: string) => {
                         this.keyboardStr = value;
                     })
                 Text('发送')
                     .height(24)
-                    .width(52)
-                    .backgroundColor(Color.Blue)// 蓝色
+                    .width(44)
+                    .backgroundColor(Color.Blue)
                     .fontColor(Color.White)
                     .margin({ right: 16 })
                     .onClick(() => {
                         // 渲染用户发言
                         this.todayDate = new Date();
                         let msg = new TextMessage(this.keyboardStr);
-                        let msgBody = new MessageBase(this.chatDetailData.totalCount()
-                            .toString(), this.userMyself, this.gpt, msg, 1, this.todayDate.getSeconds());
+                        let msgBody = new MessageBase(this.index_count.toString(),
+                            this.userMyself, this.gpt, msg, 1, this.todayDate.getSeconds());
+                        this.index_count = this.index_count + 1;
                         this.chatDetailData.pushData(msgBody);
+                        this.msgLength = this.chatDetailData.totalCount();
+                        this.scroller.scrollToIndex(this.msgLength - 1);
+
+                        // 渲染LLM加载动画
+                        this.todayDate = new Date();
+                        msg = new TextMessage('load');
+                        msgBody = new MessageBase(this.index_count.toString(),
+                            this.gpt, this.userMyself, msg, 5, this.todayDate.getSeconds());
+                        this.index_count = this.index_count + 1;
+                        this.chatDetailData.pushData(msgBody); // 进行渲染
                         this.msgLength = this.chatDetailData.totalCount();
                         this.scroller.scrollToIndex(this.msgLength - 1);
 
                         // 渲染LLM发言
                         const requestOptions: RequestOptions = {
-                            url: "http://172.29.4.148:8080/LLM/send",// TODO-大语言url
+                            url: "http://172.29.4.148:8080/LLM/send",
                             method: RequestMethod.POST,
                             header: {
                                 'Content-Type': 'application/json'
                             },
                             extraData: {
-                                //"uid" : this.myUid, // 通过uid,message 进行通信
                                 "question" : this.keyboardStr
                             }
                         };
@@ -144,9 +158,13 @@ export struct LLMPage {
                                 // 获得大语言模型返回数据
                                 this.todayDate = new Date();
                                 msg = new TextMessage(JSON.parse(JSON.stringify(result.data)));// 解析返回数据
-                                msgBody = new MessageBase(this.chatDetailData.totalCount()
-                                    .toString(), this.gpt, this.userMyself, msg, 1, this.todayDate.getSeconds());
-                                this.chatDetailData.pushData(msgBody); // 进行渲染
+                                msgBody = new MessageBase(this.index_count.toString()
+                                    , this.gpt, this.userMyself, msg, 1, this.todayDate.getSeconds());
+                                this.index_count = this.index_count + 1;
+                                this.chatDetailData.deleteData(this.chatDetailData.totalCount() - 1)
+                                this.chatDetailData.pushData(msgBody); // 渲染
+                                this.msgLength = this.chatDetailData.totalCount();
+                                this.scroller.scrollToIndex(this.msgLength - 1);
                             })
                             .catch((err) => {
                                 console.error(JSON.stringify(err));
@@ -155,7 +173,6 @@ export struct LLMPage {
                         // 清除聊天框
                         this.keyboardStr = '';
                     })
-
             }
             .borderRadius({
                 topLeft: $r('app.integer.search_border_radius'),
@@ -168,5 +185,93 @@ export struct LLMPage {
         .padding({ bottom: px2vp((this.keyboardHeight)) })
         .backgroundColor($r('app.color.detail_body_background'))
         .height($r('app.string.layout_100'))
+    }
+
+    @Builder LLMChatItemView(msg: MessageBase) {
+        Column() {
+            if (msg.from.userId != '1') {
+                // LLM的消息
+                Row() {
+                    Image(msg.from.userImage)
+                        .width($r('app.integer.opt_layout_chat_view_profile_picture_height'))
+                        .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
+                        .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
+                    Column() {
+                        if (msg.msgType === 1) {
+                            Row() {
+                                Text((msg.msgBody as TextMessage).msg)
+                                    .lineHeight($r('app.integer.search_text_height'))
+                                    .constraintSize({ minHeight: $r('app.integer.search_inline_height') })
+                                    .fontSize($r('app.integer.search_font_size'))
+                                    .fontColor($r('app.color.top_bar_font_color'))
+                                    .backgroundColor(Color.White)
+                                    .padding({
+                                        top: $r('app.integer.layout_8'),
+                                        left: $r('app.integer.text_font_13'),
+                                        bottom: $r('app.integer.layout_8'),
+                                        right: $r('app.integer.text_font_13')
+                                    })
+                                    .borderRadius({ topLeft: $r('app.integer.layout_4'),
+                                        topRight: $r('app.integer.opt_layout_chat_view_item_padding_right'),
+                                        bottomLeft: $r('app.integer.opt_layout_chat_view_item_padding_right'),
+                                        bottomRight: $r('app.integer.opt_layout_chat_view_item_padding_right')
+                                    })
+                            }
+                        } else if (msg.msgType === 5) { // LLM加载动画
+                            LoadingProgress()
+                                .color(Color.Blue)
+                                .width(108)
+                                .height(66)
+                                .backgroundColor('#F1F3F5')
+                        }
+                    }
+                    .margin({ left: $r('app.integer.layout_8') })
+                    .alignItems(HorizontalAlign.Start)
+                }
+                .width('100%')
+                .alignItems(VerticalAlign.Top)
+                .margin({ top: $r('app.integer.layout_12') })
+                .padding({ right: $r('app.integer.chat_view_time_width') })
+            } else {
+                // 用户消息
+                Row() {
+                    Image(msg.from.userImage)
+                        .width($r('app.integer.opt_layout_chat_view_profile_picture_height'))
+                        .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
+                        .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
+                    Column() {
+                        if (msg.msgType === 1) {
+                            Row() {
+                                Text((msg.msgBody as TextMessage).msg)
+                                    .lineHeight($r('app.integer.search_text_height'))
+                                    .constraintSize({ minHeight: $r('app.integer.opt_layout_chat_view_profile_picture_height') })
+                                    .fontSize($r('app.integer.search_font_size'))
+                                    .backgroundColor($r('app.color.detail_item_message_background'))
+                                    .fontColor($r('app.color.top_bar_font_color'))
+                                    .padding({
+                                        top: $r('app.integer.layout_8'),
+                                        left: $r('app.integer.text_font_13'),
+                                        bottom: $r('app.integer.layout_8'),
+                                        right: $r('app.integer.text_font_13')
+                                    })
+                                    .borderRadius({
+                                        topLeft: $r('app.integer.opt_layout_chat_view_item_padding_right'),
+                                        topRight: $r('app.integer.layout_4'),
+                                        bottomLeft: $r('app.integer.opt_layout_chat_view_item_padding_right'),
+                                        bottomRight: $r('app.integer.opt_layout_chat_view_item_padding_right')
+                                    })
+                            }
+                        }
+                    }
+                    .margin({ right: $r('app.integer.layout_8') })
+                    .alignItems(HorizontalAlign.End)
+                }
+                .alignItems(VerticalAlign.Top)
+                .width('100%')
+                .direction(Direction.Rtl)
+                .padding({ left: $r('app.integer.chat_view_time_width') })
+                .margin({ top: $r('app.integer.layout_12') })
+            }
+        }
     }
 }

@@ -45,7 +45,8 @@ enum MsgType {
   TEXT = 1,
   IMAGE = 2,
   TEXT_AND_IMAGE = 3,
-  NET_IMAGE = 4
+  NET_IMAGE = 4,
+  LOADING_PROGRESS = 5
 }
 
 // 聊天信息
@@ -217,8 +218,21 @@ export class ChatDetailData extends BasicDataSource<MessageBase> {
     this.notifyDataAdd(this.msgList.length - 1);
   }
 
-  // 为了LLM的加载动画尝试
-  // public deleteData(): void {
-  //
-  // }
+  /**
+   * added by 陈凌
+   * 删除数据、更改数据、恢复数据
+   */
+  public deleteData(index: number): void {
+    this.msgList.splice(index, 1);
+    this.notifyDataDelete(index);
+  }
+
+  public changeData(index: number, data: MessageBase): void {
+    this.msgList.splice(index, 1, data);
+    this.notifyDataChange(index);
+  }
+
+  public reloadData(): void {
+    this.notifyDataReload();
+  }
 }
