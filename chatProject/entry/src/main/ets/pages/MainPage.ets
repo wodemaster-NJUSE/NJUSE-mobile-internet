@@ -23,6 +23,11 @@ import { DiscoverPage } from './DiscoverPage';
 import { ChatPage } from './ChatPage';
 import { UserEntity } from '../stores/user';
 
+import webSocket from '@ohos.net.webSocket';
+
+var defaultIpAddress = "ws://";// TODO:待设置
+let ws = webSocket.createWebSocket();
+
 
 const TAB_INDEX_0: number = 0;
 const TAB_INDEX_1: number = 1;
@@ -121,6 +126,23 @@ struct Index {
     .barWidth($r('app.string.layout_100'))
     .barHeight($r('app.integer.tabbar_height'))
     .backgroundColor($r('app.color.tabbar_background'))
+  }
+  async aboutToAppear(){
+    // main 在展现前就要和服务端建立websocket
+    ws.connect(defaultIpAddress, (err, value) => {
+      if (!err) {
+        console.log("Connected successfully");
+      } else {
+        console.log("Connection failed. Err:" + JSON.stringify(err));
+      }
+    });
+
+    ws.on('close', (err, value) => {
+      console.log("on close, code is " + value.code + ", reason is " + value.reason);
+    });
+    ws.on('error', (err) => {
+      console.log("on error, error:" + JSON.stringify(err));
+    });
   }
 
 }

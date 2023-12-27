@@ -11,7 +11,7 @@ import Logger from '../../utils/Logger';
 import fs from '@ohos.file.fs';
 import { ShareDate, WantFileModel, WantModel } from '../../model/Want';
 import { ChatItemView } from './ChatItemView';
-
+import webSocket from '@ohos.net.webSocket';
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 1; // aboutToAppear 中使用的 taskId
 const MAKE_DATA_LOCAL_TRACE: string = 'ChatDetailPage_MakeDataLocal_HiTrace';
@@ -19,12 +19,14 @@ const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
 
+var defaultIpAddress = "ws://";
+let ws = webSocket.createWebSocket(); // 创建websocket
 
 @Preview
 @Component
 export struct ChatDetailPage {
   myUid:string;
-  friendUid:string;
+
 
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
@@ -55,7 +57,9 @@ export struct ChatDetailPage {
   chatImg: string | Resource = this.params.chatImg as string | Resource;
   lastMsg: string | Resource = this.params.lastMsg as string | Resource;
 
+
   build() {
+
     Column() {
       // 顶部导航栏
       Row() {
@@ -134,7 +138,6 @@ export struct ChatDetailPage {
             this.keyboardStr = value;
           })
 
-        // TODO-不知道程智镝想干嘛
         Image($r('app.media.input_emoji'))
           .id('chatExpression')
           .height(36)
@@ -165,6 +168,19 @@ export struct ChatDetailPage {
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
+
+            // 使用websocket通信
+            let message : string ="{"+ "friendUid" + ":" +this.chatId.toString() + "," + "message" + ":" +  this.keyboardStr + "}";
+
+            ws.send(message, (err, value) => {
+              if (!err) {
+                console.log("Message sent successfully");
+              } else {
+                console.log("Failed to send the message. Err:" + JSON.stringify(err));
+              }
+            });
+
+
             this.keyboardStr = '';
           })
       }
@@ -267,9 +283,36 @@ export struct ChatDetailPage {
   async aboutToAppear() {
     await this.getWant();
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
-    this.makeDataLocal();
+
+    // 在展现前就开始监听服务端发来的消息
+    ws.on('message', (err, value) => {
+      console.log("on message, message:" + value);
+      // 接收服务端传来的消息
+      this.todayDate = new Date();
+      let msg = new TextMessage(value as string);
+      let msgBody = new MessageBase(this.chatDetailData.totalCount()
+        .toString(), this.userFriend, this.userMyself, msg, 2, this.todayDate.getSeconds());
+      this.chatDetailData.pushData(msgBody);
+      this.msgLength = this.chatDetailData.totalCount();
+      this.scroller.scrollToIndex(this.msgLength - 1);
+
+      // 当收到服务器的`bye`消息时（此消息字段仅为示意，具体字段需要与服务器协商），主动断开连接
+      if (value === 'bye') {
+        ws.close((err, value) => {
+          if (!err) {
+            console.log("Connection closed successfully");
+          } else {
+            console.log("Failed to close the connection. Err: " + JSON.stringify(err));
+          }
+        });
+      }
+    });
+    // 填充假数据
+    // this.makeDataLocal();
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
+
+
 }
 
 

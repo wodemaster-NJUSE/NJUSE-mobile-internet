@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.cer",
-          "storePassword": "0000001BF641180C2C920818D9FE474FC654C1FAFC6836018A7764AC13BC8FBF62A976E06E320B46C43FDC",
+          "certpath": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_410086000001048220.cer",
+          "storePassword": "0000001B71876DB0F04AC32F6BF28CFB66CE1E6E33AF391B08C2CE9F9C8CFA3B8FDF497D234D9B91FD72A5",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B8319562B6E828E756E19C4AAF9720A6B81E98F4AA698C443309A814CDA4B72F1E624CFC102B7AD",
-          "profile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p7b",
+          "keyPassword": "0000001BED78EFF0950B8EE141781FD731E0C24DE7A936A7EDF900028657E3656AC382C6BFB927ECDA3D58",
+          "profile": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_410086000001048220.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p12"
+          "storeFile": "C:\\Users\\wodemaster\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_410086000001048220.p12"
         }
       }
     ],
