@@ -299,6 +299,10 @@
     {
       "name": "setting_detail_view_save_button",
       "value": "#FF22DD00"
+    },
+    {
+      "name": "test",
+      "value": "#FF6EE6FA"
     }
   ]
 }

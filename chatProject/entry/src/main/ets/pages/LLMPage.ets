@@ -101,23 +101,30 @@ export struct LLMPage {
             .width($r('app.string.layout_100'))
             .layoutWeight(LAYOUT_WEIGHT)
 
-            // 底部输入框
             Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                TextArea({ placeholder: '', text: this.keyboardStr })
+                TextArea({ placeholder: '', text: this.keyboardStr})
                     .id('bottomTextInput')
-                    .height($r('app.integer.search_inline_height'))
-                    .layoutWeight(LAYOUT_WEIGHT)
-                    .borderRadius($r('app.integer.search_border_radius'))
-                    .backgroundColor($r('app.string.chat_detail_input_background'))
+                    .height(36)
+                    .layoutWeight(1)
+                    .borderRadius(2)
+                    .backgroundColor(Color.White)
+                    .margin({
+                        left: 12,
+                        right: 8
+                    })
                     .onChange((value: string) => {
                         this.keyboardStr = value;
                     })
+
                 Text('发送')
-                    .height(24)
-                    .width(44)
-                    .backgroundColor(Color.Blue)
+                    .borderRadius(2)
+                    .height(36)
+                    .width(62)
+                    .backgroundColor('#FF6EC2FA')
                     .fontColor(Color.White)
-                    .margin({ right: 16 })
+                    .fontSize(12)
+                    .margin({ right: 10 })
+                    .textAlign(TextAlign.Center)
                     .onClick(() => {
                         // 渲染用户发言
                         this.todayDate = new Date();
@@ -173,14 +180,11 @@ export struct LLMPage {
                         // 清除聊天框
                         this.keyboardStr = '';
                     })
+
             }
-            .borderRadius({
-                topLeft: $r('app.integer.search_border_radius'),
-                topRight: $r('app.integer.search_border_radius')
-            })
-            .backgroundColor(Color.White)
+            .backgroundColor('#FFF3F3F3')
             .width($r('app.string.layout_100'))
-            .height($r('app.integer.search_outline_height'))
+            .height(52)
         }
         .padding({ bottom: px2vp((this.keyboardHeight)) })
         .backgroundColor($r('app.color.detail_body_background'))

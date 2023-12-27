@@ -113,38 +113,33 @@ export struct ChatDetailPage {
 
       // 底部输入框
       Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-        Image($r('app.media.chatting_mode_voice'))
-          .height($r('app.integer.opt_layout_chat_view_voice_image_width'))
-          .margin({
-            left: $r('app.integer.search_font_size'),
-            right: $r('app.integer.search_font_size')
-          })
-        // 去掉语音输入图标
-        TextInput({ placeholder: '', text: this.keyboardStr })
+        // // 语音输入图标
+        // Image($r('app.media.chatting_mode_voice'))
+        //   .height($r('app.integer.opt_layout_chat_view_voice_image_width'))
+        //   .margin({
+        //     left: $r('app.integer.search_font_size'),
+        //     right: $r('app.integer.search_font_size')
+        //   })
+
+        TextArea({ placeholder: '', text: this.keyboardStr })
           .id('bottomTextInput')
-          .height($r('app.integer.search_inline_height'))
+          .height(36)
           .layoutWeight(LAYOUT_WEIGHT)
-          .borderRadius($r('app.integer.search_border_radius'))
-          .backgroundColor($r('app.string.chat_detail_input_background'))
-          .enterKeyType(EnterKeyType.Send)
+          .borderRadius(2)
+          .backgroundColor(Color.White)
+          .margin({
+            left: 12
+          })
           .onChange((value: string) => {
             this.keyboardStr = value;
           })
-          .onSubmit(() => {
-            this.todayDate = new Date();
-            let msg = new TextMessage(this.keyboardStr);
-            let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, msg, 1, this.todayDate.getSeconds());
-            this.chatDetailData.pushData(msgBody);
-            this.msgLength = this.chatDetailData.totalCount();
-            this.scroller.scrollToIndex(this.msgLength - 1);
-            this.keyboardStr = '';
-          })
+
+        // TODO-不知道程智镝想干嘛
         Image($r('app.media.input_emoji'))
           .id('chatExpression')
-          .height(24)
-          .width(24)
-          .margin({ left: $r('app.integer.search_font_size'), right: $r('app.integer.search_font_size') })
+          .height(36)
+          .width(36)
+          .margin({ left: 10, right: 10  })
           .onClick(() => {// 设定图片url
             let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
             let msg = new ImageMessage(40, 50, imageStr);
@@ -156,11 +151,12 @@ export struct ChatDetailPage {
           })
 
         Text('发送')
-          .height(24)
-          .width(52)
-          .backgroundColor(Color.Blue)// 蓝色
+          .height(36)
+          .width(62)
+          .backgroundColor('#FF6EC2FA')
           .fontColor(Color.White)
-          .margin({ right: 16 })
+          .textAlign(TextAlign.Center)
+          .margin({ right: 10 })
           .onClick(() => {
             this.todayDate = new Date();
             let msg = new TextMessage(this.keyboardStr);
@@ -171,18 +167,12 @@ export struct ChatDetailPage {
             this.scroller.scrollToIndex(this.msgLength - 1);
             this.keyboardStr = '';
           })
-
       }
-      .borderRadius({
-        topLeft: $r('app.integer.search_border_radius'),
-        topRight: $r('app.integer.search_border_radius')
-      })
-      .backgroundColor(Color.White)
+      .backgroundColor('#FFF3F3F3')
       .width($r('app.string.layout_100'))
-      .height($r('app.integer.search_outline_height'))
+      .height(52)
     }
     .padding({ bottom: px2vp((this.keyboardHeight)) })
-    // .expandSafeArea([SafeAreaType.KEYBOARD]) api10的属性，暂时抛弃
     .backgroundColor($r('app.color.detail_body_background'))
     .height($r('app.string.layout_100'))
   }
