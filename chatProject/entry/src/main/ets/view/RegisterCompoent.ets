@@ -12,7 +12,6 @@ import { ResponseResult } from '../utils/http/HttpCore';
 //import { httpRequestGetUser, httpRequestPostUser } from '../utils/UserHttpUtil';
 
 @Component
-//未标准化
 export struct RegisterComponent {
   @State userName :string = '';
   @State passWord :string = '';

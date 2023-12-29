@@ -3,10 +3,16 @@ import MediaQueryModel from '../model/MediaQueryModel';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
 import { LoginComponent } from '../view/LoginComponent';
+import { myLoginComponent } from '../view/myLoginComponent';
+import app from '@system.app';
+import prompt from '@ohos.prompt';
+import promptAction from '@ohos.promptAction';
 
 @Entry
 @Component
 struct LoginPage {
+  private preTime: number = -1;
+
   aboutToAppear() {
     MediaQueryModel.register();
   }
@@ -17,11 +23,11 @@ struct LoginPage {
 
   build() {
     Column() {
-      this.Title()
+      this.TopBar()
 
       Scroll() {
         Column() {
-          LoginComponent()
+          myLoginComponent()
 
           Blank()
 
@@ -35,18 +41,31 @@ struct LoginPage {
       .layoutWeight(CommonConstants.LOGIN_SCROLL_LAYOUT_WEIGHT)
     }
     .width(CommonConstants.LOGIN_PAGE_WIDTH_PERCENT)
-    .backgroundColor($r('app.color.login_page_background'))
+    .backgroundColor($r('app.color.login_page_background_color'))
   }
 
-   @Builder Title() {
+   @Builder TopBar() {
     Row() {
-       Text("登录")
-        .fontSize($r('app.float.title_text_size'))
-        .fontColor($r('app.color.title'))
-        .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
-         .margin({
-           left: $r('app.float.image_margin_left')
-         })
+      Image($r('app.media.ic_back'))
+        .width($r('app.float.image_size'))
+        .height($r('app.float.image_size'))
+        .margin({
+          left: 16,
+          right: $r('app.float.image_margin_right')
+        })
+        .onClick(() => {
+          let currentTime = new Date().getTime()
+          console.info('login_: ' + this.preTime);
+          if (currentTime - this.preTime > 2000) {
+            promptAction.showToast({
+              message: "再按一次退出应用"
+            })
+            this.preTime = currentTime;
+          } else {
+            console.info("close_abi");
+            globalThis.context.terminateSelf();
+          }
+        })
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))

@@ -301,8 +301,12 @@
       "value": "#FF22DD00"
     },
     {
+      "name": "login_page_background_color",
+      "value": "#FFEAEAEA"
+    },
+    {
       "name": "test",
-      "value": "#FF6EE6FA"
+      "value": "#FFDEE1E3"
     }
   ]
 }

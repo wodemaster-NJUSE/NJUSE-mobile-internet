@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { myRegisterComponent } from '../view/myRegisterComponent';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
 import { RegisterComponent } from '../view/RegisterCompoent';
 
@@ -8,10 +9,12 @@ import { RegisterComponent } from '../view/RegisterCompoent';
 struct RegisterPage {
   build() {
     Column() {
-      this.Title() //退出按钮
+      this.TopBar() //退出按钮
+
       Scroll() {
         Column() {
-          RegisterComponent()
+          // RegisterComponent()
+          myRegisterComponent()
 
           Blank()
 
@@ -25,23 +28,23 @@ struct RegisterPage {
       .layoutWeight(1)
 
     }.width('100%')
-    .backgroundColor($r('app.color.register_page_background'))
+    .backgroundColor($r('app.color.login_page_background_color'))
   }
 
-  @Builder Title() {
+  @Builder TopBar() {
     Row() {
       Image($r('app.media.ic_back'))
         .width($r('app.float.image_size'))
         .height($r('app.float.image_size'))
         .margin({
-          left: $r('app.float.image_margin_left'),
+          left: 16,
           right: $r('app.float.image_margin_right')
         })
         .onClick(() => {
           router.back();
         })
 
-      Text($r('app.string.register_success_text'))
+      Text('注册')
         .fontSize($r('app.float.title_text_size'))
         .fontColor($r('app.color.title'))
         .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)

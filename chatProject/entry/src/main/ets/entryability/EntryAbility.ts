@@ -41,6 +41,9 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     Logger.info(TAG, 'MainAbility onWindowStageCreate');
 
+    //
+    globalThis.context = this.context;
+
     if (currentWindowStage === null) {
       currentWindowStage = windowStage;
     }

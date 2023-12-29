@@ -50,6 +50,7 @@ export struct FriendDetailPage {
           .onClick(() => {
             // TODO-联系人: 删除好友实现
           //   @ohos.arkui.advanced.Dialog（弹出框）
+            // or promptAction.showDialog
           })
       }
       .width(CommonConstants.FULL_WIDTH_PERCENT)
