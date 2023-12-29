@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import router from '@ohos.router';
 import hiTraceMeter from '@ohos.hiTraceMeter';
 import http from '@ohos.net.http';
@@ -40,7 +25,7 @@ const GRID_COLUMN_NUMBER: number = 3; // 九宫格每行图片数
 @Entry
 @Component
 struct MomentsPage {
-  @State uid:string = '';// 传入uid进行http通信
+  @State uid : string = '';// 传入uid进行http通信
 
   @State itemLength: number = 0;
   @State cachedCountNumber: number = 3; // 懒加载缓存数
@@ -122,43 +107,45 @@ struct MomentsPage {
     /**
      * 假数据填充
      */
-    // let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
+    let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
 
     /**
      * 真数据请求
      */
-    let friendMomentArray: Array<FriendMoment> = []
-
-    const requestOptions: RequestOptions = {
-      url: "http://172.29.4.148:8080/v1/register", //TODO: url change
-      method: RequestMethod.GET,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      extraData: {
-        "uid" : this.uid
-      }
-    };
-
+    //  let friendMomentArray: Array<FriendMoment> = []
     //
-    HttpManager.getInstance().request<ResponseResult>(requestOptions)
-      .then((result) => {
-        if(result.code == '200') {
-          // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
-          Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
-        }
-      })
-      .catch((err) => {
-        console.error(JSON.stringify(err));
-      });
+    // const requestOptions: RequestOptions = {
+    //   url: "http://172.29.4.148:8080/v1/register", //TODO: url change
+    //   method: RequestMethod.GET,
+    //   header: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   extraData: {
+    //     "uid" : this.uid
+    //   }
+    // };
+    //
+    // //
+    // HttpManager.getInstance().request<ResponseResult>(requestOptions)
+    //   .then((result) => {
+    //     if(result.code == '200') {
+    //       // 成功返回
+    //       console.info(JSON.stringify(result.data)); //信息
+    //       Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(JSON.stringify(err));
+    //   });
 
 
     if (friendMomentArray) {
       for (let i = 0; i < friendMomentArray.length; i++) {
+        console.info('xcsd: ' + friendMomentArray[i].toString())
         this.momentData.pushData(friendMomentArray[i]);
       }
     } else {
+      console.info("xcsd: fuck")
       try {
         promptAction.showToast({
           message: $r('app.string.friendMomentsPage_prompt_message'),
@@ -387,6 +374,7 @@ class jsonResult {
 async function getWebData(url: string): Promise<Array<FriendMoment>> {
   Logger.info('getWebData onMessage start');
   try {
+    console.info('fuck start');
     let webData: http.HttpResponse = await http.createHttp().request(
       url,
       { header: {
@@ -394,9 +382,14 @@ async function getWebData(url: string): Promise<Array<FriendMoment>> {
       },
         connectTimeout: FriendMomentJsonUrl.CONNECT_TIME, readTimeout: FriendMomentJsonUrl.READ_TIME
       })
+    console.info('fuck 1');
     if (typeof (webData.result) === 'string') {
       // 解析json字符串
+      console.info('fuck 2');
+      // console.info('fuck' + webData.result.toString());
+      console.info('fuck 3');
       let jsonResult = await JSON.parse(webData.result) as jsonResult;
+      console.info('fuck 4');
       let jsonObj: Array<FriendMoment> = jsonResult.FriendMoment;
       let friendMomentBuckets: Array<FriendMoment> = new Array<FriendMoment>();
       // 映射json数据为FriendMoment对象
@@ -413,12 +406,14 @@ async function getWebData(url: string): Promise<Array<FriendMoment>> {
         taskCount++;
       }
       Logger.info('getFriendMomentObj onMessage end');
+      console.info('getFriendMomentObj onMessage end st');
+      console.info('getFriendMomentObj onMessage end ed');
       return friendMomentBuckets;
     } else {
       Logger.info('getWebData makeLocalData get JSON error');
     }
   } catch (err) {
-    Logger.error(`get result failed, code is ${err.code}, message is ${err.message}`);
+    Logger.error(`get result failed, err is ${err}, code is ${err.code}, message is ${err.message}`);
   }
   return new Array();
 }

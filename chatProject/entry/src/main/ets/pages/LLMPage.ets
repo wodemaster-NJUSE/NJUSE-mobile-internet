@@ -154,6 +154,7 @@ export struct LLMPage {
                                 'Content-Type': 'application/json'
                             },
                             extraData: {
+                                "uid" : "123",
                                 "question" : this.keyboardStr
                             }
                         };

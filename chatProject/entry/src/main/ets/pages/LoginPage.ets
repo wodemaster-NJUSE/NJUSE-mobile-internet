@@ -4,18 +4,12 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
 import { LoginComponent } from '../view/LoginComponent';
 
-/**
- * This template implements the Login function.
- * First register personal details. Log in after entering the username and password.
- * Click the button at the bottom to ask for help and check the privacy statement.
- * Developers can save username and password by Preference or Relational Database.
- */
 @Entry
 @Component
 struct LoginPage {
   aboutToAppear() {
     MediaQueryModel.register();
-}
+  }
 
   aboutToDisappear() {
     MediaQueryModel.unRegister();
@@ -46,7 +40,6 @@ struct LoginPage {
 
    @Builder Title() {
     Row() {
-
        Text("登录")
         .fontSize($r('app.float.title_text_size'))
         .fontColor($r('app.color.title'))
