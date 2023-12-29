@@ -113,9 +113,6 @@ export struct myLoginComponent {
             });
           })
 
-
-
-
         Button('注册', {type: ButtonType.Normal, stateEffect: true})
           .borderRadius(8)
           .backgroundColor(Color.Orange)

@@ -44,10 +44,10 @@ struct RegisterPage {
           router.back();
         })
 
-      Text('注册')
-        .fontSize($r('app.float.title_text_size'))
-        .fontColor($r('app.color.title'))
-        .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
+      // Text('注册')
+      //   .fontSize($r('app.float.title_text_size'))
+      //   .fontColor($r('app.color.title'))
+      //   .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))
