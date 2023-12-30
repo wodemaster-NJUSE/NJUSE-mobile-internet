@@ -1,11 +1,6 @@
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
-import { User } from '../model/UserModel';
-
-
 import { HttpManager } from '../utils/http/HttpManager';
-//import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
-import http from '@ohos.net.http';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { ResponseResult } from '../utils/http/HttpCore';
 
@@ -47,6 +42,9 @@ export struct myRegisterComponent {
           // color: $r('app.color.input_border_color'),
           radius: 8
         })
+        .onChange((value: string) => {
+          this.userName = value;
+        })
 
       TextInput({ placeholder: $r('app.string.password') })
         .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
@@ -62,6 +60,9 @@ export struct myRegisterComponent {
           radius: 8
         })
         .margin({ top: 20 })
+        .onChange((value: string) => {
+          this.passWord = value;
+        })
 
       TextInput({ placeholder: '再次输入密码' })
         .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
@@ -77,6 +78,9 @@ export struct myRegisterComponent {
           radius: 8
         })
         .margin({ top: 20 })
+        .onChange((value: string) => {
+          this.repeatPWD = value;
+        })
 
       Button('立即注册', {type: ButtonType.Normal, stateEffect: true})
         .borderRadius(8)
@@ -87,12 +91,41 @@ export struct myRegisterComponent {
         .margin({
           top: 20
         })
+        .enabled(isRegisterButtonClickable(this.userName, this.passWord,this.repeatPWD))
+        .onClick(() => {
+          // 创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
+          const requestOptions: RequestOptions = {
+            url: "http://172.29.4.148:8080/v1/register",
+            method: RequestMethod.POST,
+            header: {
+              'Content-Type': 'application/json'
+            },
+            extraData: {
+              "username": this.userName,
+              "password": this.passWord
+            }
+          };
 
+          // 调用HttpManager的request方法，发起POST请求
+          HttpManager.getInstance().request<ResponseResult>(requestOptions)
+            .then((result) => {
+              console.info(JSON.stringify(result.data));//输出用户信息并跳转
 
+              router.pushUrl({
+                url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
+                params :{
+                  uid : JSON.parse(JSON.stringify(result.data)).uid  //只需要获取一个uid即可
+                }
+              });
+            })
+            .catch((err) => {
+              console.error(JSON.stringify(err));
+            });
+        })
     }
   }
 }
 
-function isLoginButtonClickable(userName: string, password: string): boolean {
-  return userName !== '' && password !== '';
+function isRegisterButtonClickable(userName: string, password: string, repeatPWD:string): boolean {
+  return userName !== '' && password !== '' && repeatPWD !== '';
 }

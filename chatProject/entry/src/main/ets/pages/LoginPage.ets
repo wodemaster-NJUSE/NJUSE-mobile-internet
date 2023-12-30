@@ -1,11 +1,7 @@
-import router from '@ohos.router';
 import MediaQueryModel from '../model/MediaQueryModel';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
-import { LoginComponent } from '../view/LoginComponent';
 import { myLoginComponent } from '../view/myLoginComponent';
-import app from '@system.app';
-import prompt from '@ohos.prompt';
 import promptAction from '@ohos.promptAction';
 
 @Entry

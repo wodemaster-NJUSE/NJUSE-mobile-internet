@@ -47,6 +47,7 @@ export struct RegisterComponent {
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
           }.width("100%")
+
           TextInput({ placeholder: $r('app.string.username') })
             .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
             .height($r('app.float.text_input_height'))
@@ -95,6 +96,7 @@ export struct RegisterComponent {
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
           }.width("100%")
+
           TextInput({ placeholder: "请再次输入密码" })
             .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
             .height($r('app.float.text_input_height'))

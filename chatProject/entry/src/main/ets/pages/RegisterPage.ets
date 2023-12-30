@@ -2,7 +2,6 @@ import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { myRegisterComponent } from '../view/myRegisterComponent';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
-import { RegisterComponent } from '../view/RegisterCompoent';
 
 @Entry
 @Component
@@ -13,7 +12,7 @@ struct RegisterPage {
 
       Scroll() {
         Column() {
-          // RegisterComponent()
+
           myRegisterComponent()
 
           Blank()
@@ -43,11 +42,6 @@ struct RegisterPage {
         .onClick(() => {
           router.back();
         })
-
-      // Text('注册')
-      //   .fontSize($r('app.float.title_text_size'))
-      //   .fontColor($r('app.color.title'))
-      //   .fontWeight(CommonConstants.TITLE_FONT_WEIGHT)
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))
