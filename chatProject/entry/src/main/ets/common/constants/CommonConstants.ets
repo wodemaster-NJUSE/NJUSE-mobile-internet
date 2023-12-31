@@ -315,7 +315,7 @@ export class CommonConstants {
   /**
    * 设置界面路由
    */
-  static readonly SETTINGS_PAGE_URL: string = 'pages/settingPages/SettingsPage';
+  static readonly SETTINGS_PAGE_URL: string = 'pages/settingPages/mySettingPage';
   /**
    * 设置聊天列表路由
    */

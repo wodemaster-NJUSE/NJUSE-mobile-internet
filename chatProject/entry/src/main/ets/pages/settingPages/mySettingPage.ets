@@ -1,4 +1,5 @@
 import router from '@ohos.router';
+import promptAction from '@ohos.promptAction';
 import {CommonConstants} from '../../common/constants/CommonConstants';
 import {User} from '../../model/UserModel'
 
@@ -13,11 +14,41 @@ struct mySettingPage {
   @State signature : string = this.user.signature
   @State gender : string = this.user.gender
 
+  @State isChanged : boolean = false;
+
     build() {
       Column() {
         this.TopBar()
 
         this.PersonalMsgList()
+
+        Row() {
+          // 保存修改按钮
+          Button('保存修改', {type: ButtonType.Normal, stateEffect: true})
+            .borderRadius(8)
+            .fontSize(18)
+            .backgroundColor('#317aff')
+            .width('45%')
+            .enabled(this.isChanged)
+            .onClick(() => {
+              // TODO-修改个人信息
+            })
+
+          // 退出登录按钮
+          Button('退出登录', {type: ButtonType.Normal, stateEffect: true})
+            .borderRadius(8)
+            .backgroundColor('0x317aff')
+            .width('45%')
+            .backgroundColor('#FFFA0404')
+            .fontSize(18)
+            .onClick(() => {
+              // TODO-退出登录
+            })
+        }
+        .width('90%')
+        .height('48vp')
+        .margin({top: 18})
+        .justifyContent(FlexAlign.SpaceBetween)
       }
       .width('100%')
       .height('100%')
@@ -63,71 +94,202 @@ struct mySettingPage {
             .fontSize(16)
             .textAlign(TextAlign.Start)
             .height('100%')
-            .width(50)
+            .layoutWeight(1)
             .margin({left: 12})
+
+          Image(this.profilePicture)
+            .height(54)
+            .width(54)
+            .borderRadius(27)
+            .margin({right: 20})
+            .align(Alignment.End)
         }
         .width('100%')
         .height('100%')
       }
       .width('100%')
-      .height(40)
+      .height('100%')
       .backgroundColor(Color.White)
-      .borderRadius({
-        topLeft: 4,
-        topRight: 4
-      })
+      .borderRadius(8)
+    }
+    .width('90%')
+    .height(80)
 
+
+    List() {
       // 用户名
       ListItem() {
         Row() {
-          Text('test2')
+          Text('用户名')
+            .fontSize(16)
+            .textAlign(TextAlign.Start)
+            .height('100%')
+            .width('20%')
+            .margin({left: 12})
+
+          // Text(this.userName)
+          //   .fontSize(18)
+          //   .textAlign(TextAlign.Start)
+          //   .height('100%')
+          //   .width('75%')
+          TextInput({placeholder : this.userName})
+            .placeholderFont({size : 18})
+            .placeholderColor(Color.Black)
+            .height('100%')
+            .width('80%')
+            .borderRadius(0)
+            .backgroundColor(Color.White)
+            .onChange((value: string) => {
+              this.userName = value;
+              this.isChanged = true;
+            })
         }
       }
       .width('100%')
-      .height(40)
+      .height(46)
       .backgroundColor(Color.White)
+      .borderRadius({
+        topLeft : 8,
+        topRight : 8
+      })
 
       // 性别
       ListItem() {
         Row() {
-          Text('test2')
+          Text('性别')
+            .fontSize(16)
+            .textAlign(TextAlign.Start)
+            .height('100%')
+            .width('20%')
+            .margin({left: 12})
+
+          Text(this.gender)
+            .fontSize(18)
+            .textAlign(TextAlign.Start)
+            .height('100%')
+            .width('80%')
+            .padding({left: 15})
         }
       }
       .width('100%')
-      .height(40)
+      .height(46)
       .backgroundColor(Color.White)
+      .onClick(() => {
+        try {
+          promptAction.showDialog({
+            message: '选择性别',
+            buttons: [{
+              text : '男',
+              color : '#000000'
+            },
+              {
+              text : '女',
+              color : '#000000'
+            }],
+          })
+            .then(data => {
+              this.isChanged = true;
+              if (data.index === 0) {
+                this.gender = '男';
+              } else {
+                this.gender = '女';
+              }
+            })
+            .catch(err => {
+              console.info('SettingPage showDialog error: ' + err);
+            })
+        } catch (error) {
+          console.error(`SettingPage showDialog args error code is ${error.code}, message is ${error.message}`);
+        }
+      })
 
       // 签名
       ListItem() {
         Row() {
-          Text('test2')
-        }
-      }
-      .width('100%')
-      .height(40)
-      .backgroundColor(Color.White)
+          Text('签名')
+            .fontSize(16)
+            .textAlign(TextAlign.Start)
+            .height('100%')
+            .width('20%')
+            .margin({left: 12})
 
-      // 个人空间
-      ListItem() {
-        Row() {
-          Text('test2')
+          // Text(this.signature)
+          //   .fontSize(18)
+          //   .textAlign(TextAlign.Start)
+          //   .maxLines(1)
+          //   .height('100%')
+          //   .width('75%')
+
+          TextInput({placeholder : this.signature})
+            .placeholderFont({size : 18})
+            .placeholderColor(Color.Black)
+            .height('100%')
+            .width('80%')
+            .borderRadius(0)
+            .backgroundColor(Color.White)
+            .onChange((value: string) => {
+              this.signature = value;
+              this.isChanged = true;
+            })
         }
       }
       .width('100%')
-      .height(40)
+      .height(46)
       .backgroundColor(Color.White)
       .borderRadius({
-        bottomLeft: 4,
-        bottomRight: 4
+        bottomLeft: 8,
+        bottomRight: 8
       })
     }
     .width('90%')
-    .height(400)
+    .height('140')
     .divider({
       strokeWidth: '4px',
       startMargin: 6,
       endMargin: 6,
       color: "#FFEAEAEA"
+    })
+    .margin({
+      top: 12
+    })
+
+    // 空间
+    List() {
+      ListItem() {
+        Row() {
+          Text('我的空间')
+            .fontSize(16)
+            .textAlign(TextAlign.Start)
+            .height('100%')
+            .layoutWeight(1)
+            .margin({left: 12})
+
+          Image($r('app.media.right_arrow'))
+            .height(18)
+            .width(18)
+            .objectFit(ImageFit.Contain)
+            .margin({right: 12})
+            .align(Alignment.End)
+        }
+      }
+      .width('100%')
+      .height(46)
+      .backgroundColor(Color.White)
+      .borderRadius(8)
+      .onClick(() => {
+        // TODO-进入个人空间
+      })
+    }
+    .width('90%')
+    .height(50)
+    .divider({
+      strokeWidth: '4px',
+      startMargin: 6,
+      endMargin: 6,
+      color: "#FFEAEAEA"
+    })
+    .margin({
+      top: 12
     })
   }
 }

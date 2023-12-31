@@ -11,7 +11,7 @@
     "pages/ContactsPage",
     "pages/DiscoverPage",
 
-
+    "pages/settingPages/mySettingPage",
     "pages/settingPages/SettingsPage",
     "pages/settingPages/SettingProfilePicturePage",
     "pages/settingPages/SettingUsernamePage",
