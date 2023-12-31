@@ -374,4 +374,9 @@ export class CommonConstants {
    * 设置好友详情界面
    */
   static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/FriendDetailPage'
+
+  /**
+   * 设置添加动态界面
+   */
+  static readonly ADD_MOMENTS_PAGE_URL: string = 'pages/momentPages/AddMomentsPage'
 }

@@ -58,7 +58,12 @@ struct MomentsPage {
           .objectFit(ImageFit.Contain)
           .onClick(()=>{
             // 点击进入到添加动态界面
-
+            router.pushUrl({
+              url: CommonConstants.ADD_MOMENTS_PAGE_URL,
+              params:{
+               uid : this.uid
+            }
+            })
           })
       }
       .alignItems(VerticalAlign.Center)
