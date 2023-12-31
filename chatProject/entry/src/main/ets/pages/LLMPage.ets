@@ -50,16 +50,16 @@ export struct LLMPage {
             // 顶部导航栏
             Row() {
                 Row() {
-                    Image($r('app.media.ic_back'))
-                        .id('returnBtn')
-                        .height(24)
-                        .width(24)
-                        .margin({
-                            left: 14
-                        })
-                        .onClick(() => {
-                            router.back();
-                        })
+                    // Image($r('app.media.ic_back'))
+                    //     .id('returnBtn')
+                    //     .height(24)
+                    //     .width(24)
+                    //     .margin({
+                    //         left: 14
+                    //     })
+                    //     .onClick(() => {
+                    //         router.back();
+                    //     })
 
                     Text('小智')
                         .fontSize($r('app.integer.opt_layout_chat_view_profile_picture_radius'))

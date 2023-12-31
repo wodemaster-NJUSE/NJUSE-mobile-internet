@@ -6,6 +6,7 @@ import http from '@ohos.net.http';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { ResponseResult } from '../utils/http/HttpCore';
 import { UserEntity } from '../stores/user';
+import Logger from '../utils/Logger';
 
 /**
  * Login page component.
@@ -140,8 +141,6 @@ export struct LoginComponent {
             //   .catch((err) => {
             //     console.error(JSON.stringify(err));
             //   });
-
-
 
             router.pushUrl({
               url:CommonConstants.MAIN_PAGE_URL,

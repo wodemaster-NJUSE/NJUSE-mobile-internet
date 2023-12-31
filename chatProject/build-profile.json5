@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.cer",
-          "storePassword": "0000001B139F269CF5AE52089BA8C18BA8EB996D4419AE49C97EC178E5C82A187EF89F4B8EFD4F1CAEA922",
+          "storePassword": "0000001B47B5D04DD71F8D901E7827784EC6EA765BC7A1D17E47AC4462E64D1E851CED954564D65265E8A6",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BF0BA39BA7DC4A680DFE70943E9CE85BDBE426A1BE5F5D12F9CF9AB5A996EE2A5FAC091177B639F",
+          "keyPassword": "0000001B932C1DE07FAD2D2222F38F1D5A222F222AB0D7C23CC6A3275DB4DE2D572DD25E344857E22236FE",
           "profile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\Milo\\.ohos\\config\\auto_debug_chatProject_com.example.chatproject_30086000620883578.p12"
