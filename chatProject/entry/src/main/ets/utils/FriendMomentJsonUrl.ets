@@ -18,10 +18,10 @@ export default class FriendMomentJsonUrl {
   public static readonly FRIEND_MOMENT_JSON_URL: Array<string> = [
     'https://gitee.com/openharmony/applications_app_samples/raw/master/code/Solutions' +
       '/IM/Chat/features/chatlist/src/main/resources/rawfile/mockFriendMomentOneModelData.json',
-  'https://gitee.com/openharmony/applications_app_samples/raw/master/code/Solutions' +
-  '/IM/Chat/features/chatlist/src/main/resources/rawfile/mockFriendMomentTwoModelData.json',
-  'https://gitee.com/openharmony/applications_app_samples/raw/master/code/Solutions' +
-  '/IM/Chat/features/chatlist/src/main/resources/rawfile/mockFriendMomentThreeModelData.json'
+    'https://gitee.com/openharmony/applications_app_samples/raw/master/code/Solutions' +
+      '/IM/Chat/features/chatlist/src/main/resources/rawfile/mockFriendMomentTwoModelData.json',
+    'https://gitee.com/openharmony/applications_app_samples/raw/master/code/Solutions' +
+      '/IM/Chat/features/chatlist/src/main/resources/rawfile/mockFriendMomentThreeModelData.json'
     // 'src/main/resources/rawfile/mockFriendMomentOneModelData.json',
     // 'src/main/resources/rawfile/mockFriendMomentTwoModelData.json',
     // 'src/main/resources/rawfile/mockFriendMomentThreeModelData.json'

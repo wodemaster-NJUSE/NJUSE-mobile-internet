@@ -71,6 +71,10 @@ struct MomentsPage {
           .height($r('app.integer.friendMomentsPage_title_icon_height'))
           .width($r('app.integer.friendMomentsPage_title_icon_width'))
           .objectFit(ImageFit.Contain)
+          .onClick(()=>{
+            // 点击进入到添加动态界面
+
+          })
       }
       .alignItems(VerticalAlign.Center)
       .height($r('app.integer.friendMomentsPage_title_height'))
@@ -122,36 +126,36 @@ struct MomentsPage {
     /**
      * 假数据填充
      */
-    // let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
+    let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
 
     /**
      * 真数据请求
      */
-    let friendMomentArray: Array<FriendMoment> = []
+    //let friendMomentArray: Array<FriendMoment> = []
 
-    const requestOptions: RequestOptions = {
-      url: "http://172.29.4.148:8080/v1/register", //TODO: url change
-      method: RequestMethod.GET,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      extraData: {
-        "uid" : this.uid
-      }
-    };
-
+    // const requestOptions: RequestOptions = {
+    //   url: "http://172.29.4.148:8080/v1/register", //TODO: url change
+    //   method: RequestMethod.GET,
+    //   header: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   extraData: {
+    //     "uid" : this.uid
+    //   }
+    // };
     //
-    HttpManager.getInstance().request<ResponseResult>(requestOptions)
-      .then((result) => {
-        if(result.code == '200') {
-          // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
-          Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
-        }
-      })
-      .catch((err) => {
-        console.error(JSON.stringify(err));
-      });
+    // //
+    // HttpManager.getInstance().request<ResponseResult>(requestOptions)
+    //   .then((result) => {
+    //     if(result.code == '200') {
+    //       // 成功返回
+    //       console.info(JSON.stringify(result.data)); //信息
+    //       Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(JSON.stringify(err));
+    //   });
 
 
     if (friendMomentArray) {

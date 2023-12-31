@@ -308,7 +308,7 @@ export struct ChatDetailPage {
       }
     });
     // 填充假数据
-    // this.makeDataLocal();
+    this.makeDataLocal();
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 
