@@ -110,11 +110,14 @@ export struct myRegisterComponent {
           HttpManager.getInstance().request<ResponseResult>(requestOptions)
             .then((result) => {
               console.info(JSON.stringify(result.data));//输出用户信息并跳转
+              let res_uid : string = JSON.parse(JSON.stringify(result.data)).uid;
+
+
 
               router.pushUrl({
                 url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                 params :{
-                  uid : JSON.parse(JSON.stringify(result.data)).uid  //只需要获取一个uid即可
+                  uid : res_uid  //只需要获取一个uid即可
                 }
               });
             })
