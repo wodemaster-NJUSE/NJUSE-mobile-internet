@@ -96,6 +96,7 @@ struct ChatView {
       router.pushUrl({
         url: CommonConstants.DETAIL_PAGE_URL,
         params: {
+          // 传递的是朋友的信息
           chatName: this.chatItem.user.userName,
           chatId: this.chatItem.user.userId,
           chatImg: this.chatItem.user.userImage,

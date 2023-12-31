@@ -33,4 +33,3 @@ export default class FriendMomentJsonUrl {
   // getWebData 中使用的读取时间
   public static READ_TIME: number = 60000;
 }
-

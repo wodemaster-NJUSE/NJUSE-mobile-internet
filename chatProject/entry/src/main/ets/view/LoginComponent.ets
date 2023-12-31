@@ -146,8 +146,8 @@ export struct LoginComponent {
             router.pushUrl({
               url:CommonConstants.MAIN_PAGE_URL,
               params: {
-                          uid: 10001
-                        }
+                uid: 10001
+              }
             });
           })
       }

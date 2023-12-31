@@ -25,7 +25,7 @@ const GRID_COLUMN_NUMBER: number = 3; // 九宫格每行图片数
 @Entry
 @Component
 struct MomentsPage {
-  @State uid : string = '';// 传入uid进行http通信
+  @State uid:string = '';// 传入uid进行http通信
 
   @State itemLength: number = 0;
   @State cachedCountNumber: number = 3; // 懒加载缓存数
@@ -56,6 +56,10 @@ struct MomentsPage {
           .height($r('app.integer.friendMomentsPage_title_icon_height'))
           .width($r('app.integer.friendMomentsPage_title_icon_width'))
           .objectFit(ImageFit.Contain)
+          .onClick(()=>{
+            // 点击进入到添加动态界面
+
+          })
       }
       .alignItems(VerticalAlign.Center)
       .height($r('app.integer.friendMomentsPage_title_height'))
@@ -113,7 +117,7 @@ struct MomentsPage {
      * 真数据请求
      */
     //  let friendMomentArray: Array<FriendMoment> = []
-    //
+
     // const requestOptions: RequestOptions = {
     //   url: "http://172.29.4.148:8080/v1/register", //TODO: url change
     //   method: RequestMethod.GET,
@@ -141,11 +145,9 @@ struct MomentsPage {
 
     if (friendMomentArray) {
       for (let i = 0; i < friendMomentArray.length; i++) {
-        console.info('xcsd: ' + friendMomentArray[i].toString())
         this.momentData.pushData(friendMomentArray[i]);
       }
     } else {
-      console.info("xcsd: fuck")
       try {
         promptAction.showToast({
           message: $r('app.string.friendMomentsPage_prompt_message'),
@@ -374,7 +376,6 @@ class jsonResult {
 async function getWebData(url: string): Promise<Array<FriendMoment>> {
   Logger.info('getWebData onMessage start');
   try {
-    console.info('fuck start');
     let webData: http.HttpResponse = await http.createHttp().request(
       url,
       { header: {
@@ -382,14 +383,9 @@ async function getWebData(url: string): Promise<Array<FriendMoment>> {
       },
         connectTimeout: FriendMomentJsonUrl.CONNECT_TIME, readTimeout: FriendMomentJsonUrl.READ_TIME
       })
-    console.info('fuck 1');
     if (typeof (webData.result) === 'string') {
       // 解析json字符串
-      console.info('fuck 2');
-      // console.info('fuck' + webData.result.toString());
-      console.info('fuck 3');
       let jsonResult = await JSON.parse(webData.result) as jsonResult;
-      console.info('fuck 4');
       let jsonObj: Array<FriendMoment> = jsonResult.FriendMoment;
       let friendMomentBuckets: Array<FriendMoment> = new Array<FriendMoment>();
       // 映射json数据为FriendMoment对象
@@ -406,8 +402,6 @@ async function getWebData(url: string): Promise<Array<FriendMoment>> {
         taskCount++;
       }
       Logger.info('getFriendMomentObj onMessage end');
-      console.info('getFriendMomentObj onMessage end st');
-      console.info('getFriendMomentObj onMessage end ed');
       return friendMomentBuckets;
     } else {
       Logger.info('getWebData makeLocalData get JSON error');
