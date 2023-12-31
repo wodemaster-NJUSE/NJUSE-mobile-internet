@@ -40,7 +40,7 @@ export struct AddMomentsPage {
   // imageList: Array<string> = new Array<string>()
   // media: string = '' // media为需要获取的视频url
   // mediaPreview: string = '' //mediaPreview为需要获取的视频预览图url
-  @State mediaBean: MediaBean = new MediaBean();
+  @State mediaBeans: Array<MediaBean> = [];
   private mediaHelper: MediaHelper = new MediaHelper(getContext());
 
   async aboutToAppear(){
@@ -80,11 +80,11 @@ export struct AddMomentsPage {
           .margin(20)
           .border({ width: 0.5, color: '#ff38f84b', radius: 15 })
           .onClick(async () => {
-            this.mediaBean = await this.mediaHelper.selectPicture();
+            this.mediaBeans = await this.mediaHelper.selectPictures();
           })
       //展示图片
-      Image(this.mediaBean.localUrl)
-
+      Image(this.mediaBeans[0].localUrl)
+      // 弄个list就可以了
 
 
     }

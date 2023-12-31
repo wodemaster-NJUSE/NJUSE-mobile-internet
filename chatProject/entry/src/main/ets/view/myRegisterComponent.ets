@@ -114,7 +114,7 @@ export struct myRegisterComponent {
               router.pushUrl({
                 url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                 params :{
-                  uid : JSON.parse(JSON.stringify(result.data)).uid  //只需要获取一个uid即可
+                  uid : JSON.parse(JSON.stringify(result.data))  //只需要获取一个uid即可
                 }
               });
             })

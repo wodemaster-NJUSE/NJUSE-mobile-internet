@@ -84,13 +84,6 @@ export class HttpCore {
     return resultPromise;
   }
 
-
-  private appendQueryParams(url: string, queryParams: Record<string, string>): string {
-
-    // todo 使用将参数拼接到url上
-    return url;
-  }
-
   private isValidUrl(url: string): boolean {
 
     //todo 实现URL格式判断

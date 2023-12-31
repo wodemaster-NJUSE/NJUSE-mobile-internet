@@ -18,30 +18,35 @@ export class MediaHelper {
   /**
    * 选择图片
    */
-  public selectPicture(): Promise<MediaBean> {
+  public selectPictures(): Promise<Array<MediaBean>> {
 
     try {
       let photoSelectOptions = new picker.PhotoSelectOptions();
       photoSelectOptions.MIMEType = picker.PhotoViewMIMETypes.IMAGE_TYPE;
-      photoSelectOptions.maxSelectNumber = 1;
+      photoSelectOptions.maxSelectNumber = 9;// 最大选择数量
       let photoPicker = new picker.PhotoViewPicker();
       return photoPicker.select(photoSelectOptions)
         .then((photoSelectResult) => {
           console.info(this.TAG, 'PhotoViewPicker.select successfully, PhotoSelectResult uri: ' + JSON.stringify(photoSelectResult));
 
           if (photoSelectResult && photoSelectResult.photoUris && photoSelectResult.photoUris.length > 0) {
-            let filePath = photoSelectResult.photoUris[0];
-            console.info(this.TAG, 'PhotoViewPicker.select successfully, PhotoSelectResult uri: ' + filePath);
-            return filePath;
+            let filePaths : Array<string> = photoSelectResult.photoUris;// 获取图片url
+            console.info(this.TAG, 'PhotoViewPicker.select successfully, PhotoSelectResult uri: ' + filePaths[0]);// 能输出第一个就说明没问题
+            return filePaths;// 返回所有图片url
           }
-
         }).catch((err) => {
           console.error(this.TAG, 'PhotoViewPicker.select failed with err: ' + err);
           return err;
-        }).then(async (filePath) => {
-          const mediaBean = await this.buildMediaBean(filePath);
-          return mediaBean;
+        }).then(async filePaths => {
+          let photoArr : Array<string>  = filePaths;
+          let mediaBeans : Array<MediaBean> = []
+          for(let i = 0; i < photoArr.length; i++){
+            const mediaBean = await this.buildMediaBean(photoArr[i]);
+            mediaBeans.push(mediaBean)
+          }
+          return mediaBeans;
         });
+
     } catch (err) {
       console.error(this.TAG, 'PhotoViewPicker failed with err: ' + err);
       return Promise.reject(err);
