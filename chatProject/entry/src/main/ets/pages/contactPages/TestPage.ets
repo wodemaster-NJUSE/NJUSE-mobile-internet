@@ -1,3 +1,4 @@
+import { CommonConstants } from '../../common/constants/CommonConstants';
 import { ChatContact, ChatModel } from '../../viewmodel/MsgBase';
 
 @Entry
@@ -8,31 +9,39 @@ export struct NewFriendsView {
   // @StorageLink('image_sync_load') imageSyncLoad: boolean | undefined = AppStorage.Get('image_sync_load');
 
   build() {
-    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-      TextArea({ placeholder: ''})
-        .id('bottomTextInput')
-        .height(30)
-        .layoutWeight(1)
-        .borderRadius(2)
-        .backgroundColor(Color.White)
-        .margin({
-          left: 8,
-          right: 8
-        })
+    Column() {}
+  }
 
-      Text('发送')
-        .borderRadius(2)
-        .height(30)
-        .width(52)
-        .backgroundColor('#FF6EC2FA')
-        .fontColor(Color.White)
-        .fontSize(12)
-        .margin({ right: 10 })
+  @Builder TopBar() {
+    Row() {
+      // Image($r('app.media.ic_back'))
+      //   .width($r('app.float.image_size'))
+      //   .height($r('app.float.image_size'))
+      //   .margin({
+      //     left: $r('app.float.image_margin_left'),
+      //     right: $r('app.float.image_margin_right')
+      //   })
+      //   .onClick(() => {
+      //     router.back()
+      //   })
+
+      Text('取消')
+
+
+
+      Text('个人信息编辑')
+        .fontSize(20)
+        .fontColor('#182431')
+        .width('40%')
         .textAlign(TextAlign.Center)
 
+      Text().width('24vp').margin({
+        left: '16vp',
+        right: '24vp'
+      })
     }
-    .backgroundColor('#FFF3F3F3')
-    .width($r('app.string.layout_100'))
-    .height(46)
+    .width(CommonConstants.FULL_WIDTH_PERCENT)
+    .height($r('app.float.title_height'))
+    .justifyContent(FlexAlign.SpaceBetween)
   }
 }
