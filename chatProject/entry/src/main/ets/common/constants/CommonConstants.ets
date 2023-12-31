@@ -315,7 +315,7 @@ export class CommonConstants {
   /**
    * 设置界面路由
    */
-  static readonly SETTINGS_PAGE_URL: string = 'pages/settingPages/mySettingPage';
+  static readonly SETTINGS_PAGE_URL: string = 'pages/settingPages/SettingPage';
   /**
    * 设置聊天列表路由
    */
@@ -373,7 +373,7 @@ export class CommonConstants {
   /**
    * 设置好友详情界面
    */
-  static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/myFriendDetailPage'
+  static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/FriendDetailPage'
 
   /**
    * 设置添加动态界面

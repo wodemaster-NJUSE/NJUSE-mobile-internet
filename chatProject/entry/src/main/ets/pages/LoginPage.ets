@@ -1,7 +1,7 @@
 import MediaQueryModel from '../model/MediaQueryModel';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
-import { myLoginComponent } from '../view/myLoginComponent';
+import { LoginComponent } from '../view/LoginComponent';
 import promptAction from '@ohos.promptAction';
 
 @Entry
@@ -23,7 +23,7 @@ struct LoginPage {
 
       Scroll() {
         Column() {
-          myLoginComponent()
+          LoginComponent()
 
           Blank()
 

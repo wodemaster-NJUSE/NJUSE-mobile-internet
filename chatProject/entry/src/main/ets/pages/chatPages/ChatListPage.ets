@@ -3,7 +3,7 @@ import { makeDataLocal, makeDataList } from '../../utils/DataFactory';
 import Constants from '../../utils/Constants';
 import { ChatModel } from '../../viewmodel/MsgBase';
 import { ChatListData } from '../../viewmodel/ChatListDataSource';
-import { OptLayoutChatView, ReusableOptLayoutChatView } from '../../view/OptLayoutChatView';
+import { ChatView, ReusableChatView } from '../../view/ChatView';
 import Logger from '../../utils/Logger';
 import router from '@ohos.router';
 import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
@@ -52,10 +52,10 @@ export struct ChatListDisplayView {
   OptChatViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
-      ReusableOptLayoutChatView(new Message(msg))
+      ReusableChatView(new Message(msg))
         //.reuseId(REUSE_ID)
     } else {
-      OptLayoutChatView(new Message(msg))
+      ChatView(new Message(msg))
     }
   }
 

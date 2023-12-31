@@ -6,7 +6,7 @@ import { ResponseResult } from '../utils/http/HttpCore';
 import Logger from '../utils/Logger';
 
 @Component
-export struct myRegisterComponent {
+export struct RegisterComponent {
   @State userName: string = '';
   @State passWord: string = '';
   @State repeatPWD: string = '';
