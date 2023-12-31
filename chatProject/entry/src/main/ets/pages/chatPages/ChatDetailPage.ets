@@ -9,6 +9,7 @@ import hiTraceMeter from '@ohos.hiTraceMeter';
 import Want from '@ohos.app.ability.Want';
 import Logger from '../../utils/Logger';
 import fs from '@ohos.file.fs';
+
 import { ShareDate, WantFileModel, WantModel } from '../../model/Want';
 import { ChatItemView } from './ChatItemView';
 import webSocket from '@ohos.net.webSocket';
