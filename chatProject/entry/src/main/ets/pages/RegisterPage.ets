@@ -2,6 +2,7 @@ import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import { myRegisterComponent } from '../view/myRegisterComponent';
 import { PrivacyStatementComponent } from '../view/PrivacyStatementComponent';
+import { RegisterComponent } from '../view/RegisterCompoent';
 
 @Entry
 @Component
@@ -12,8 +13,8 @@ struct RegisterPage {
 
       Scroll() {
         Column() {
-
           myRegisterComponent()
+          // RegisterComponent()
 
           Blank()
 

@@ -7,8 +7,8 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 @Entry
 @Component
 struct RegistrationSuccessPage {
-  // private params = router.getParams() as Record<string, Object>;
-  // uid : string | Resource = this.params.uid as string | Resource;
+  private params = router.getParams() as Record<string, Object>;
+  uid : string | Resource = this.params.uid as string | Resource;
   build() {
 
     Column() {
@@ -31,7 +31,7 @@ struct RegistrationSuccessPage {
           .fontColor($r('app.color.register_success_text_font'))
           .margin({ top: 10 })
 
-        Text('-1111111')
+        Text(this.uid)
           .fontColor(Color.Black)
           .fontSize(20)
           .width(200)

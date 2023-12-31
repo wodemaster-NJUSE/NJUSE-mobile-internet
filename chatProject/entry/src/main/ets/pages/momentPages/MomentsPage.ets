@@ -52,6 +52,7 @@ struct MomentsPage {
           .fontFamily($r('app.string.harmony_hei_ti'))
           .lineHeight($r('app.integer.friendMomentsPage_title_line_height'))
           .layoutWeight(LAYOUT_WEIGHT)
+
         Image($r('app.media.camera'))
           .height($r('app.integer.friendMomentsPage_title_icon_height'))
           .width($r('app.integer.friendMomentsPage_title_icon_width'))
@@ -74,6 +75,9 @@ struct MomentsPage {
         right: $r('app.integer.friendMomentsPage_title_padding_right'),
         top: $r('app.integer.friendMomentsPage_title_padding_top'),
         bottom: $r('app.integer.friendMomentsPage_title_padding_bottom')
+      })
+      .margin({
+        top : 20
       })
 
       Column() {
