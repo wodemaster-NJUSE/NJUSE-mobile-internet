@@ -373,7 +373,7 @@ export class CommonConstants {
   /**
    * 设置好友详情界面
    */
-  static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/FriendDetailPage'
+  static readonly FRIEND_DETAIL_PAGE_URL: string = 'pages/contactPages/myFriendDetailPage'
 
   /**
    * 设置添加动态界面

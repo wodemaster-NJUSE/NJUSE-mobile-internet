@@ -3,7 +3,7 @@ import { CommonConstants } from '../../common/constants/CommonConstants';
 
 @Entry
 @Component
-export struct FriendDetailPage {
+export struct FriedDetailPage {
   private params = router.getParams() as Record<string, Object>;
   chatId: number = this.params.chatId as number;
   chatName: string | Resource = this.params.chatName as string | Resource;
