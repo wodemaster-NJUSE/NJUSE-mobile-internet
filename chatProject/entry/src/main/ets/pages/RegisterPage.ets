@@ -29,7 +29,6 @@ struct RegisterPage {
     }.width('100%')
     .backgroundColor($r('app.color.login_page_background_color'))
   }
-
   @Builder TopBar() {
     Row() {
       Image($r('app.media.ic_back'))
