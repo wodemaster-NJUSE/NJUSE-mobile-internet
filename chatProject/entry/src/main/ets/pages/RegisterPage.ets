@@ -26,11 +26,9 @@ struct RegisterPage {
         .padding($r('app.float.login_operation_area_padding'))
       }
       .layoutWeight(1)
-
     }.width('100%')
     .backgroundColor($r('app.color.login_page_background_color'))
   }
-
   @Builder TopBar() {
     Row() {
       Image($r('app.media.ic_back'))

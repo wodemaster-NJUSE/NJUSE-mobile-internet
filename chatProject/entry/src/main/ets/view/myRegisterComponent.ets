@@ -116,12 +116,11 @@ export struct myRegisterComponent {
                 url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                 params :{
                   uid : JSON.parse(JSON.stringify(result.data))  //只需要获取一个uid即可
-                  // uid : '1000001'
                 }
               });
             })
             .catch((err) => {
-              Logger.error(`fuck reg ${err}`);
+              console.error(JSON.stringify(err));
             });
         })
     }
