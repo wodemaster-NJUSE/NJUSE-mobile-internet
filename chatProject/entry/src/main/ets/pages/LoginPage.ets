@@ -65,5 +65,8 @@ struct LoginPage {
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))
+     .margin({
+       top: 20
+     })
   }
 }
