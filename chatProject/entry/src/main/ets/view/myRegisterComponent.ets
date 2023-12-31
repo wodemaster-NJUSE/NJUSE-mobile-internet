@@ -94,8 +94,6 @@ export struct myRegisterComponent {
         })
         .enabled(isRegisterButtonClickable(this.userName, this.passWord,this.repeatPWD))
         .onClick(() => {
-          console.info("fuck Huazi");
-
           // 创建一个RequestOptions对象，指定请求的URL、方法、请求头和要发送的数据
           const requestOptions: RequestOptions = {
             url: "http://172.29.4.148:8080/v1/register",
@@ -112,14 +110,13 @@ export struct myRegisterComponent {
           // 调用HttpManager的request方法，发起POST请求
           HttpManager.getInstance().request<ResponseResult>(requestOptions)
             .then((result) => {
-              console.info("fuck Huazi");
               console.info(JSON.stringify(result.data));//输出用户信息并跳转
 
               router.pushUrl({
                 url: CommonConstants.REGISTRATION_SUCCESS_PAGE_URL,
                 params :{
-                  // uid : JSON.parse(JSON.stringify(result.data)).uid  //只需要获取一个uid即可
-                  uid : '1000001'
+                  uid : JSON.parse(JSON.stringify(result.data))  //只需要获取一个uid即可
+                  // uid : '1000001'
                 }
               });
             })
