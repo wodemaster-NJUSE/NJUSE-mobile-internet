@@ -4,22 +4,31 @@ import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
 import request from '@ohos.request';
 import { MediaBean, MediaHelper } from './MediaHelper';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
 import { CommonConstants } from '../../common/constants/CommonConstants';
 import router from '@ohos.router';
 
 // 获取应用文件路径
 let context = getContext(this) as common.UIAbilityContext;
 let cacheDir = context.cacheDir;
+
 // 上传任务配置项
 let uploadConfig = {
   url: 'http://192.168.3.48:8740/file/upload',
   header: { key1: 'Content-Type', key2: 'multipart/form-data' },
   method: 'POST',
-  files: [
-    { filename: 'test.jpg', name: 'test', uri: 'internal://cache/test.jpg', type: 'jpg' }
-  ],
+  files: [], // 存放图片
   data: [
-    { name: 'fileId', value: 'FP000008' }
+    {
+      uid: '',
+      user: ChatContact,
+      content: '',
+      time: '',
+      media: '', // media为需要获取的视频url
+      mediaPreview: '' //mediaPreview为需要获取的视频预览图url
+    }
   ]
 }
 @Entry
@@ -49,6 +58,44 @@ export struct AddMomentsPage {
     // 加载前对myChatContact进行填充，向后端获取数据
     console.info('addMomentsPage get uid'+ this.uid)
   }
+  // uploadMoment() {
+  //   // 将本地应用文件上传至网络服务器
+  //   try {
+  //     uploadConfig.data = [{
+  //       uid: this.uid,
+  //       user: ChatContact,
+  //       content: this.keyboardStr,
+  //       time: this.time.toString(),
+  //       media: '', // media为需要获取的视频url
+  //       mediaPreview: '' //mediaPreview为需要获取的视频预览图url
+  //     }]
+  //     // Clear the existing files in the upload configuration
+  //     uploadConfig.files = [];
+  //     // Add each selected image to the upload configuration
+  //     for (let i = 0; i < this.pictures.length; i++) {
+  //       let uri = this.pictures[i];
+  //       let filename = `image_${i}.jpg`; // You can customize the filename as needed
+  //       uploadConfig.files.push({ filename, name: 'image', uri, type: 'jpg' });
+  //     }
+  //
+  //     // Upload the files to the server
+  //     request.uploadFile(context, uploadConfig)
+  //       .then((uploadTask) => {
+  //         uploadTask.on('complete', (taskStates) => {
+  //           for (let i = 0; i < taskStates.length; i++) {
+  //             console.info(`xx upload complete taskState: ${JSON.stringify(taskStates[i])}`);
+  //           }
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         console.error(`xx Invoke uploadFile failed, code is ${err.code}, message is ${err.message}`);
+  //
+  //       })
+  //   } catch (err) {
+  //     console.error(`xx Invoke uploadFile failed, code is ${err.code}, message is ${err.message}`);
+  //
+  //   }
+  // }
   build() {
     Column() {
 
@@ -64,7 +111,7 @@ export struct AddMomentsPage {
           .margin({ right: 10 })
           .textAlign(TextAlign.Center)
           .onClick(() => {
-            //TODO: 对远程数据进行更新 uid -> momentsList
+            //TODO: 对远程数据进行更新 uid -> momentsList,上传单个动态到后端
           })
       }
       // 动态构建

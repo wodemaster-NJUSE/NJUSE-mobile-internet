@@ -56,7 +56,7 @@ export struct ChatDetailPage {
   chatName: string | Resource = this.params.chatName as string | Resource;
   chatImg: string | Resource = this.params.chatImg as string | Resource;
   lastMsg: string | Resource = this.params.lastMsg as string | Resource;
-
+  time  = new Date();
 
   build() {
 
@@ -170,7 +170,13 @@ export struct ChatDetailPage {
             this.scroller.scrollToIndex(this.msgLength - 1);
 
             // 使用websocket通信
-            let message : string ="{"+ "friendUid" + ":" +this.chatId.toString() + "," + "message" + ":" +  this.keyboardStr + "}";
+            let message : string =
+            "{"+
+              "senderUid" + ":" +this.chatId.toString() + ","+
+              "receiverUid" + ":" +this.chatId.toString() + ","+
+              "message" + ":" +  this.keyboardStr + ","+
+              "time" + ":" + this.time.toString()+
+            "}";
 
             ws.send(message, (err, value) => {
               if (!err) {

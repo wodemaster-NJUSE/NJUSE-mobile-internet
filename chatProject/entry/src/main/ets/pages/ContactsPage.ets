@@ -6,6 +6,7 @@ import { ContactsListDisplayView } from './contactPages/ContactsListPage';
 @Component
 export struct ContactsPage {
   uid : string;
+
   build() {
     Column() {
       this.TopBar()

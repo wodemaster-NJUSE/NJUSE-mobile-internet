@@ -25,9 +25,8 @@ import { UserEntity } from '../stores/user';
 
 import webSocket from '@ohos.net.webSocket';
 
-var defaultIpAddress = "ws://";// TODO:待设置
+var defaultIpAddress = "ws://127.0.0.1:8080/websocket/"//
 let ws = webSocket.createWebSocket();
-
 
 const TAB_INDEX_0: number = 0;
 const TAB_INDEX_1: number = 1;
@@ -129,7 +128,7 @@ struct Index {
   }
   async aboutToAppear(){
     // main 在展现前就要和服务端建立websocket
-    ws.connect(defaultIpAddress, (err, value) => {
+    ws.connect(defaultIpAddress+this.uid, (err, value) => {
       if (!err) {
         console.log("Connected successfully");
       } else {
