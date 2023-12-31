@@ -3,6 +3,7 @@ import picker from '@ohos.file.picker';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
 import request from '@ohos.request';
+import { MediaBean, MediaHelper } from './MediaHelper';
 
 // 获取应用文件路径
 let context = getContext(this) as common.UIAbilityContext;
@@ -39,7 +40,8 @@ export struct AddMomentsPage {
   // imageList: Array<string> = new Array<string>()
   // media: string = '' // media为需要获取的视频url
   // mediaPreview: string = '' //mediaPreview为需要获取的视频预览图url
-
+  @State mediaBean: MediaBean = new MediaBean();
+  private mediaHelper: MediaHelper = new MediaHelper(getContext());
 
   async aboutToAppear(){
     // 加载前对myChatContact进行填充，向后端获取数据
@@ -70,6 +72,19 @@ export struct AddMomentsPage {
         })
 
       //添加图片
+      Text('选择图片')
+          .textAlign(TextAlign.Center)
+          .width(200)
+          .fontSize(16)
+          .padding(10)
+          .margin(20)
+          .border({ width: 0.5, color: '#ff38f84b', radius: 15 })
+          .onClick(async () => {
+            this.mediaBean = await this.mediaHelper.selectPicture();
+          })
+      //展示图片
+      Image(this.mediaBean.localUrl)
+
 
 
     }
