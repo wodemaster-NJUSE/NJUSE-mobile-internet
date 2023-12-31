@@ -18,7 +18,7 @@ export class MediaHelper {
   /**
    * 选择图片
    */
-  public selectPictures(): Promise<Array<MediaBean>> {
+  public selectPictures(): Promise<Array<string>> {
 
     try {
       let photoSelectOptions = new picker.PhotoSelectOptions();
@@ -37,16 +37,7 @@ export class MediaHelper {
         }).catch((err) => {
           console.error(this.TAG, 'PhotoViewPicker.select failed with err: ' + err);
           return err;
-        }).then(async filePaths => {
-          let photoArr : Array<string>  = filePaths;
-          let mediaBeans : Array<MediaBean> = []
-          for(let i = 0; i < photoArr.length; i++){
-            const mediaBean = await this.buildMediaBean(photoArr[i]);
-            mediaBeans.push(mediaBean)
-          }
-          return mediaBeans;
-        });
-
+        })
     } catch (err) {
       console.error(this.TAG, 'PhotoViewPicker failed with err: ' + err);
       return Promise.reject(err);
