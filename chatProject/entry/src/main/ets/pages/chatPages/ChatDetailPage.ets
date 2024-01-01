@@ -19,15 +19,11 @@ const MAKE_DATA_LOCAL_TRACE: string = 'ChatDetailPage_MakeDataLocal_HiTrace';
 const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
-
-var defaultIpAddress = "ws://";
 let ws = webSocket.createWebSocket(); // 创建websocket
 
 @Preview
 @Component
 export struct ChatDetailPage {
-  myUid:string;
-
 
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
@@ -53,7 +49,7 @@ export struct ChatDetailPage {
   @State imageFile: image.PixelMap | undefined = undefined;
   @State imageSize: number = 90960;
   private params = router.getParams() as Record<string, Object>;
-  chatId: number = this.params.chatId as number;
+  chatId: number = this.params.chatId as number;// 朋友的uid
   chatName: string | Resource = this.params.chatName as string | Resource;
   chatImg: string | Resource = this.params.chatImg as string | Resource;
   lastMsg: string | Resource = this.params.lastMsg as string | Resource;
@@ -118,14 +114,6 @@ export struct ChatDetailPage {
 
       // 底部输入框
       Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-        // // 语音输入图标
-        // Image($r('app.media.chatting_mode_voice'))
-        //   .height($r('app.integer.opt_layout_chat_view_voice_image_width'))
-        //   .margin({
-        //     left: $r('app.integer.search_font_size'),
-        //     right: $r('app.integer.search_font_size')
-        //   })
-
         TextArea({ placeholder: '', text: this.keyboardStr })
           .id('bottomTextInput')
           .height(36)
@@ -174,7 +162,8 @@ export struct ChatDetailPage {
             let message : string =
             "{"+
               "senderUid" + ":" +this.chatId.toString() + ","+
-              "receiverUid" + ":" +this.chatId.toString() + ","+
+              "receiverUid" + ":" +"1000001" + ","+ // 暂时写死uid
+              //"receiverUid" + ":" +this.chatId.toString() + ","+
               "message" + ":" +  this.keyboardStr + ","+
               "time" + ":" + this.time.toString()+
             "}";

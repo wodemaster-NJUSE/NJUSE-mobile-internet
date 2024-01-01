@@ -5,7 +5,7 @@ import Logger from '../utils/Logger'
 const TAG: string = 'ChatList_Data'
 
 export class ChatListData extends BasicDataSource<ChatModel> {
-  private chatList: Array<ChatModel> = []
+  chatList: Array<ChatModel> = []
 
   public totalCount(): number {
     return this.chatList.length
