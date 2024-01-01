@@ -8,7 +8,7 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 @Component
 struct RegistrationSuccessPage {
   private params = router.getParams() as Record<string, Object>;
-  uid : string | Resource = this.params.uid as string | Resource;
+  uid : string = this.params.uid as string;
   build() {
 
     Column() {

@@ -7,6 +7,8 @@ import { MediaBean, MediaHelper } from './MediaHelper';
 import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
 import { HttpManager } from '../../utils/http/HttpManager';
 import { ResponseResult } from '../../utils/http/HttpCore';
+import { CommonConstants } from '../../common/constants/CommonConstants';
+import router from '@ohos.router';
 
 // 获取应用文件路径
 let context = getContext(this) as common.UIAbilityContext;
@@ -96,44 +98,96 @@ export struct AddMomentsPage {
   // }
   build() {
     Column() {
+      this.TopBar()
 
-      Stack() {
-        // 取消    写说说     发表按钮
-        Text('发送')
-          .borderRadius(2)
-          .height(36)
-          .width(62)
-          .backgroundColor('#FF6EC2FA')
-          .fontColor(Color.White)
-          .fontSize(12)
-          .margin({ right: 10 })
-          .textAlign(TextAlign.Center)
-          .onClick(() => {
-            //TODO: 对远程数据进行更新 uid -> momentsList,上传单个动态到后端
+      Column() {
+        TextArea({placeholder:'分享新鲜事……'})
+          .width('100%')
+          .height(180)
+          .borderRadius(0)
+          .backgroundColor('#FFF3F3F3')
+          .placeholderFont({
+            size: 18
           })
-      }
-      // 动态构建
-      TextInput({placeholder:'分享新鲜事……'})
-        .onChange((value: string) => {
-          this.keyboardStr = value;
-        })
+          .margin({
+            top: 12
+          })
+          .onChange((value: string) => {
+            this.keyboardStr = value;
+          })
 
-      //添加图片
-      Text('选择图片')
+        //添加图片
+        Text('选择照片')
           .textAlign(TextAlign.Center)
-          .width(200)
+          .width(120)
           .fontSize(16)
+          .fontColor(Color.White)
           .padding(10)
           .margin(20)
-          .border({ width: 0.5, color: '#ff38f84b', radius: 15 })
+          .borderRadius(8)
+          .backgroundColor('#FF90D1FD')
           .onClick(async () => {
             this.pictures = await this.mediaHelper.selectPictures();
           })
-      //展示图片
-      Image(this.pictures[0])
+
+      }
+      .width('100%')
+      .height(280)
+      .backgroundColor('#FFF3F3F3')
+      .margin({
+        top: 12
+      })
+
+      // TODO-展示图片
+      // Image(this.pictures[0])
       // 弄个list就可以了
 
 
     }
+    .width('100%')
+    .height('100%')
+    .backgroundColor("#FFEAEAEA")
+  }
+
+  @Builder TopBar() {
+    Row() {
+      Text('取消')
+        .height(40)
+        .width(66)
+        .textAlign(TextAlign.Center)
+        .fontSize(20)
+        .fontColor(Color.Black)
+        .margin({
+          left: 12
+        })
+        .onClick(() => {
+          router.back()
+        })
+
+      Text('发表动态')
+        .fontSize(20)
+        .fontColor('#182431')
+        .width(88)
+        .height(40)
+        .textAlign(TextAlign.Center)
+
+      Text('发布')
+        .width(66)
+        .height(32)
+        .textAlign(TextAlign.Center)
+        .fontColor(Color.White)
+        .fontSize(16)
+        .backgroundColor('#FF6EC2FA')
+        .borderRadius(4)
+        .margin({
+          right: 12
+        })
+        .onClick(() => {
+          // TODO: 对远程数据进行更新 uid -> momentsList,上传单个动态到后端
+        })
+    }
+    .width(CommonConstants.FULL_WIDTH_PERCENT)
+    .height($r('app.float.title_height'))
+    .justifyContent(FlexAlign.SpaceBetween)
   }
 }

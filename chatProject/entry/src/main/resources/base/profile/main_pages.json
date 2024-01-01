@@ -3,20 +3,15 @@
     "pages/ChatPage",
     "pages/LoginPage",
     "pages/RegistrationSuccessPage",
-    "pages/PrivacyPage",
     "pages/CustomerServicePage",
+    "pages/PrivacyPage",
     "pages/RegisterPage",
     "pages/MainPage",
     "pages/LLMPage",
     "pages/ContactsPage",
     "pages/DiscoverPage",
 
-
-    "pages/settingPages/SettingsPage",
-    "pages/settingPages/SettingProfilePicturePage",
-    "pages/settingPages/SettingUsernamePage",
-    "pages/settingPages/SettingSignaturePage",
-    "pages/settingPages/SettingGenderPage",
+    "pages/settingPages/SettingPage",
 
     "pages/chatPages/ChatListPage",
     "pages/chatPages/Detail",

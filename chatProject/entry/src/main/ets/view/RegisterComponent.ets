@@ -3,9 +3,10 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 import { HttpManager } from '../utils/http/HttpManager';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { ResponseResult } from '../utils/http/HttpCore';
+import Logger from '../utils/Logger';
 
 @Component
-export struct myRegisterComponent {
+export struct RegisterComponent {
   @State userName: string = '';
   @State passWord: string = '';
   @State repeatPWD: string = '';

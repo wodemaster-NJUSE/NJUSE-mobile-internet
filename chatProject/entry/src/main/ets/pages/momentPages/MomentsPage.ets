@@ -383,7 +383,9 @@ class jsonResult {
 // 获取网络数据
 @Concurrent
 async function getWebData(url: string): Promise<Array<FriendMoment>> {
-  Logger.info('getWebData onMessage start');
+  const mydate = new Date();
+  Logger.info('getWebData onMessage start:' + mydate.getFullYear() + mydate.getMonth() + mydate.getDate()
+   + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds());
   try {
     let webData: http.HttpResponse = await http.createHttp().request(
       url,

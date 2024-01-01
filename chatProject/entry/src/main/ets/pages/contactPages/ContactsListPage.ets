@@ -2,7 +2,6 @@ import hiTraceMeter from '@ohos.hiTraceMeter';
 import { makeDataLocal, makeDataList } from '../../utils/DataFactory';
 import Constants from '../../utils/Constants';
 import { ContactsView, ReusableContactsView } from '../../view/ContactsView';
-import { OptLayoutContactsView, ReusableOptLayoutContactsView } from '../../view/OptLayoutContactsView';
 import Logger from '../../utils/Logger';
 import effectKit from '@ohos.effectKit';
 import { ChatModel } from '../../viewmodel/MsgBase';
@@ -47,10 +46,10 @@ export struct ContactsListDisplayView {
   OptContactsViewBuilder(msg: ChatModel) {
     // reusable component
     if (this.reusable) {
-      ReusableOptLayoutContactsView(new Message(msg))
+      ReusableContactsView(new Message(msg))
       //.reuseId(REUSE_ID)
     } else {
-      OptLayoutContactsView(new Message(msg))
+      ContactsView(new Message(msg))
     }
   }
 
