@@ -126,34 +126,34 @@ export struct ChatListDisplayView {
      * uid ->  Array<ChatModel>,填充真数据
      */
 
-    const requestOptions: RequestOptions = {
-      url: "172.29.4.148:8080/v1/getChatModelList?uid="+globalThis.UID,
-      method: RequestMethod.GET,
-      header: {
-        'Content-Type': 'application/json'
-      },
-    };
-
+    // const requestOptions: RequestOptions = {
+    //   url: "172.29.4.148:8080/v1/getChatModelList?uid="+globalThis.UID,
+    //   method: RequestMethod.GET,
+    //   header: {
+    //     'Content-Type': 'application/json'
+    //   },
+    // };
     //
-    HttpManager.getInstance().request<ResponseResult>(requestOptions)
-      .then((result) => {
-        if(result.code == '200') {
-          // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
-          Object.assign(this.chatListArray,result.data)//填充正常加载数据
-          Object.assign(this.chatListLazy.chatList,result.data)// 填充懒加载数据
-        // 进行数据填充
-        }
-      })
-      .catch((err) => {
-        console.error(JSON.stringify(err));
-      });
-    // 把获得的数据放入当前展示的列表中
+    // //
+    // HttpManager.getInstance().request<ResponseResult>(requestOptions)
+    //   .then((result) => {
+    //     if(result.code == '200') {
+    //       // 成功返回
+    //       console.info(JSON.stringify(result.data)); //信息
+    //       Object.assign(this.chatListArray,result.data)//填充正常加载数据
+    //       Object.assign(this.chatListLazy.chatList,result.data)// 填充懒加载数据
+    //     // 进行数据填充
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(JSON.stringify(err));
+    //   });
+    // // 把获得的数据放入当前展示的列表中
 
 
     // 假数据填充
-    // await makeDataLocal(this.chatListLazy);
-    // await makeDataList(this.chatListArray);
+    await makeDataLocal(this.chatListLazy);
+    await makeDataList(this.chatListArray);
 
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
