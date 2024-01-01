@@ -86,6 +86,7 @@ export struct ContactsListDisplayView {
   }
 
   async aboutToAppear(): Promise<void> {
+    console.info('contacts_uid:' + globalThis.testUid);
     Logger.info(TAG, "ContactsListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     //this.controller.stopEditing();

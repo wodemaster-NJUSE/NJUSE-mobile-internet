@@ -4,7 +4,7 @@ import { CommonConstants } from '../../common/constants/CommonConstants'
 @Entry
 @Component
 export struct AddFriendsPage {
-  @State submitValue: string = ''
+  @State submitValue: string = globalThis.testUid;
   // 根据状态切换展示信息
   @State private searchState : number = 0;
   // '添加好友'按钮状态

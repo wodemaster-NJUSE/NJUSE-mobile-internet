@@ -180,6 +180,7 @@ struct OneMoment {
   build() {
     Column() {
       Row() {
+        // 头像
         Image(this.moment.user.userImage)
           .id('userImage')
           .autoResize(false)
@@ -187,6 +188,7 @@ struct OneMoment {
           .height($r('app.integer.friendMomentsPage_user_image_height'))
           .borderRadius($r('app.integer.friendMomentsPage_user_image_border_radius'))
         Column() {
+          // 用户名
           Text(this.moment.user.userName)
             .fontSize($r('app.integer.friendMomentsPage_useName_fontSize'))
             .fontColor($r('app.color.title_font_color'))
