@@ -25,7 +25,7 @@ import { UserEntity } from '../stores/user';
 
 import webSocket from '@ohos.net.webSocket';
 
-var defaultIpAddress = "ws://127.0.0.1:8080/websocket/"//
+var defaultIpAddress = "ws://172.29.4.148:8080/chat"//
 let ws = webSocket.createWebSocket();
 
 const TAB_INDEX_0: number = 0;
@@ -78,7 +78,7 @@ struct Index {
     Tabs({ barPosition: BarPosition.End, controller: this.controller, index: this.currentIndex }) {
       TabContent() {
         Column() {
-          ChatPage({uid : this.uid})
+          ChatPage()
         }
       }
       .tabBar(this.TabBuilder(TAB_INDEX_0,

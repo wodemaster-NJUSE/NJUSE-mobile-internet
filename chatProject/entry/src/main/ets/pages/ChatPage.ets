@@ -7,11 +7,11 @@ import { ChatListDisplayView } from './chatPages/ChatListPage';
 @Entry
 @Component
 export struct ChatPage {
-  uid:string;
+
   build() {
     Column() {
       this.TopBar()
-      ChatListDisplayView({uid:this.uid}) //传递uid
+      ChatListDisplayView()
     }
     .width('100%')
     .backgroundColor($r('app.color.contacts_page_background'))

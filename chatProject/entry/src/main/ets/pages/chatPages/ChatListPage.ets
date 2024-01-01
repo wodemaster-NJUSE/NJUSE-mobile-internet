@@ -28,11 +28,6 @@ class Message {
 @Preview
 @Component
 export struct ChatListDisplayView {
-  // 通过router传入参数ChatModel list来展示
-  @State uid:string = '';
-
-  private params = router.getParams() as Array<ChatModel>;
-
   // 懒加载的数据列表
   private chatListLazy = new ChatListData();
   // 普通加载的数据列表
@@ -126,12 +121,13 @@ export struct ChatListDisplayView {
   async aboutToAppear(): Promise<void> {
     Logger.info(TAG, "ChatListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
+
     /**
      * uid ->  Array<ChatModel>,填充真数据
      */
 
     const requestOptions: RequestOptions = {
-      url: "172.29.4.148:8080/v1/getChatModelList?uid="+this.uid,
+      url: "172.29.4.148:8080/v1/getChatModelList?uid="+globalThis.UID,
       method: RequestMethod.GET,
       header: {
         'Content-Type': 'application/json'
@@ -144,7 +140,8 @@ export struct ChatListDisplayView {
         if(result.code == '200') {
           // 成功返回
           console.info(JSON.stringify(result.data)); //信息
-          Object.assign(this.chatListArray,)
+          Object.assign(this.chatListArray,result.data)//填充正常加载数据
+          Object.assign(this.chatListLazy.chatList,result.data)// 填充懒加载数据
         // 进行数据填充
         }
       })
