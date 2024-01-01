@@ -19,8 +19,6 @@ const MAKE_DATA_LOCAL_TRACE: string = 'ChatDetailPage_MakeDataLocal_HiTrace';
 const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
-
-var defaultIpAddress = "ws://";
 let ws = webSocket.createWebSocket(); // 创建websocket
 
 @Preview
