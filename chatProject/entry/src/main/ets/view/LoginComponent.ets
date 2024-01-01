@@ -103,8 +103,6 @@ export struct LoginComponent {
             //     console.error(JSON.stringify(err));
             //   });
 
-
-
             router.pushUrl({
               url:CommonConstants.MAIN_PAGE_URL,
               params: {
