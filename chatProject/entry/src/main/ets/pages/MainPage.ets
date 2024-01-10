@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
 import { ContactsPage } from './ContactsPage';
 import { LLMPage } from './LLMPage'
 import router from '@ohos.router';
@@ -25,7 +9,7 @@ import { UserEntity } from '../stores/user';
 
 import webSocket from '@ohos.net.webSocket';
 
-var defaultIpAddress = "ws://172.29.4.148:8080/chat"//
+var defaultIpAddress = "ws://172.29.4.148:8080/websocket"//
 let ws = webSocket.createWebSocket();
 globalThis.WS = ws;
 const TAB_INDEX_0: number = 0;
@@ -41,9 +25,9 @@ const TABBAR_SEPARATE_LINE = 0.05;
 @Component
 struct Index {
 
-  // login 跳转到main界面把uid传入
-  private params = router.getParams() as Record<string, Object>;
-  uid : string  = this.params.uid as string ;
+  // login 跳转到main界面
+  // private params = router.getParams() as Record<string, Object>;
+  @State uid: string = globalThis.UID;
 
 
   @StorageLink('page_layout') page_layout: boolean | undefined = AppStorage.Get('page_layout'); // AppStorage中key对应的属性建立双向数据同步
@@ -128,13 +112,35 @@ struct Index {
   }
   async aboutToAppear(){
     // main 在展现前就要和服务端建立websocket
-    ws.connect(defaultIpAddress+this.uid, (err, value) => {
-      if (!err) {
-        console.log("Connected successfully");
-      } else {
-        console.log("Connection failed. Err:" + JSON.stringify(err));
-      }
-    });
+    // ws.connect(defaultIpAddress, (err, value) => {
+    //   if (!err) {
+    //     console.log("Connected successfully");
+    //   } else {
+    //     console.log("Connection failed. Err:" + JSON.stringify(err));
+    //   }
+    // });
+    // ws.on('open', (err, value) => {
+    //   console.log("on open, status:" + JSON.stringify(value));
+    //   // 当收到on('open')事件时，可以通过send()方法与服务器进行通信
+    //
+    //   let message : string =
+    //     "{"+
+    //       "senderUid" + ":" + "100000001" + ","+
+    //       "receiverUid" + ":" +"100000000" + ","+ // 暂时写死uid
+    //       //"receiverUid" + ":" +this.chatId.toString() + ","+
+    //       "message" + ":" +  "你好" + ","+
+    //       "time" + ":" + " 15：52" +
+    //       "}";
+    //
+    //   ws.send(message, (err, value) => {
+    //     if (!err) {
+    //       console.log("Message sent successfully");
+    //     } else {
+    //       console.log("Failed to send the message. Err:" + JSON.stringify(err));
+    //     }
+    //   });
+    // });
+
 
     ws.on('close', (err, value) => {
       console.log("on close, code is " + value.code + ", reason is " + value.reason);

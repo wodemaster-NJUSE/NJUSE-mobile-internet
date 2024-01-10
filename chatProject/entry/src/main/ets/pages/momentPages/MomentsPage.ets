@@ -168,6 +168,7 @@ struct OneMoment {
   build() {
     Column() {
       Row() {
+        // 头像
         Image(this.moment.user.userImage)
           .id('userImage')
           .autoResize(false)
@@ -175,18 +176,42 @@ struct OneMoment {
           .height($r('app.integer.friendMomentsPage_user_image_height'))
           .borderRadius($r('app.integer.friendMomentsPage_user_image_border_radius'))
         Column() {
+          // Row() {
+          //   // 用户名
+          //   Text(this.moment.user.userName)
+          //     .fontSize($r('app.integer.friendMomentsPage_useName_fontSize'))
+          //     .fontColor($r('app.color.title_font_color'))
+          //     .lineHeight($r('app.integer.friendMomentsPage_useName_line_height'))
+          //     .fontFamily($r('app.string.harmony_hei_ti'))
+          //     .fontWeight(FontWeight.Medium)
+          //
+          //   // 时间
+          //   Text('2023年06月21日 19:20') // TODO
+          //     .fontSize(12)
+          //     .fontColor(Color.Gray)
+          //     .lineHeight($r('app.integer.friendMomentsPage_useName_line_height'))
+          //     .fontFamily($r('app.string.harmony_hei_ti'))
+          //     .fontWeight(FontWeight.Normal)
+          //     .margin({left: 20})
+          // }
+          // .width('100%')
+          // .height(22)
+          // .justifyContent(FlexAlign.Start)
+
           Text(this.moment.user.userName)
             .fontSize($r('app.integer.friendMomentsPage_useName_fontSize'))
             .fontColor($r('app.color.title_font_color'))
             .lineHeight($r('app.integer.friendMomentsPage_useName_line_height'))
             .fontFamily($r('app.string.harmony_hei_ti'))
             .fontWeight(FontWeight.Medium)
-          Text(this.moment.text)
-            .fontSize($r('app.integer.friendMomentsPage_userText_fontSize'))
-            .fontColor($r('app.color.title_font_color'))
+
+          Text('2023/06/21 19:20') // TODO
+            .fontSize(12)
+            .fontColor(Color.Gray)
             .lineHeight($r('app.integer.friendMomentsPage_userText_line_height'))
             .opacity($r('app.float.opacity_zero_point_six'))
-            .margin({ top: $r('app.integer.friendMomentsPage_userText_margin_top') })
+            .fontFamily($r('app.string.harmony_hei_ti'))
+            .margin({ top: 0 })
         }
         .margin({ left: $r('app.integer.friendMomentsPage_user_col_margin_left') })
         .layoutWeight(LAYOUT_WEIGHT)
@@ -199,6 +224,20 @@ struct OneMoment {
         right: $r('app.integer.friendMomentsPage_row_padding_right'),
         top: $r('app.integer.friendMomentsPage_row_padding_top'),
         bottom: $r('app.integer.friendMomentsPage_row_padding_bottom')
+      })
+
+      Row () {
+        Text(this.moment.text)
+          .fontSize(16)
+          .fontColor(Color.Black)
+          .lineHeight($r('app.integer.friendMomentsPage_userText_line_height'))
+          .margin({ top: $r('app.integer.friendMomentsPage_userText_margin_top') })
+          .textAlign(TextAlign.Start)
+      }
+      .width('100%')
+      .padding({
+        left: 60,
+        right: 60
       })
 
       Column() {
@@ -271,6 +310,7 @@ struct OneMoment {
       }
       .alignItems(HorizontalAlign.Start)
       .width($r('app.string.layout_100'))
+      .margin({top : 2})
       .padding({
         left: $r('app.integer.friendMomentsPage_image_group_padding_left'),
         right: $r('app.integer.friendMomentsPage_image_group_padding_right')
@@ -278,24 +318,24 @@ struct OneMoment {
 
       Row() {
         Row() {
-          MomentHandler({
-            imageStr: $r('app.media.ic_share'),
-            text: $r('app.string.friendMomentsPage_share')
-          })
+          // MomentHandler({
+          //   imageStr: $r('app.media.ic_share'),
+          //   text: $r('app.string.friendMomentsPage_share')
+          // })
           MomentHandler({
             imageStr: this.liked ? $r('app.media.ic_thumbsup_pre') : $r('app.media.ic_thumbsup'),
             text: $r('app.string.friendMomentsPage_thumbsup')
           })
-            .margin({ left: $r('app.integer.friendMomentsPage_thumbsup_margin_left') })
+            // .margin({ left: $r('app.integer.friendMomentsPage_thumbsup_margin_left') })
             .onClick(() => {
               this.liked = !this.liked
               //TODO: 在这里更新点赞数
             })
-          MomentHandler({
-            imageStr: $r('app.media.ic_message'),
-            text: $r('app.string.friendMomentsPage_message')
-          })
-            .margin({ left: $r('app.integer.friendMomentsPage_message_margin_left') })
+          // MomentHandler({
+          //   imageStr: $r('app.media.ic_message'),
+          //   text: $r('app.string.friendMomentsPage_message')
+          // })
+          //   .margin({ left: $r('app.integer.friendMomentsPage_message_margin_left') })
         }
       }
       .justifyContent(FlexAlign.SpaceBetween)
