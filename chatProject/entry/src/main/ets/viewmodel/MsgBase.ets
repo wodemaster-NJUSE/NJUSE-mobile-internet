@@ -28,12 +28,13 @@ export class ChatModel {
   lastMsg: string
   lastTime: string
   unreadMsgCount: number
-
-  constructor(user: ChatContact, lastMsg: string, lastTime: string, unreadMsgCount: number) {
+  msgList:Array<MessageBase>
+  constructor(user: ChatContact, lastMsg: string, lastTime: string, unreadMsgCount: number, msgs?:Array<MessageBase>) {
     this.user = user;
     this.lastMsg = lastMsg;
     this.lastTime = lastTime;
     this.unreadMsgCount = unreadMsgCount;
+    this.msgList = msgs;
   }
 
   toString(): string {
@@ -56,9 +57,9 @@ export class MessageBase {
   to: ChatContact
   msgBody: MessageBody
   msgType: MsgType
-  msgTime: number = 0
+  msgTime: string = ''
 
-  constructor(id: string, from: ChatContact, to: ChatContact, msg: MessageBody, type: number, time?: number) {
+  constructor(id: string, from: ChatContact, to: ChatContact, msg: MessageBody, type: number, time?: string) {
     this.msgId = id;
     this.from = from;
     this.to = to;

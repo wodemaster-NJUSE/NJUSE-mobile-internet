@@ -25,13 +25,13 @@ const GRID_COLUMN_NUMBER: number = 3; // 九宫格每行图片数
 @Entry
 @Component
 struct MomentsPage {
-  @State uid:string = '';// 传入uid进行http通信
+  @State uid:string = globalThis.UID;// 传入uid进行http通信
 
   @State itemLength: number = 0;
   @State cachedCountNumber: number = 3; // 懒加载缓存数
   // 通过填充momentList来展示动态列表
   @StorageLink('momentData') momentData: FriendMomentsData = new FriendMomentsData();
-
+  // 获取全部的动态，在这里填充
   build() {
     Column() {
       Row() {
@@ -61,9 +61,6 @@ struct MomentsPage {
             // 点击进入到添加动态界面
             router.pushUrl({
               url: CommonConstants.ADD_MOMENTS_PAGE_URL,
-              params:{
-               uid : this.uid
-            }
             })
           })
       }
@@ -109,7 +106,28 @@ struct MomentsPage {
   async aboutToAppear(): Promise<void> {
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     Logger.info(TAG, 'aboutToAppear');
-    await this.makeLocalData();  // 在这里可选假数据填充或者通过uid向http获取真数据
+    // 真数据请求
+    const requestOptions: RequestOptions = {// 获取所有动态
+      url: "http://172.29.4.148:8080/v1/getZoneMomentModels?uid="+this.uid,
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        if(result.code == '200') {
+          // 成功返回
+          console.info(JSON.stringify(result.data)); //信息
+          Object.assign(this.momentData.momentList,result.data) // 进行数据填充
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
+    //await this.makeLocalData();  // 在这里假数据填充
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 
@@ -121,36 +139,6 @@ struct MomentsPage {
      * 假数据填充
      */
     let friendMomentArray: Array<FriendMoment> = await getWebData(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[0]);
-
-    /**
-     * 真数据请求
-     */
-    //  let friendMomentArray: Array<FriendMoment> = []
-
-    // const requestOptions: RequestOptions = {
-    //   url: "http://172.29.4.148:8080/v1/register", //TODO: url change
-    //   method: RequestMethod.GET,
-    //   header: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   extraData: {
-    //     "uid" : this.uid
-    //   }
-    // };
-    //
-    // //
-    // HttpManager.getInstance().request<ResponseResult>(requestOptions)
-    //   .then((result) => {
-    //     if(result.code == '200') {
-    //       // 成功返回
-    //       console.info(JSON.stringify(result.data)); //信息
-    //       Object.assign(friendMomentArray,JSON.parse(JSON.stringify(result.data))) // 进行数据填充
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(JSON.stringify(err));
-    //   });
-
 
     if (friendMomentArray) {
       for (let i = 0; i < friendMomentArray.length; i++) {
@@ -375,12 +363,11 @@ class FriendMomentsData extends BasicDataSource<FriendMoment> {
     return this.momentList.length;
   }
 
-  // 根据index获取具体项
+  // 根据index获取具体项，假数据填充
   public getData(index: number): FriendMoment {
     // 判断组件是否已经缓存到最后一项数据了
     if (index == this.momentList.length - 1) {
       // 目前json文件只有3个，所以对3取余后加一实现循环获取3个json
-      // TODO:动态真数据填充 
       getFriendMomentByTaskPool(FriendMomentJsonUrl.FRIEND_MOMENT_JSON_URL[this.getJsonIndex % 3]);
       this.getJsonIndex++;
     }

@@ -11,7 +11,7 @@ import webSocket from '@ohos.net.webSocket';
 
 var defaultIpAddress = "ws://172.29.4.148:8080/websocket"//
 let ws = webSocket.createWebSocket();
-
+globalThis.WS = ws;
 const TAB_INDEX_0: number = 0;
 const TAB_INDEX_1: number = 1;
 const TAB_INDEX_2: number = 2;
@@ -79,7 +79,7 @@ struct Index {
         $r('app.string.contacts')));
 
       TabContent() {
-        LLMPage({myUid : this.uid})
+        LLMPage()
       }
       .tabBar(this.TabBuilder(TAB_INDEX_2,
         $r('app.media.profileIconNormal'),
@@ -87,7 +87,7 @@ struct Index {
         $r('app.string.LLM')));
 
       TabContent() {
-        DiscoverPage({uid:this.uid})
+        DiscoverPage()
       }
       .tabBar(this.TabBuilder(TAB_INDEX_3,
         $r('app.media.findIconNormal'),

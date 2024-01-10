@@ -13,18 +13,22 @@ import fs from '@ohos.file.fs';
 import { ShareDate, WantFileModel, WantModel } from '../../model/Want';
 import { ChatItemView } from './ChatItemView';
 import webSocket from '@ohos.net.webSocket';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
+import { CommonConstants } from '../../common/constants/CommonConstants';
+
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
 const ABOUT_TO_APPEAR_TRACE_ID: number = 1; // aboutToAppear 中使用的 taskId
 const MAKE_DATA_LOCAL_TRACE: string = 'ChatDetailPage_MakeDataLocal_HiTrace';
 const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
-var defaultIpAddress = "ws://172.29.4.148:8080/websocket"//
+
 
 @Preview
 @Component
 export struct ChatDetailPage {
-  ws = webSocket.createWebSocket(); // 创建websocket
 
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
@@ -33,10 +37,10 @@ export struct ChatDetailPage {
   msg = new TextMessage($r('app.string.message1'));
   msgAnother = new TextMessage($r('app.string.message2'));
   todayDate = new Date();
-  msgBody = new MessageBase('1', this.userMyself, this.userFriend, this.msgAnother, 1, this.todayDate.getSeconds());
+  msgBody = new MessageBase('1', this.userMyself, this.userFriend, this.msgAnother, 1, this.todayDate.getSeconds().toString());
 
   @State keyboardStr: string = '';
-  private chatDetailData = new ChatDetailData();
+  private chatDetailData = new ChatDetailData();// 聊天信息加载,要填充
   private scroller: Scroller = new Scroller();
   @State wantId: number = 0;
   @State userMyselfName: string = '';
@@ -154,65 +158,51 @@ export struct ChatDetailPage {
             this.todayDate = new Date();
             let msg = new TextMessage(this.keyboardStr);
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, msg, 1, this.todayDate.getSeconds());
+              .toString(), this.userMyself, this.userFriend, msg, 1, this.todayDate.getSeconds().toString());
+
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
 
-
             // 使用websocket通信
             let message : string =
             "{"+
-              "\"senderUid\"" + ":" + "\"" +this.chatId.toString() + "\"" + ","+
-              "\"receiverUid\"" + ":" +"\"100000000\"" + ","+ // 暂时写死uid
-              //"receiverUid" + ":" +this.chatId.toString() + ","+
-              "\"message\"" + ":" + "\"" + this.keyboardStr + "\"" +  ","+
-              "\"time\"" + ":" + "\"" + this.time.toString() + "\"" +
+              "senderUid" + ":" +this.chatId.toString() + ","+
+              //"receiverUid" + ":" +"1000001" + ","+ // 暂时写死uid
+              "receiverUid" + ":" +this.chatId.toString() + ","+
+              "message" + ":" +  this.keyboardStr + ","+
+              "time" + ":" + this.time.toString()+
             "}";
 
-            // ws.on('open', (err, value) => {
-            //   ws.send(message, (err, value) => {
-            //     if (!err) {
-            //       console.log("Message sent successfully");
-            //     } else {
-            //       console.log("Failed to send the message. Err:" + JSON.stringify(err));
-            //     }
-            //   });
-            // });
-            console.info("wsONclick")
-
-
-
-            console.info("about to on open");
-            this.ws.on('open', (err, value) => {
+            globalThis.WS.send(message, (err, value) => {
               if (!err) {
-                console.log("on open, status:" + JSON.stringify(value));
+                // 成功发送一条消息就更新一次
+                console.log("Message sent successfully");
 
-                this.ws.send(message, (err, value) => {
-                  if (!err) {
-                    console.log("Message sent successfully");
-                  } else {
-                    console.log("Failed to send the message. Err:" + JSON.stringify(err));
-                  }
-                });
+                const requestOptions: RequestOptions = {
+                  url: "http://172.29.4.148:8080/v2/sendMessage",//
+                  method: RequestMethod.POST,
+                  header: {
+                    'Content-Type': 'application/json'
+                  },
+                  extraData: JSON.stringify({
+                    MessageBase:msgBody
+                  })
+                };
+                // 调用HttpManager的request方法，发起POST请求
+                HttpManager.getInstance().request<ResponseResult>(requestOptions)
+                  .then((result) => {
+                    console.info(JSON.stringify(result.data));//输出
+                  })
+                  .catch((err) => {
+                    console.error(JSON.stringify(err));
+                  });
               } else {
-                console.error("Failed to open.Err:" + JSON.stringify(err));
+                console.log("Failed to send the message. Err:" + JSON.stringify(err));
               }
-              console.info("finish to on open");
-
-              // 当收到on('open')事件时，可以通过send()方法与服务器进行通信
-
-              // let message : string =
-              //   "{"+
-              //     "senderUid" + ":" + "100000001" + ","+
-              //     "receiverUid" + ":" +"100000000" + ","+ // 暂时写死uid
-              //     //"receiverUid" + ":" +this.chatId.toString() + ","+
-              //     "message" + ":" +  "你好" + ","+
-              //     "time" + ":" + " 15：52" +
-              //     "}";
-
-
             });
+
+
             this.keyboardStr = '';
           })
       }
@@ -265,7 +255,7 @@ export struct ChatDetailPage {
     return await manager.getStringValue(resource.id);
   }
 
-  // 设定本地聊天内容
+  // 设定本地聊天内容，假数据填充
   async makeDataLocal() {
     hiTraceMeter.startTrace(MAKE_DATA_LOCAL_TRACE, MAKE_DATA_LOCAL_TRACE_ID);
     let chatDetailMsgList = await getMessageListFromJSON();
@@ -280,17 +270,17 @@ export struct ChatDetailPage {
       if (sum % 2 === 0) {
         msg = new TextMessage(chatDetailMsgList[i % Constants.MOCK_ELEMENT_COUNT]);
         if (i % 2 === 0) {
-          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, 1, todayDate.getSeconds());
+          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, 1, todayDate.getSeconds().toString());
         } else {
-          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, 1, todayDate.getSeconds());
+          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, 1, todayDate.getSeconds().toString());
         }
       } else {
         let imageStr = `/resources/images/photo${(i % 50).toString()}.jpg`;
         msg = new ImageMessage(40, 50, imageStr);
         if (i % 2 === 0) {
-          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, 2, todayDate.getSeconds());
+          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, 2, todayDate.getSeconds().toString());
         } else {
-          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, 2, todayDate.getSeconds());
+          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, 2, todayDate.getSeconds().toString());
         }
       }
       if (i % 2 === 0) {
@@ -300,12 +290,12 @@ export struct ChatDetailPage {
     }
     if (this.wantId === 1) {
       let lastMsg = new ImageTextMessage(200, 100, this.wantParams.srcImage, this.wantParams.textContent);
-      this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, 3, todayDate.getSeconds()));
+      this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, 3, todayDate.getSeconds().toString()));
     } else if (this.wantId === 2) {
       await this.fdTransformPixelMap();
       if (this.imageFile !== undefined) {
         let lastMsg = new FileMessage(180, 200, this.imageFile);
-        this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, 3, todayDate.getSeconds()));
+        this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, 3, todayDate.getSeconds().toString()));
       }
     }
     this.msgLength = this.chatDetailData.totalCount();
@@ -315,32 +305,70 @@ export struct ChatDetailPage {
   async aboutToAppear() {
     await this.getWant();
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
+    const requestOptions: RequestOptions = {
+      // 显示前先获取所有聊天信息
+      url: "http://172.29.4.148:8080/v2/sendMessage",//TODO:修改url
+      method: RequestMethod.POST,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      extraData: JSON.stringify({
+        myUid:globalThis.UID,
+        friendUid:this.chatId
+      })
+    };
 
-    this.ws.connect(defaultIpAddress, (err, value) => {
-      if (!err) {
-        console.log("Connected successfully");
-      } else {
-        console.log("Connection failed. Err:" + JSON.stringify(err));
-      }
-    });
+    // 调用HttpManager的request方法，发起POST请求
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        console.info(JSON.stringify(result.data));//输出
+        // 表示成功
+        Object.assign(this.chatDetailData.msgList,result.data)// 填充聊天信息
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
 
     // 在展现前就开始监听服务端发来的消息
-    this.ws.on('message', (err, value) => {
+    globalThis.WS.on('message', (err, value) => {
       console.log("on message, message:" + value);
+
+
+
       // 接收服务端传来的消息
       this.todayDate = new Date();
       let msg = new TextMessage(value as string);
       let msgBody = new MessageBase(this.chatDetailData.totalCount()
-        .toString(), this.userFriend, this.userMyself, msg, 2, this.todayDate.getSeconds());
+        .toString(), this.userFriend, this.userMyself, msg, 2, this.todayDate.getSeconds().toString());
       this.chatDetailData.pushData(msgBody);
       this.msgLength = this.chatDetailData.totalCount();
       this.scroller.scrollToIndex(this.msgLength - 1);
 
+      const requestOptions: RequestOptions = {
+        url: "http://172.29.4.148:8080/v2/sendMessage",//
+        method: RequestMethod.POST,
+        header: {
+          'Content-Type': 'application/json'
+        },
+        extraData: JSON.stringify({
+          MessageBase:msgBody
+        })
+      };
+      // 调用HttpManager的request方法，发起POST请求
+      HttpManager.getInstance().request<ResponseResult>(requestOptions)
+        .then((result) => {
+          console.info(JSON.stringify(result.data));//输出
+          // 表示成功y
+        })
+        .catch((err) => {
+          console.error(JSON.stringify(err));
+        });
       // 当收到服务器的`bye`消息时（此消息字段仅为示意，具体字段需要与服务器协商），主动断开连接
       if (value === 'bye') {
-        this.ws.close((err, value) => {
+        globalThis.WS.close((err, value) => {
           if (!err) {
             console.log("Connection closed successfully");
+
           } else {
             console.log("Failed to close the connection. Err: " + JSON.stringify(err));
           }
@@ -348,10 +376,9 @@ export struct ChatDetailPage {
       }
     });
     // 填充假数据
-    this.makeDataLocal();
+    // this.makeDataLocal();
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
-
 
 }
 

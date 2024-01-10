@@ -35,7 +35,7 @@ let uploadConfig = {
 @Component
 export struct AddMomentsPage {
   // 添加新动态，点击发表的时候要更新动态列表
-  uid: string = ''; // 通过uid来向后端获取对应的数据
+  uid: string = globalThis.UID; // 通过uid来向后端获取对应的数据
   private keyboardStr : string = ''; // 刷新输入
   private myChatContact: ChatContact = new ChatContact(this.uid, '','');
   // userId: string
@@ -184,6 +184,29 @@ export struct AddMomentsPage {
         })
         .onClick(() => {
           // TODO: 对远程数据进行更新 uid -> momentsList,上传单个动态到后端
+          const requestOptions: RequestOptions = {
+            url: "http://172.29.4.148:8080/v1/publishMoment",
+            method: RequestMethod.POST,
+            header: {
+              'Content-Type': 'application/json'
+            },
+            extraData:JSON.stringify({
+              momentModel:this.newMoment
+            })
+          };
+
+          //
+          HttpManager.getInstance().request<ResponseResult>(requestOptions)
+            .then((result) => {
+              if(result.code == '200') {
+                // 成功添加动态
+                console.info(JSON.stringify(result.data)); //信息
+
+              }
+            })
+            .catch((err) => {
+              console.error(JSON.stringify(err));
+            });
         })
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)
