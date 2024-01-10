@@ -19,11 +19,12 @@ const MAKE_DATA_LOCAL_TRACE: string = 'ChatDetailPage_MakeDataLocal_HiTrace';
 const MAKE_DATA_LOCAL_TRACE_ID: number = 2; // makeDataLocal 中使用的 taskId
 const STROKE_WIDTH: number = 2; // strokeWidth的宽度
 const LAYOUT_WEIGHT: number = 1; // layoutWeight参数
-let ws = webSocket.createWebSocket(); // 创建websocket
+var defaultIpAddress = "ws://172.29.4.148:8080/websocket"//
 
 @Preview
 @Component
 export struct ChatDetailPage {
+  ws = webSocket.createWebSocket(); // 创建websocket
 
   @StorageLink('keyboardHeight') keyboardHeight: number = 0;
   @State msgLength: number = 0;
@@ -158,25 +159,60 @@ export struct ChatDetailPage {
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
 
+
             // 使用websocket通信
             let message : string =
             "{"+
-              "senderUid" + ":" +this.chatId.toString() + ","+
-              "receiverUid" + ":" +"1000001" + ","+ // 暂时写死uid
+              "\"senderUid\"" + ":" + "\"" +this.chatId.toString() + "\"" + ","+
+              "\"receiverUid\"" + ":" +"\"100000000\"" + ","+ // 暂时写死uid
               //"receiverUid" + ":" +this.chatId.toString() + ","+
-              "message" + ":" +  this.keyboardStr + ","+
-              "time" + ":" + this.time.toString()+
+              "\"message\"" + ":" + "\"" + this.keyboardStr + "\"" +  ","+
+              "\"time\"" + ":" + "\"" + this.time.toString() + "\"" +
             "}";
 
-            ws.send(message, (err, value) => {
+            // ws.on('open', (err, value) => {
+            //   ws.send(message, (err, value) => {
+            //     if (!err) {
+            //       console.log("Message sent successfully");
+            //     } else {
+            //       console.log("Failed to send the message. Err:" + JSON.stringify(err));
+            //     }
+            //   });
+            // });
+            console.info("wsONclick")
+
+
+
+            console.info("about to on open");
+            this.ws.on('open', (err, value) => {
               if (!err) {
-                console.log("Message sent successfully");
+                console.log("on open, status:" + JSON.stringify(value));
+
+                this.ws.send(message, (err, value) => {
+                  if (!err) {
+                    console.log("Message sent successfully");
+                  } else {
+                    console.log("Failed to send the message. Err:" + JSON.stringify(err));
+                  }
+                });
               } else {
-                console.log("Failed to send the message. Err:" + JSON.stringify(err));
+                console.error("Failed to open.Err:" + JSON.stringify(err));
               }
+              console.info("finish to on open");
+
+              // 当收到on('open')事件时，可以通过send()方法与服务器进行通信
+
+              // let message : string =
+              //   "{"+
+              //     "senderUid" + ":" + "100000001" + ","+
+              //     "receiverUid" + ":" +"100000000" + ","+ // 暂时写死uid
+              //     //"receiverUid" + ":" +this.chatId.toString() + ","+
+              //     "message" + ":" +  "你好" + ","+
+              //     "time" + ":" + " 15：52" +
+              //     "}";
+
+
             });
-
-
             this.keyboardStr = '';
           })
       }
@@ -280,8 +316,16 @@ export struct ChatDetailPage {
     await this.getWant();
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
 
+    this.ws.connect(defaultIpAddress, (err, value) => {
+      if (!err) {
+        console.log("Connected successfully");
+      } else {
+        console.log("Connection failed. Err:" + JSON.stringify(err));
+      }
+    });
+
     // 在展现前就开始监听服务端发来的消息
-    ws.on('message', (err, value) => {
+    this.ws.on('message', (err, value) => {
       console.log("on message, message:" + value);
       // 接收服务端传来的消息
       this.todayDate = new Date();
@@ -294,7 +338,7 @@ export struct ChatDetailPage {
 
       // 当收到服务器的`bye`消息时（此消息字段仅为示意，具体字段需要与服务器协商），主动断开连接
       if (value === 'bye') {
-        ws.close((err, value) => {
+        this.ws.close((err, value) => {
           if (!err) {
             console.log("Connection closed successfully");
           } else {

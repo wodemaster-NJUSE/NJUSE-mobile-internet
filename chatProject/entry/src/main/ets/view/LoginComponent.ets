@@ -11,13 +11,16 @@ export struct LoginComponent {
   @StorageProp('isMinHeight') isMinHeight: boolean = false;
   @State uid: string = '';
   @State password: string = '';
+  @State loginInputState: number = 0; // 登录UI状态
 
   build() {
     Column() {
+      // 图标
       Image($r('app.media.Huazi'))
         .width(80)
         .height(80)
 
+      // 应用名称
       Text('MeetMe')
         .fontColor('#FF3B3A3A')
         .fontSize(26)
@@ -25,6 +28,7 @@ export struct LoginComponent {
         .fontStyle(FontStyle.Italic)
         .textAlign(TextAlign.Center)
 
+      // UID输入框
       TextInput({ placeholder: 'UID' })
         .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
         .height($r('app.float.text_input_height'))
@@ -43,6 +47,7 @@ export struct LoginComponent {
           this.uid = value;
         })
 
+      // 密码输入框
       TextInput({ placeholder: $r('app.string.password') })
         .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
         .height($r('app.float.text_input_height'))
@@ -62,7 +67,7 @@ export struct LoginComponent {
         })
 
       Row() {
-
+        // 登录按钮
         Button('登录', {type: ButtonType.Normal, stateEffect: true})
           .borderRadius(8)
           .fontSize(18)
@@ -118,6 +123,7 @@ export struct LoginComponent {
             // });
           })
 
+        // 注册按钮
         Button('注册', {type: ButtonType.Normal, stateEffect: true})
           .borderRadius(8)
           .backgroundColor(Color.Orange)

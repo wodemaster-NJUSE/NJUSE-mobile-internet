@@ -9,7 +9,7 @@ import { UserEntity } from '../stores/user';
 
 import webSocket from '@ohos.net.webSocket';
 
-var defaultIpAddress = "ws://172.29.4.148:8080/chat"//
+var defaultIpAddress = "ws://172.29.4.148:8080/websocket"//
 let ws = webSocket.createWebSocket();
 
 const TAB_INDEX_0: number = 0;
@@ -112,13 +112,35 @@ struct Index {
   }
   async aboutToAppear(){
     // main 在展现前就要和服务端建立websocket
-    ws.connect(defaultIpAddress+this.uid, (err, value) => {
-      if (!err) {
-        console.log("Connected successfully");
-      } else {
-        console.log("Connection failed. Err:" + JSON.stringify(err));
-      }
-    });
+    // ws.connect(defaultIpAddress, (err, value) => {
+    //   if (!err) {
+    //     console.log("Connected successfully");
+    //   } else {
+    //     console.log("Connection failed. Err:" + JSON.stringify(err));
+    //   }
+    // });
+    // ws.on('open', (err, value) => {
+    //   console.log("on open, status:" + JSON.stringify(value));
+    //   // 当收到on('open')事件时，可以通过send()方法与服务器进行通信
+    //
+    //   let message : string =
+    //     "{"+
+    //       "senderUid" + ":" + "100000001" + ","+
+    //       "receiverUid" + ":" +"100000000" + ","+ // 暂时写死uid
+    //       //"receiverUid" + ":" +this.chatId.toString() + ","+
+    //       "message" + ":" +  "你好" + ","+
+    //       "time" + ":" + " 15：52" +
+    //       "}";
+    //
+    //   ws.send(message, (err, value) => {
+    //     if (!err) {
+    //       console.log("Message sent successfully");
+    //     } else {
+    //       console.log("Failed to send the message. Err:" + JSON.stringify(err));
+    //     }
+    //   });
+    // });
+
 
     ws.on('close', (err, value) => {
       console.log("on close, code is " + value.code + ", reason is " + value.reason);
