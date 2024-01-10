@@ -139,7 +139,7 @@ export struct ChatListDisplayView {
       .then((result) => {
         if(result.code == '200') {
           // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
+          console.info("get chatModelList",JSON.stringify(result.data)); //信息
           Object.assign(this.chatListArray,result.data)//填充正常加载数据
           Object.assign(this.chatListLazy.chatList,result.data)// 填充懒加载数据
         // 进行数据填充
