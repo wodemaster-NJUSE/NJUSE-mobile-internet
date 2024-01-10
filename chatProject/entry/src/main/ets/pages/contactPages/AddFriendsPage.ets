@@ -1,5 +1,9 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../common/constants/CommonConstants'
+import { UserEntity } from '../../stores/user';
+import { ResponseResult } from '../../utils/http/HttpCore';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
 
 @Entry
 @Component
@@ -9,6 +13,11 @@ export struct AddFriendsPage {
   @State private searchState : number = 0;
   // '添加好友'按钮状态
   @State private send: boolean = false;
+
+  uid = globalThis.UID
+
+  user = new UserEntity();
+
   search_placeholder: string = '请输入您要搜索的UID'
 
   build() {
@@ -30,11 +39,34 @@ export struct AddFriendsPage {
           // TODO-联系人: 查询用户
           this.searchState = 1;
           this.send = false;
-        })
+
+          const requestOptions: RequestOptions = {
+                  url: "http://172.29.4.148:8080/v1/find",//
+                  method: RequestMethod.GET,
+                  header: {
+                    'Content-Type': 'application/json'
+                  },
+                  extraData: JSON.stringify({
+                    uid : value
+                  })
+                };
+                // 调用HttpManager的request方法，发起POST请求
+                HttpManager.getInstance().request<ResponseResult>(requestOptions)
+                  .then((result) => {
+
+                    Object.assign(this.user, result)
+
+                    console.info(JSON.stringify(result.data));//输出
+                  })
+                  .catch((err) => {
+                    console.error(JSON.stringify(err));
+                  });
+              }
+        )
         .margin(20)
 
       if (this.searchState === 1) {
-        this.SearchMessage();
+        this.SearchMessage(this.user);
       }
 
     }
@@ -75,7 +107,7 @@ export struct AddFriendsPage {
   }
 
   // 搜索到的用户信息
-  @Builder SearchMessage() {
+  @Builder SearchMessage(user : UserEntity) {
     RelativeContainer() {
       Image($r('app.media.profile_photo_3'))
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
@@ -92,7 +124,7 @@ export struct AddFriendsPage {
         // .syncLoad(true)
         .id("figure")
 
-      Text('Milo')
+      Text(user.username)
         .fontColor($r('app.color.top_bar_font_color'))
         .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
         .lineHeight($r('app.integer.layout_22'))
@@ -137,6 +169,27 @@ export struct AddFriendsPage {
           .onClick(() => {
             this.send = true;
             // TODO-联系人:发送好友申请
+
+            const requestOptions: RequestOptions = {
+              url: "http://172.29.4.148:8080/v1/find",//
+              method: RequestMethod.POST,
+              header: {
+                'Content-Type': 'application/json'
+              },
+              extraData: JSON.stringify({
+                senderUid : this.uid,
+                receiverUid : this.user.uid
+              })
+            };
+            // 调用HttpManager的request方法，发起POST请求
+            HttpManager.getInstance().request<ResponseResult>(requestOptions)
+              .then((result) => {
+                console.info('发送好友申请：' + JSON.stringify(result.data));//输出
+              })
+              .catch((err) => {
+                console.error(JSON.stringify(err));
+              });
+
           })
           .id('button')
       } else {

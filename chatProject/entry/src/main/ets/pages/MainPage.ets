@@ -1,11 +1,8 @@
 import { ContactsPage } from './ContactsPage';
 import { LLMPage } from './LLMPage'
-import router from '@ohos.router';
-import { ChatListDisplayView } from './chatPages/ChatListPage';
 
 import { DiscoverPage } from './DiscoverPage';
 import { ChatPage } from './ChatPage';
-import { UserEntity } from '../stores/user';
 
 import webSocket from '@ohos.net.webSocket';
 
