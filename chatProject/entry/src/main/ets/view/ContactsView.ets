@@ -3,6 +3,7 @@ import { ChatContact } from '../viewmodel/MsgBase';
 import { ChatModel} from '../viewmodel/MsgBase'
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { getAvatar } from '../utils/Constants';
 
 const TAG: string = 'ContactsList_ContactsView';
 
@@ -35,7 +36,7 @@ export struct ContactsView {
 
   build() {
     RelativeContainer() {
-      Image(this.contactItem.user.userImage)
+      Image(getAvatar(this.contactItem.user.userId))
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
         .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
         .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
@@ -91,7 +92,7 @@ export struct ContactsView {
         params: {
           chatName: this.contactItem.user.userName,
           chatId: this.contactItem.user.userId,
-          chatImg: this.contactItem.user.userImage,
+          chatImg: getAvatar(this.contactItem.user.userId),
           lastMsg: this.contactItem.lastMsg
         }
       }, (err) => {

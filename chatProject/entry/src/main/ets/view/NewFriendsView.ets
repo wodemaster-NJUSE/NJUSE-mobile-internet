@@ -6,6 +6,7 @@ import { CommonConstants } from '../common/constants/CommonConstants';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { ResponseResult } from '../utils/http/HttpCore';
 import { HttpManager } from '../utils/http/HttpManager';
+import { getAvatar } from '../utils/Constants';
 
 const TAG: string = 'NewFriendsList_NewFriendsView';
 
@@ -35,7 +36,7 @@ export struct NewFriendsView {
 
   build() {
     RelativeContainer() {
-      Image(this.contactItem.user.userImage)
+      Image(getAvatar(this.contactItem.user.userId))
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
         .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
         .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))

@@ -25,3 +25,8 @@ export default class Constants {
   // 朋友圈模拟数据的数量
   public static readonly FRIEND_MOMENT_MOCK_DATA_COUNT: number = 100;
 }
+
+export function getAvatar(uid : string) : string {
+  let a : string = uid[8];
+  return `/resources/images/photo${a}.jpg`;
+}
