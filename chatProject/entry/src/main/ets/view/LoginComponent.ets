@@ -12,13 +12,14 @@ export struct LoginComponent {
   @State uid: string = '';
   @State password: string = '';
   @State uid_border_width: number = 0;
+  @State pd_border_width: number = 0;
   rep = new RegExp("[0-9]{9}")
 
   // 登录UI状态
-  @State loginState: number = 1;
+  @State loginState: number = 0;
 
   // 错误提示
-  @State hint: string = '未定义';
+  @State hint: string = '';
 
   build() {
     Column() {
@@ -59,27 +60,23 @@ export struct LoginComponent {
             this.hint = "用户名应为9位数字"
           } else {
             this.uid_border_width = 0;
+            this.hint = ""
           }
 
         })
 
-      if (this.loginState === 0) {
-        Text()
-          .height(14)
-      } else {
-        Text(this.hint)
-          .fontColor(Color.Red)
-          .fontSize(14)
-          .width("100%")
-          .height(14)
-          .textAlign(TextAlign.Start)
-          .padding({
-            left: 6
-          })
-          .margin({
-            top: 4
-          })
-      }
+      Text(this.hint)
+        .fontColor(Color.Red)
+        .fontSize(14)
+        .width("100%")
+        .height(14)
+        .textAlign(TextAlign.Start)
+        .padding({
+          left: 6
+        })
+        .margin({
+          top: 4
+        })
 
       // 密码输入框
       TextInput({ placeholder: '密码' })
@@ -93,7 +90,9 @@ export struct LoginComponent {
         .border({
           // width: { bottom: $r('app.float.input_border_width') },
           // color: $r('app.color.input_border_color'),
-          radius: 8
+          radius: 8,
+          color: Color.Red,
+          width: this.pd_border_width
         })
         .margin({ top: 20 })
         .onChange((value: string) => {
@@ -146,7 +145,10 @@ export struct LoginComponent {
                 }
               })
               .catch((err) => {
-                console.error("login_:" + JSON.stringify(err));
+                console.error("login_:" + err.code + err);
+                this.uid_border_width = 1;
+                this.pd_border_width = 1;
+                this.hint = '用户名或密码错误';
               });
 
             // globalThis.UID = this.uid;
