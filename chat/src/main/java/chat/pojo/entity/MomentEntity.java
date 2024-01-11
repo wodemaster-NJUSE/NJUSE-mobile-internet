@@ -1,5 +1,6 @@
 package chat.pojo.entity;
 
+import chat.pojo.object.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,45 +11,45 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
 @Entity
 @Table
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Embeddable
+@NoArgsConstructor
 @Accessors(chain = true)
-public class UserEntity {
-
+public class MomentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
-    private String username;
+    private String publisherUid;
     @NotNull
-    private String password;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String momentUid;
     @NotNull
-    @Column(unique = true)
-    private String uid;
+    private String content;
+    @NotNull
+    private String date;
 
-    private String avatar;
+    private int likeCount;
 
-    private String gender;
-
-    private String motto;
-
-    /**
-     * 好友列表,存储 UID
-     */
+    private int commentCount;
     @ElementCollection
-    private List<String> relationList;
+    private List<String> likerList;
 
     @ElementCollection
-    private List<String> friendRequestList;
+    private List<Comment> commentList;
 
     @ElementCollection
-    private List<String> momentList;
-    //TODO:private String photoUrl;
+    private List<String> imageList;
+
+//    private String momentUid;
+//
+//    private String uid;
+//
+//    private String content;
+//
+//    private String time;
 }

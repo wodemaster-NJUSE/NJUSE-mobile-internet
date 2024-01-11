@@ -1,8 +1,9 @@
 package chat.mapper;
 
 import chat.pojo.entity.UserEntity;
-import chat.pojo.vo.user.UserVO;
-import org.apache.ibatis.annotations.Mapper;
+import chat.pojo.vo.UserVO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

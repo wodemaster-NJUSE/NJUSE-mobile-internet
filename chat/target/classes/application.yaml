@@ -3,16 +3,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/chat
     username: root
-    password: Abc750621
-
-
+    password: 123456
+#    Abc750621
+#   123456
   jpa:
     show-sql: true #在控制台显示sql语句 便于调试
     database: mysql
     hibernate:
       ddl-auto: update
 
-
+server:
+  port: 8080
 
 #sa-token:
 ##   token-name: token

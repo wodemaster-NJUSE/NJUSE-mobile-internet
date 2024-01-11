@@ -29,4 +29,19 @@ public class CommonResponse<T> {
     }
 
     // Add other constructors, getters, and setters as needed
+    public static <T> CommonResponse<T> failure() {
+        return new CommonResponse<T>();
+    }
+
+    public static <T> CommonResponse<T> failure(T data) {
+        CommonResponse<T> response = new CommonResponse<>();
+        response.setData(data);
+        return response;
+    }
+
+    public static <T> CommonResponse<T> failure(int code) {
+        CommonResponse<T> response = new CommonResponse<>();
+        response.setCode(code);
+        return response;
+    }
 }
