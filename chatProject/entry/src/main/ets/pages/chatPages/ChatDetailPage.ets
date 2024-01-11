@@ -60,6 +60,7 @@ export struct ChatDetailPage {
   lastMsg: string | Resource = this.params.lastMsg as string | Resource;
   time  = new Date();
 
+
   build() {
 
     Column() {
@@ -159,48 +160,68 @@ export struct ChatDetailPage {
             let msg = new TextMessage(this.keyboardStr);
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
               .toString(), this.userMyself, this.userFriend, msg, 1, this.todayDate.getSeconds().toString());
-
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
 
-            // 使用websocket通信
-            let message : string =
-            "{"+
-              "senderUid" + ":" +this.chatId.toString() + ","+
-              //"receiverUid" + ":" +"1000001" + ","+ // 暂时写死uid
-              "receiverUid" + ":" +this.chatId.toString() + ","+
-              "message" + ":" +  this.keyboardStr + ","+
-              "time" + ":" + this.time.toString()+
-            "}";
+            const requestOptions: RequestOptions = {// 发送一条message
+              url: "http://172.29.4.148:8080/v2/sendMessage",
+              method: RequestMethod.POST,
+              header: {
+                'Content-Type': 'application/json'
+              },
+              extraData:JSON.stringify({
+                MessageBase:this.msgBody
+              })
+            };
 
-            globalThis.WS.send(message, (err, value) => {
-              if (!err) {
-                // 成功发送一条消息就更新一次
-                console.log("Message sent successfully");
-
-                const requestOptions: RequestOptions = {
-                  url: "http://172.29.4.148:8080/v2/sendMessage",//
-                  method: RequestMethod.POST,
-                  header: {
-                    'Content-Type': 'application/json'
-                  },
-                  extraData: JSON.stringify({
-                    MessageBase:msgBody
-                  })
-                };
-                // 调用HttpManager的request方法，发起POST请求
-                HttpManager.getInstance().request<ResponseResult>(requestOptions)
-                  .then((result) => {
-                    console.info(JSON.stringify(result.data));//输出
-                  })
-                  .catch((err) => {
-                    console.error(JSON.stringify(err));
-                  });
-              } else {
-                console.log("Failed to send the message. Err:" + JSON.stringify(err));
-              }
-            });
+            //
+            HttpManager.getInstance().request<ResponseResult>(requestOptions)
+              .then((result) => {
+                if(result.code == '200') {
+                  // 成功返回
+                  console.info("post msg "+JSON.stringify(result.data)); //信息
+                }
+              })
+              .catch((err) => {
+                console.error(JSON.stringify(err));
+              });
+            // // 使用websocket通信
+            // let message : string =
+            // "{"+
+            //   "senderUid" + ":" +this.chatId.toString() + ","+
+            //   //"receiverUid" + ":" +"1000001" + ","+ // 暂时写死uid
+            //   "receiverUid" + ":" +this.chatId.toString() + ","+
+            //   "message" + ":" +  this.keyboardStr + ","+
+            //   "time" + ":" + this.time.toString()+
+            // "}";
+            // globalThis.WS.send(message, (err, value) => {
+            //   if (!err) {
+            //     // 成功发送一条消息就更新一次
+            //     console.log("Message sent successfully");
+            //
+            //     const requestOptions: RequestOptions = {
+            //       url: "http://172.29.4.148:8080/v2/sendMessage",//
+            //       method: RequestMethod.POST,
+            //       header: {
+            //         'Content-Type': 'application/json'
+            //       },
+            //       extraData: JSON.stringify({
+            //         MessageBase:msgBody
+            //       })
+            //     };
+            //     // 调用HttpManager的request方法，发起POST请求
+            //     HttpManager.getInstance().request<ResponseResult>(requestOptions)
+            //       .then((result) => {
+            //         console.info(JSON.stringify(result.data));//输出
+            //       })
+            //       .catch((err) => {
+            //         console.error(JSON.stringify(err));
+            //       });
+            //   } else {
+            //     console.log("Failed to send the message. Err:" + JSON.stringify(err));
+            //   }
+            // });
 
 
             this.keyboardStr = '';
@@ -225,6 +246,36 @@ export struct ChatDetailPage {
       this.wantId = this.wantParams.senderId;
     }
   }
+
+  async onPageShow(){
+
+    const requestOptions: RequestOptions = {// 发送一条message
+      url: "http://172.29.4.148:8080/v2/getMessages?"+"ownerUid"+":"+globalThis.UID+"&"+"friendUid"+":"+this.chatId.toString(),
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        if(result.code == '200') {
+          // 成功返回
+          console.info("get MessageList on page show" + JSON.stringify(result.data)); //输出
+          // 表示成功
+          Object.assign(this.chatDetailData.msgList, result.data) // 填充聊天信息
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
+
+  }
+
+
+
+
 
   async fdTransformPixelMap(): Promise<void> {
     try {
@@ -305,76 +356,70 @@ export struct ChatDetailPage {
   async aboutToAppear() {
     await this.getWant();
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
-    const requestOptions: RequestOptions = {
-      // 显示前先获取所有聊天信息
-      url: "http://172.29.4.148:8080/v2/sendMessage",//TODO:修改url
-      method: RequestMethod.POST,
+    const requestOptions: RequestOptions = { // 发送一条message
+      url: "http://172.29.4.148:8080/v2/getMessages?" + "ownerUid" + ":" + globalThis.UID + "&" + "friendUid" + ":" + this.chatId.toString(),
+      method: RequestMethod.GET,
       header: {
         'Content-Type': 'application/json'
       },
-      extraData: JSON.stringify({
-        myUid:globalThis.UID,
-        friendUid:this.chatId
-      })
     };
-
     // 调用HttpManager的request方法，发起POST请求
     HttpManager.getInstance().request<ResponseResult>(requestOptions)
       .then((result) => {
-        console.info(JSON.stringify(result.data));//输出
+        console.info("get MessageList on appear" + JSON.stringify(result.data)); //输出
         // 表示成功
-        Object.assign(this.chatDetailData.msgList,result.data)// 填充聊天信息
+        Object.assign(this.chatDetailData.msgList, result.data) // 填充聊天信息
       })
       .catch((err) => {
         console.error(JSON.stringify(err));
       });
 
-    // 在展现前就开始监听服务端发来的消息
-    globalThis.WS.on('message', (err, value) => {
-      console.log("on message, message:" + value);
-
-
-
-      // 接收服务端传来的消息
-      this.todayDate = new Date();
-      let msg = new TextMessage(value as string);
-      let msgBody = new MessageBase(this.chatDetailData.totalCount()
-        .toString(), this.userFriend, this.userMyself, msg, 2, this.todayDate.getSeconds().toString());
-      this.chatDetailData.pushData(msgBody);
-      this.msgLength = this.chatDetailData.totalCount();
-      this.scroller.scrollToIndex(this.msgLength - 1);
-
-      const requestOptions: RequestOptions = {
-        url: "http://172.29.4.148:8080/v2/sendMessage",//
-        method: RequestMethod.POST,
-        header: {
-          'Content-Type': 'application/json'
-        },
-        extraData: JSON.stringify({
-          MessageBase:msgBody
-        })
-      };
-      // 调用HttpManager的request方法，发起POST请求
-      HttpManager.getInstance().request<ResponseResult>(requestOptions)
-        .then((result) => {
-          console.info(JSON.stringify(result.data));//输出
-          // 表示成功y
-        })
-        .catch((err) => {
-          console.error(JSON.stringify(err));
-        });
-      // 当收到服务器的`bye`消息时（此消息字段仅为示意，具体字段需要与服务器协商），主动断开连接
-      if (value === 'bye') {
-        globalThis.WS.close((err, value) => {
-          if (!err) {
-            console.log("Connection closed successfully");
-
-          } else {
-            console.log("Failed to close the connection. Err: " + JSON.stringify(err));
-          }
-        });
-      }
-    });
+    // // 在展现前就开始监听服务端发来的消息
+    // globalThis.WS.on('message', (err, value) => {
+    //   console.log("on message, message:" + value);
+    //
+    //
+    //
+    //   // 接收服务端传来的消息
+    //   this.todayDate = new Date();
+    //   let msg = new TextMessage(value as string);
+    //   let msgBody = new MessageBase(this.chatDetailData.totalCount()
+    //     .toString(), this.userFriend, this.userMyself, msg, 2, this.todayDate.getSeconds().toString());
+    //   this.chatDetailData.pushData(msgBody);
+    //   this.msgLength = this.chatDetailData.totalCount();
+    //   this.scroller.scrollToIndex(this.msgLength - 1);
+    //
+    //   const requestOptions: RequestOptions = {
+    //     url: "http://172.29.4.148:8080/v2/sendMessage",//
+    //     method: RequestMethod.POST,
+    //     header: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     extraData: JSON.stringify({
+    //       MessageBase:msgBody
+    //     })
+    //   };
+    //   // 调用HttpManager的request方法，发起POST请求
+    //   HttpManager.getInstance().request<ResponseResult>(requestOptions)
+    //     .then((result) => {
+    //       console.info(JSON.stringify(result.data));//输出
+    //       // 表示成功y
+    //     })
+    //     .catch((err) => {
+    //       console.error(JSON.stringify(err));
+    //     });
+    //   // 当收到服务器的`bye`消息时（此消息字段仅为示意，具体字段需要与服务器协商），主动断开连接
+    //   if (value === 'bye') {
+    //     globalThis.WS.close((err, value) => {
+    //       if (!err) {
+    //         console.log("Connection closed successfully");
+    //
+    //       } else {
+    //         console.log("Failed to close the connection. Err: " + JSON.stringify(err));
+    //       }
+    //     });
+    //   }
+    // });
     // 填充假数据
     // this.makeDataLocal();
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);

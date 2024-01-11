@@ -7,6 +7,7 @@ import { ChatContact,
 @Component
   // 聊天对话框
 export struct ChatItemView {
+
   private msg: MessageBase = new MessageBase('', new ChatContact('', ''), new ChatContact('', ''), new MessageBody(), 0);
 
   build() {
