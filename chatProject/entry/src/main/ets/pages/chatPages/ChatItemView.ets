@@ -8,7 +8,7 @@ import { ChatContact,
   // 聊天对话框
 export struct ChatItemView {
 
-  private msg: MessageBase = new MessageBase('', new ChatContact('', ''), new ChatContact('', ''), new MessageBody(), 0);
+  private msg: MessageBase = new MessageBase('', new ChatContact('', ''), new ChatContact('', ''), new MessageBody(), "");
 
   build() {
     Column() {
@@ -20,7 +20,7 @@ export struct ChatItemView {
             .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
             .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
           Column() {
-            if (this.msg.msgType === 1) {
+            if (this.msg.msgType === "1") {
               Row() {
                 Text((this.msg.msgBody as TextMessage).msg)
                   .lineHeight($r('app.integer.search_text_height'))
@@ -40,7 +40,7 @@ export struct ChatItemView {
                     bottomRight: $r('app.integer.opt_layout_chat_view_item_padding_right')
                   })
               }
-            } else if (this.msg.msgType === 2) {
+            } else if (this.msg.msgType === "2") {
               Image((this.msg.msgBody as ImageMessage).image)
                 .width($r('app.integer.layout_184'))
                 .height($r('app.integer.layout_111'))
@@ -62,7 +62,7 @@ export struct ChatItemView {
             .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
             .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
           Column() {
-            if (this.msg.msgType === 1) {
+            if (this.msg.msgType === "1") {
               Row() {
                 Text((this.msg.msgBody as TextMessage).msg)
                   .lineHeight($r('app.integer.search_text_height'))
@@ -83,12 +83,12 @@ export struct ChatItemView {
                     bottomRight: $r('app.integer.opt_layout_chat_view_item_padding_right')
                   })
               }
-            } else if (this.msg.msgType === 2) {
+            } else if (this.msg.msgType === "2") {
               Image((this.msg.msgBody as ImageMessage).image)
                 .width($r('app.integer.layout_184'))
                 .height($r('app.integer.layout_111'))
                 .borderRadius($r('app.integer.search_border_radius'))
-            } else if (this.msg.msgType === 3) {
+            } else if (this.msg.msgType === "3") {
               // 接收分享的页面
               Column() {
                 Text((this.msg.msgBody as ImageTextMessage).msg)
@@ -106,7 +106,7 @@ export struct ChatItemView {
               .margin({ left: '40%' })
               .padding({ left: '2%', right: '2%', bottom: '2%' })
               .backgroundColor($r('app.color.detail_item_background'))
-            } else if (this.msg.msgType == 4) {
+            } else if (this.msg.msgType == "4") {
               Image((this.msg.msgBody as FileMessage).image)
                 .width((this.msg.msgBody as FileMessage).width)
                 .height((this.msg.msgBody as FileMessage).height)

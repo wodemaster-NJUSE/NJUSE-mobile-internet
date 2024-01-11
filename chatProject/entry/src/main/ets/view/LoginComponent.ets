@@ -12,10 +12,10 @@ export struct LoginComponent {
   @State uid: string = '';
   @State password: string = '';
   @State uid_border_width: number = 0;
-  rep = new RegExp("\d{9}")
+  rep = new RegExp("[0-9]{9}")
 
   // 登录UI状态
-  @State loginState: number = 0;
+  @State loginState: number = 1;
 
   // 错误提示
   @State hint: string = '未定义';
@@ -54,9 +54,32 @@ export struct LoginComponent {
         })
         .onChange((value: string) => {
           this.uid = value;
-
+          if (!this.rep.test(value)) {
+            this.uid_border_width = 1;
+            this.hint = "用户名应为9位数字"
+          } else {
+            this.uid_border_width = 0;
+          }
 
         })
+
+      if (this.loginState === 0) {
+        Text()
+          .height(14)
+      } else {
+        Text(this.hint)
+          .fontColor(Color.Red)
+          .fontSize(14)
+          .width("100%")
+          .height(14)
+          .textAlign(TextAlign.Start)
+          .padding({
+            left: 6
+          })
+          .margin({
+            top: 4
+          })
+      }
 
       // 密码输入框
       TextInput({ placeholder: '密码' })
@@ -152,7 +175,7 @@ export struct LoginComponent {
       .width(CommonConstants.FULL_WIDTH_PERCENT)
       .height('48vp')
       .margin({
-        top: 20
+        top: 30
       })
       .backgroundColor("#FFEAEAEA")
       .justifyContent(FlexAlign.SpaceBetween)
