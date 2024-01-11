@@ -42,13 +42,13 @@ export class ChatModel {
   }
 }
 
-enum MsgType {
-  TEXT = 1,
-  IMAGE = 2,
-  TEXT_AND_IMAGE = 3,
-  NET_IMAGE = 4,
-  LOADING_PROGRESS = 5
-}
+// enum string {
+//   TEXT = 1,
+//   IMAGE = 2,
+//   TEXT_AND_IMAGE = 3,
+//   NET_IMAGE = 4,
+//   LOADING_PROGRESS = 5
+// }
 
 // 聊天信息
 export class MessageBase {
@@ -56,10 +56,10 @@ export class MessageBase {
   from: ChatContact
   to: ChatContact
   msgBody: MessageBody
-  msgType: MsgType
+  msgType: string
   msgTime: string = ''
 
-  constructor(id: string, from: ChatContact, to: ChatContact, msg: MessageBody, type: number, time?: string) {
+  constructor(id: string, from: ChatContact, to: ChatContact, msg: MessageBody, type: string, time?: string) {
     this.msgId = id;
     this.from = from;
     this.to = to;
