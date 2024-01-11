@@ -170,21 +170,23 @@ export struct ChatDetailPage {
               header: {
                 'Content-Type': 'application/json'
               },
-              extraData:{
-                "msgId":"1",
-                "from":  {
-                  "userId" : this.userMyself.userId,
-                  "userName" : this.userMyself.userName,
-                  "userImage": "null"
-                },
-                "to":  {
-                  "userId" : this.userFriend.userId,
-                  "userName" : this.userFriend.userName,
-                  "userImage": this.userFriend.userImage
-                },
-                "msgBody": msgBody.toString(),
-                "msgType": "1",
-                "msgTime": this.todayDate.getSeconds().toString()
+              extraData: {
+                "messageBase": {
+                  "msgId": "1",
+                  "from": {
+                    "userId": this.userMyself.userId,
+                    "userName": this.userMyself.userName,
+                    "userImage": "null"
+                  },
+                  "to": {
+                    "userId": this.userFriend.userId,
+                    "userName": this.userFriend.userName,
+                    "userImage": "null"
+                  },
+                  "msgBody": this.keyboardStr,
+                  "msgType": "1",
+                  "msgTime": this.todayDate.getSeconds().toString()
+                }
               }
             };
 
