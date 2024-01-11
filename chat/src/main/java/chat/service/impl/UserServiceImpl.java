@@ -7,6 +7,7 @@ import chat.exception.BizError;
 import chat.mapper.ChatModelMapper;
 import chat.mapper.MomentMapper;
 import chat.mapper.UserMapper;
+import chat.pojo.Pair;
 import chat.pojo.entity.FriendEntity;
 import chat.pojo.entity.MomentEntity;
 import chat.pojo.entity.UserEntity;
@@ -17,9 +18,11 @@ import chat.pojo.vo.MomentModel;
 import chat.service.UserService;
 import io.exception.BizException;
 import io.exception.CommonErrorType;
+import io.pojo.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.util.function.Tuple2;
 
 import java.util.*;
 
@@ -48,14 +51,36 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Override
+    public UserEntity findByUid(String uid){
+        return userDao.findByUid(uid);
+    }
+
     /**
      * 根据 uid 查找用户
-     * @param uid 账号
-     * @return         用户实体
+     * @return         pair
      */
     @Override
-    public UserEntity findByUid(String uid) {
-        return userDao.findByUid(uid);
+    public Pair<UserEntity,String> searchByUid(String senderUid,String receiverUid) {
+        UserEntity senderUser = userDao.findByUid(senderUid);
+        UserEntity receiverUser = userDao.findByUid(receiverUid);
+        Pair<UserEntity,String> res = new Pair<>(null,"-1");
+        if (receiverUser == null)
+            res.setSecond("0");
+        // 双方已是好友
+        else if (receiverUser.getRelationList().contains(senderUid))
+            res.setSecond("1");
+        // 已向对方发送过过申请
+        else if (receiverUser.getFriendRequestList().contains(senderUid))
+            res.setSecond("2");
+        // 对方已向我发送过申请
+        else if(senderUser.getFriendRequestList().contains(senderUid))
+            res.setSecond("3");
+        // 发送请求成功！
+        else
+            res.setSecond("4");
+        res.setFirst(receiverUser);
+        return res;
     }
 
     /**
@@ -91,40 +116,12 @@ public class UserServiceImpl implements UserService {
      * @return int 类型，404：未找到用户，405：用户已经是好友，200：正常
      */
     @Override
-    public String requestFriend(String senderUid, String receiverUid) {
+    public void requestFriend(String senderUid, String receiverUid) {
         UserEntity receiverUser = userDao.findByUid(receiverUid);
-        UserEntity senderUser = userDao.findByUid(senderUid);
-        String state;
-
-        // 未查找到用户
-        if (receiverUser == null) {
-            state = "0";
-        }
-
-        // 双方已是好友
-        else if (receiverUser.getRelationList().contains(senderUid)) {
-            state =  "1";
-        }
-
-        // 已向对方发送过过申请
-        else if (receiverUser.getFriendRequestList().contains(senderUid)) {
-            state =  "2";
-        }
-
-        // 对方已向我发送过申请
-        else if(senderUser.getFriendRequestList().contains(senderUid)) {
-            state = "3";
-        }
 
         // 发送请求成功！
-        else {
-            state = "4";
-            receiverUser.getFriendRequestList().add(senderUid);
-            userDao.save(receiverUser);
-        }
-
-        return state;
-
+        receiverUser.getFriendRequestList().add(senderUid);
+        userDao.save(receiverUser);
     }
 
     @Override

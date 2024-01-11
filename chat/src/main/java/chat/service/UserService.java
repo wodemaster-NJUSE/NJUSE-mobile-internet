@@ -1,5 +1,6 @@
 package chat.service;
 
+import chat.pojo.Pair;
 import chat.pojo.entity.UserEntity;
 import chat.pojo.object.PersonalInfo;
 import chat.pojo.vo.ChatModel;
@@ -13,9 +14,11 @@ public interface UserService {
 
     UserEntity findByUid(String uid);
 
+    Pair<UserEntity,String> searchByUid(String senderUid,String receiverUid);
+
     void editInfo(String uid,String username);
 
-    String requestFriend(String senderUid, String receiverUid);
+    void requestFriend(String senderUid, String receiverUid);
 
     List<ChatModel> getRequestFriend(String uid);
 

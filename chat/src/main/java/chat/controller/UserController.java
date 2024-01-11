@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.pojo.Pair;
 import chat.pojo.entity.UserEntity;
 import chat.pojo.object.PersonalInfo;
 import chat.pojo.request.userRequest.*;
@@ -61,13 +62,16 @@ public class UserController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<CommonResponse<UserEntity>> findByUid(@RequestParam("uid") String uid) {
-        UserEntity user = userService.findByUid(uid);
-        if (user != null) {
-            CommonResponse<UserEntity> commonResponse = CommonResponse.success(user);
+    public ResponseEntity<CommonResponse<UserEntity>> searchByUid(@RequestParam("senderUid") String senderUid,@RequestParam("receiverUid") String receiverUid) {
+        Pair<UserEntity,String> pair = userService.searchByUid(senderUid,receiverUid);
+        if (pair.getFirst() != null) {
+            CommonResponse<UserEntity> commonResponse = CommonResponse.success(pair.getFirst());
+            commonResponse.setMessage(pair.getSecond());
             return ResponseEntity.ok(commonResponse);
         } else {
-            return ResponseEntity.notFound().build();
+            CommonResponse<UserEntity> commonResponse = CommonResponse.failure(null);
+            commonResponse.setMessage(pair.getSecond());
+            return ResponseEntity.ok(commonResponse);
         }
     }
 
@@ -78,14 +82,9 @@ public class UserController {
 
     @PostMapping("requestFriend")
     public CommonResponse<ChatModel> requestfriend(@Valid @RequestBody MakeFriendRequest request){
-        String nowRelation = userService.requestFriend(request.getSenderUid(), request.getReceiverUid());
+        userService.requestFriend(request.getSenderUid(), request.getReceiverUid());
         CommonResponse<ChatModel> commonResponse = new CommonResponse<>();
         commonResponse.setCode(200);
-        commonResponse.setMessage(nowRelation);
-        //当状态码不为0 返回chatModel
-        if(!nowRelation.equals("0")){
-            commonResponse.setData(userService.getChatModel(request.getReceiverUid(),request.getSenderUid()));
-        }
         return commonResponse;
     }
 
