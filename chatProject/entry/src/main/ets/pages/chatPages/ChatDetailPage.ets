@@ -171,20 +171,21 @@ export struct ChatDetailPage {
                 'Content-Type': 'application/json'
               },
               extraData:JSON.stringify({
-                MessageBase:this.msgBody
+                messageBase : this.msgBody
               })
             };
 
             //
             HttpManager.getInstance().request<ResponseResult>(requestOptions)
               .then((result) => {
+                console.info("post_msg:start")
                 if(result.code == '200') {
                   // 成功返回
-                  console.info("post msg "+JSON.stringify(result.data)); //信息
+                  console.info("post_msg:"+JSON.stringify(result.data)); //信息
                 }
               })
               .catch((err) => {
-                console.error(JSON.stringify(err));
+                console.error("post_error" + err);
               });
             // // 使用websocket通信
             // let message : string =
@@ -250,7 +251,7 @@ export struct ChatDetailPage {
   async onPageShow(){
 
     const requestOptions: RequestOptions = {// 发送一条message
-      url: "http://172.29.4.148:8080/v2/getMessages?"+"ownerUid"+":"+globalThis.UID+"&"+"friendUid"+":"+this.chatId.toString(),
+      url: "http://172.29.4.148:8080/v2/getMessages?"+"ownerUid"+"="+globalThis.UID+"&"+"friendUid"+"="+this.chatId.toString(),
       method: RequestMethod.GET,
       header: {
         'Content-Type': 'application/json'
@@ -357,7 +358,7 @@ export struct ChatDetailPage {
     await this.getWant();
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     const requestOptions: RequestOptions = { // 发送一条message
-      url: "http://172.29.4.148:8080/v2/getMessages?" + "ownerUid" + ":" + globalThis.UID + "&" + "friendUid" + ":" + this.chatId.toString(),
+      url: "http://172.29.4.148:8080/v2/getMessages?" + "ownerUid=" + globalThis.UID + "&friendUid=" + this.chatId.toString(),
       method: RequestMethod.GET,
       header: {
         'Content-Type': 'application/json'
@@ -373,6 +374,9 @@ export struct ChatDetailPage {
       .catch((err) => {
         console.error(JSON.stringify(err));
       });
+
+    this.userMyself = new ChatContact(globalThis.UID, globalThis.USERNAME, '')
+    this.userFriend = new ChatContact(this.chatId.toString(), this.chatName, this.chatImg)
 
     // // 在展现前就开始监听服务端发来的消息
     // globalThis.WS.on('message', (err, value) => {

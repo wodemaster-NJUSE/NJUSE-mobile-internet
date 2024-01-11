@@ -12,7 +12,7 @@ export struct LoginComponent {
   @State uid: string = '';
   @State password: string = '';
   @State uid_border_width: number = 0;
-  rep = new RegExp("")
+  rep = new RegExp("\d{9}")
 
   // 登录UI状态
   @State loginState: number = 0;

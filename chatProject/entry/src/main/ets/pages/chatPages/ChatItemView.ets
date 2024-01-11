@@ -12,7 +12,7 @@ export struct ChatItemView {
 
   build() {
     Column() {
-      if (this.msg.from.userId != '1') {
+      if (this.msg.from.userId != globalThis.UID) {
         // 聊天页面对方的消息
         Row() {
           Image(this.msg.from.userImage)
