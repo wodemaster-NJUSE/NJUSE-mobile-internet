@@ -18,10 +18,12 @@ import zlib from '@ohos.zlib';
 import request from '@ohos.request';
 import type common from '@ohos.app.ability.common';
 import Logger from '../../utils/Logger';
+import webSocket from '@ohos.net.webSocket';
 
 let workerPort = worker.workerPort;
 
 workerPort.onmessage = (e: MessageEvents): void => {
+  
   Logger.info('workerPort onmessage start');
   // worker线程向主线程发送信息
   let context: common.UIAbilityContext = e.data.context;
@@ -70,3 +72,36 @@ workerPort.onmessage = (e: MessageEvents): void => {
     Logger.info(`Invoke downloadTask failed, code is ${err.code}, message is ${err.message}`);
   });
 };
+workerPort.onmessage = function(e : MessageEvents){
+  let data = e.data
+  let mSocket: webSocket.WebSocket = webSocket.createWebSocket()
+  let promise = mSocket.connect(data.url)
+  promise.then(()=>{
+    workerPort.postMessage({type: 'connect',value:'waiting……'});
+  }).catch((err:Error)=>{
+    workerPort.postMessage({type:'err',value: JSON.stringify(err)});
+  })
+  let heartTimer
+  mSocket.on('open',()=>{
+    workerPort.postMessage({type: 'open',value : 'start to reply'});
+    //mSocket.send() 发送消息
+    heartTimer= setInterval(()=>{
+      mSocket.send("ping")
+    },3000)
+  })
+
+  mSocket.on('error',(err)=>{
+    workerPort.postMessage({typen:'err',value: JSON.stringify(err)})
+    clearInterval(heartTimer)
+  })
+
+  mSocket.on('close', (code, value) => {
+    workerPort.postMessage({type:'close',value:`code:${value}, reason:${JSON.stringify(value)}`})
+    clearInterval(heartTimer)
+  });
+
+  mSocket.on('message',(err:Error,value:Object)=>{
+      workerPort.postMessage({type:'message',value: value})
+  })
+
+}

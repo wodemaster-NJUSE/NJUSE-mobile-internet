@@ -15,20 +15,17 @@ let context = getContext(this) as common.UIAbilityContext;
 let cacheDir = context.cacheDir;
 
 // 上传任务配置项
+// 获取应用文件路径
+
 let uploadConfig = {
-  url: 'http://192.168.3.48:8740/file/upload',
+  url: 'http://172.29.4.148:8080/',
   header: { key1: 'Content-Type', key2: 'multipart/form-data' },
   method: 'POST',
-  files: [], // 存放图片
+  files: [
+    { filename: 'test.jpg', name: 'test', uri: 'internal://cache/test.jpg', type: 'jpg' }
+  ],
   data: [
-    {
-      uid: '',
-      user: ChatContact,
-      content: '',
-      time: '',
-      media: '', // media为需要获取的视频url
-      mediaPreview: '' //mediaPreview为需要获取的视频预览图url
-    }
+    { name: 'fileId', value: 'FP000008' }
   ]
 }
 @Entry

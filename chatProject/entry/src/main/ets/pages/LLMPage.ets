@@ -1,16 +1,12 @@
-import router from '@ohos.router';
-import {CommonConstants} from '../common/constants/CommonConstants';
-import { WantFileModel, WantModel } from '../model/Want';
+
 import { ChatContact, ChatDetailData, ImageMessage,
     ImageTextMessage,
     MessageBase, TextMessage } from '../viewmodel/MsgBase';
-import Want from '@ohos.app.ability.Want';
-import image from '@ohos.multimedia.image';
-import { ChatItemView } from './chatPages/ChatItemView';
+
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { HttpManager } from '../utils/http/HttpManager';
 import { ResponseResult } from '../utils/http/HttpCore';
-import hiTraceMeter from '@ohos.hiTraceMeter';
+
 
 
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
