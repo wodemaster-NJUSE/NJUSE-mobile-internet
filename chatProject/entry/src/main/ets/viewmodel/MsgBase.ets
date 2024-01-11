@@ -59,6 +59,9 @@ export class MessageBase {
   msgType: string
   msgTime: string = ''
 
+
+
+
   constructor(id: string, from: ChatContact, to: ChatContact, msg: MessageBody, type: string, time?: string) {
     this.msgId = id;
     this.from = from;
