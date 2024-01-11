@@ -37,7 +37,7 @@ export struct ChatDetailPage {
   msg = new TextMessage($r('app.string.message1'));
   msgAnother = new TextMessage($r('app.string.message2'));
   todayDate = new Date();
-  msgBody = new MessageBase('1', this.userMyself, this.userFriend, this.msgAnother, "1", this.todayDate.getSeconds().toString());
+  msgBody = new MessageBase('1', this.userMyself, this.userFriend, '', "1", this.todayDate.getSeconds().toString());
 
   @State keyboardStr: string = '';
   private chatDetailData = new ChatDetailData();// 聊天信息加载,要填充
@@ -142,7 +142,7 @@ export struct ChatDetailPage {
             let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
             let msg = new ImageMessage(40, 50, imageStr);
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, msg, "2");
+              .toString(), this.userMyself, this.userFriend, '', "2");
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
@@ -159,7 +159,7 @@ export struct ChatDetailPage {
             this.todayDate = new Date();
             let msg = new TextMessage(this.keyboardStr);
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, msg, "1", this.todayDate.getSeconds().toString());
+              .toString(), this.userMyself, this.userFriend, '', "1", this.todayDate.getSeconds().toString());
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
@@ -308,51 +308,51 @@ export struct ChatDetailPage {
   }
 
   // 设定本地聊天内容，假数据填充
-  async makeDataLocal() {
-    hiTraceMeter.startTrace(MAKE_DATA_LOCAL_TRACE, MAKE_DATA_LOCAL_TRACE_ID);
-    let chatDetailMsgList = await getMessageListFromJSON();
-    let todayDate = new Date();
-    let userMyself = new ChatContact('1', $r('app.string.myself'));
-    let userFriend = new ChatContact('2', this.chatName, this.chatImg);
-    let sum = 0;
-    // 循环遍历本地数据，通过取模的方式选择文本数据或者图片数据
-    for (let i = 0; i < 1000; i++) {
-      let msg: TextMessage | ImageMessage;
-      let msgBody: MessageBase;
-      if (sum % 2 === 0) {
-        msg = new TextMessage(chatDetailMsgList[i % Constants.MOCK_ELEMENT_COUNT]);
-        if (i % 2 === 0) {
-          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, "1", todayDate.getSeconds().toString());
-        } else {
-          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, "1", todayDate.getSeconds().toString());
-        }
-      } else {
-        let imageStr = `/resources/images/photo${(i % 50).toString()}.jpg`;
-        msg = new ImageMessage(40, 50, imageStr);
-        if (i % 2 === 0) {
-          msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, "2", todayDate.getSeconds().toString());
-        } else {
-          msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, "2", todayDate.getSeconds().toString());
-        }
-      }
-      if (i % 2 === 0) {
-        sum++;
-      }
-      this.chatDetailData.pushData(msgBody);
-    }
-    if (this.wantId === 1) {
-      let lastMsg = new ImageTextMessage(200, 100, this.wantParams.srcImage, this.wantParams.textContent);
-      this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, "3", todayDate.getSeconds().toString()));
-    } else if (this.wantId === 2) {
-      await this.fdTransformPixelMap();
-      if (this.imageFile !== undefined) {
-        let lastMsg = new FileMessage(180, 200, this.imageFile);
-        this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, "3", todayDate.getSeconds().toString()));
-      }
-    }
-    this.msgLength = this.chatDetailData.totalCount();
-    hiTraceMeter.finishTrace(MAKE_DATA_LOCAL_TRACE, MAKE_DATA_LOCAL_TRACE_ID);
-  }
+  // async makeDataLocal() {
+  //   hiTraceMeter.startTrace(MAKE_DATA_LOCAL_TRACE, MAKE_DATA_LOCAL_TRACE_ID);
+  //   let chatDetailMsgList = await getMessageListFromJSON();
+  //   let todayDate = new Date();
+  //   let userMyself = new ChatContact('1', $r('app.string.myself'));
+  //   let userFriend = new ChatContact('2', this.chatName, this.chatImg);
+  //   let sum = 0;
+  //   // 循环遍历本地数据，通过取模的方式选择文本数据或者图片数据
+  //   for (let i = 0; i < 1000; i++) {
+  //     let msg: TextMessage | ImageMessage;
+  //     let msgBody: MessageBase;
+  //     if (sum % 2 === 0) {
+  //       msg = new TextMessage(chatDetailMsgList[i % Constants.MOCK_ELEMENT_COUNT]);
+  //       if (i % 2 === 0) {
+  //         msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, "1", todayDate.getSeconds().toString());
+  //       } else {
+  //         msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, "1", todayDate.getSeconds().toString());
+  //       }
+  //     } else {
+  //       let imageStr = `/resources/images/photo${(i % 50).toString()}.jpg`;
+  //       msg = new ImageMessage(40, 50, imageStr);
+  //       if (i % 2 === 0) {
+  //         msgBody = new MessageBase(i.toString(), userFriend, userMyself, msg, "2", todayDate.getSeconds().toString());
+  //       } else {
+  //         msgBody = new MessageBase(i.toString(), userMyself, userFriend, msg, "2", todayDate.getSeconds().toString());
+  //       }
+  //     }
+  //     if (i % 2 === 0) {
+  //       sum++;
+  //     }
+  //     this.chatDetailData.pushData(msgBody);
+  //   }
+  //   if (this.wantId === 1) {
+  //     let lastMsg = new ImageTextMessage(200, 100, this.wantParams.srcImage, this.wantParams.textContent);
+  //     this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, "3", todayDate.getSeconds().toString()));
+  //   } else if (this.wantId === 2) {
+  //     await this.fdTransformPixelMap();
+  //     if (this.imageFile !== undefined) {
+  //       let lastMsg = new FileMessage(180, 200, this.imageFile);
+  //       this.chatDetailData.pushData(new MessageBase('1000', userMyself, userFriend, lastMsg, "3", todayDate.getSeconds().toString()));
+  //     }
+  //   }
+  //   this.msgLength = this.chatDetailData.totalCount();
+  //   hiTraceMeter.finishTrace(MAKE_DATA_LOCAL_TRACE, MAKE_DATA_LOCAL_TRACE_ID);
+  // }
 
   async aboutToAppear() {
     await this.getWant();

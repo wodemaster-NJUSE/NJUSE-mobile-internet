@@ -1,12 +1,16 @@
-
+import router from '@ohos.router';
+import {CommonConstants} from '../common/constants/CommonConstants';
+import { WantFileModel, WantModel } from '../model/Want';
 import { ChatContact, ChatDetailData, ImageMessage,
     ImageTextMessage,
     MessageBase, TextMessage } from '../viewmodel/MsgBase';
-
+import Want from '@ohos.app.ability.Want';
+import image from '@ohos.multimedia.image';
+import { ChatItemView } from './chatPages/ChatItemView';
 import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
 import { HttpManager } from '../utils/http/HttpManager';
 import { ResponseResult } from '../utils/http/HttpCore';
-
+import hiTraceMeter from '@ohos.hiTraceMeter';
 
 
 const ABOUT_TO_APPEAR_TRACE: string = 'ChatDetailPage_AboutToAppear_HiTrace';
@@ -25,7 +29,7 @@ export struct LLMPage {
     gpt = new ChatContact('2', "小智");//构造gpt的默认聊天对象
     msgAnother = new TextMessage('hello,小智');
     todayDate = new Date();
-    msgBody = new MessageBase('1', this.userMyself, this.gpt, this.msgAnother, "1", this.todayDate.getSeconds().toString());
+    msgBody = new MessageBase('1', this.userMyself, this.gpt, this.msgAnother.toString(), "1", this.todayDate.getSeconds().toString());
     // 消息体构造：消息id，来自，去往，消息，消息类型（文本，图片，文本加图片，网络图片），日期
     @State keyboardStr: string = '';// 键盘输入
     @State private chatDetailData: ChatDetailData = new ChatDetailData();// 根据这个来构造细节聊天界面，通过 msgList 来对界面进行渲染
@@ -126,7 +130,7 @@ export struct LLMPage {
                         this.todayDate = new Date();
                         let msg = new TextMessage(this.keyboardStr);
                         let msgBody = new MessageBase(this.index_count.toString(),
-                            this.userMyself, this.gpt, msg, "1", this.todayDate.getSeconds().toString());
+                            this.userMyself, this.gpt, msg.toString(), "1", this.todayDate.getSeconds().toString());
                         this.index_count = this.index_count + 1;
                         this.chatDetailData.pushData(msgBody);
                         this.msgLength = this.chatDetailData.totalCount();
@@ -136,7 +140,7 @@ export struct LLMPage {
                         this.todayDate = new Date();
                         msg = new TextMessage('load');
                         msgBody = new MessageBase(this.index_count.toString(),
-                            this.gpt, this.userMyself, msg, "5", this.todayDate.getSeconds().toString());
+                            this.gpt, this.userMyself, msg.toString(), "5", this.todayDate.getSeconds().toString());
                         this.index_count = this.index_count + 1;
                         this.chatDetailData.pushData(msgBody); // 进行渲染
                         this.msgLength = this.chatDetailData.totalCount();
@@ -163,7 +167,7 @@ export struct LLMPage {
                                 this.todayDate = new Date();
                                 msg = new TextMessage(JSON.parse(JSON.stringify(result.data)));// 解析返回数据
                                 msgBody = new MessageBase(this.index_count.toString()
-                                    , this.gpt, this.userMyself, msg, "1", this.todayDate.getSeconds().toString());
+                                    , this.gpt, this.userMyself, msg.toString(), "1", this.todayDate.getSeconds().toString());
                                 this.index_count = this.index_count + 1;
                                 this.chatDetailData.deleteData(this.chatDetailData.totalCount() - 1)
                                 this.chatDetailData.pushData(msgBody); // 渲染
@@ -200,7 +204,7 @@ export struct LLMPage {
                     Column() {
                         if (msg.msgType === "1") {
                             Row() {
-                                Text((msg.msgBody as TextMessage).msg)
+                                Text(msg.msgBody)
                                     .lineHeight($r('app.integer.search_text_height'))
                                     .constraintSize({ minHeight: $r('app.integer.search_inline_height') })
                                     .fontSize($r('app.integer.search_font_size'))
@@ -241,9 +245,9 @@ export struct LLMPage {
                         .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
                         .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
                     Column() {
-                        if (msg.msgType === "1") {
+                        if (msg.msgType ==="1") {
                             Row() {
-                                Text((msg.msgBody as TextMessage).msg)
+                                Text(msg.msgBody)
                                     .lineHeight($r('app.integer.search_text_height'))
                                     .constraintSize({ minHeight: $r('app.integer.opt_layout_chat_view_profile_picture_height') })
                                     .fontSize($r('app.integer.search_font_size'))
