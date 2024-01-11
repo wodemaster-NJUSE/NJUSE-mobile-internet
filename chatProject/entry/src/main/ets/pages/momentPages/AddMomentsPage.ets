@@ -37,13 +37,13 @@ export struct AddMomentsPage {
   // 添加新动态，点击发表的时候要更新动态列表
   uid: string = globalThis.UID; // 通过uid来向后端获取对应的数据
   private keyboardStr : string = ''; // 刷新输入
-  private myChatContact: ChatContact = new ChatContact(this.uid, '','');
+  private myChatContact: ChatContact = new ChatContact(this.uid, globalThis.USERNAME,'');
   // userId: string
   // userName: string | Resource
   // userImage: string | Resource
   private imageList : Array<string> = new Array<string>();
   private time : Date = new Date();
-  private newMoment: FriendMoment = new FriendMoment(this.uid, this.myChatContact, this.keyboardStr, this.time.toString(),this.imageList, '', '');
+  private newMoment: FriendMoment = new FriendMoment(this.uid, this.myChatContact, this.keyboardStr, this.time.toString(),[], '', '');
   // id: string
   // user: ChatContact
   // text: string
@@ -58,44 +58,7 @@ export struct AddMomentsPage {
     // 加载前对myChatContact进行填充，向后端获取数据
     console.info('addMomentsPage get uid'+ this.uid)
   }
-  // uploadMoment() {
-  //   // 将本地应用文件上传至网络服务器
-  //   try {
-  //     uploadConfig.data = [{
-  //       uid: this.uid,
-  //       user: ChatContact,
-  //       content: this.keyboardStr,
-  //       time: this.time.toString(),
-  //       media: '', // media为需要获取的视频url
-  //       mediaPreview: '' //mediaPreview为需要获取的视频预览图url
-  //     }]
-  //     // Clear the existing files in the upload configuration
-  //     uploadConfig.files = [];
-  //     // Add each selected image to the upload configuration
-  //     for (let i = 0; i < this.pictures.length; i++) {
-  //       let uri = this.pictures[i];
-  //       let filename = `image_${i}.jpg`; // You can customize the filename as needed
-  //       uploadConfig.files.push({ filename, name: 'image', uri, type: 'jpg' });
-  //     }
-  //
-  //     // Upload the files to the server
-  //     request.uploadFile(context, uploadConfig)
-  //       .then((uploadTask) => {
-  //         uploadTask.on('complete', (taskStates) => {
-  //           for (let i = 0; i < taskStates.length; i++) {
-  //             console.info(`xx upload complete taskState: ${JSON.stringify(taskStates[i])}`);
-  //           }
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         console.error(`xx Invoke uploadFile failed, code is ${err.code}, message is ${err.message}`);
-  //
-  //       })
-  //   } catch (err) {
-  //     console.error(`xx Invoke uploadFile failed, code is ${err.code}, message is ${err.message}`);
-  //
-  //   }
-  // }
+
   build() {
     Column() {
       this.TopBar()
@@ -184,6 +147,8 @@ export struct AddMomentsPage {
         })
         .onClick(() => {
           // TODO: 对远程数据进行更新 uid -> momentsList,上传单个动态到后端
+
+          let newMoment: FriendMoment = new FriendMoment(this.uid, this.myChatContact, this.keyboardStr, this.time.toString(),[], '', '');
           const requestOptions: RequestOptions = {
             url: "http://172.29.4.148:8080/v1/publishMoment",
             method: RequestMethod.POST,
@@ -191,7 +156,7 @@ export struct AddMomentsPage {
               'Content-Type': 'application/json'
             },
             extraData:JSON.stringify({
-              momentModel:this.newMoment
+              momentModel : newMoment
             })
           };
 
@@ -207,6 +172,8 @@ export struct AddMomentsPage {
             .catch((err) => {
               console.error(JSON.stringify(err));
             });
+
+          router.back();
         })
     }
     .width(CommonConstants.FULL_WIDTH_PERCENT)

@@ -118,9 +118,12 @@ struct MomentsPage {
     //
     HttpManager.getInstance().request<ResponseResult>(requestOptions)
       .then((result) => {
+
+
         if(result.code == '200') {
           // 成功返回
-          console.info(JSON.stringify(result.data)); //信息
+
+          console.info("jhgvjhchg" + JSON.stringify(result.data)); //信息
           Object.assign(this.momentData.momentList,result.data) // 进行数据填充
         }
       })

@@ -5,6 +5,9 @@ import Logger from '../../utils/Logger';
 import { ChatModel } from '../../viewmodel/MsgBase';
 import { ChatListData } from '../../viewmodel/ChatListDataSource';
 import { NewFriendsView, ReusableNewFriendsView } from '../../view/NewFriendsView';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
 
 
 const TAG: string = 'NewFriendsListDisplayView';
@@ -92,8 +95,35 @@ export struct NewFriendsListDisplayView {
     Logger.info(TAG, "ContactsListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     //this.controller.stopEditing();
-    await makeDataLocal(this.newFriendsListLazy);
-    await makeDataList(this.newFriendsListArray);
+
+    const requestOptions: RequestOptions = {
+      url: "172.29.4.148:8080/v1/getRequestFriend?uid="+globalThis.UID,
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        console.info('newFriend:start')
+        if(result.code == '200') {
+          // 成功返回
+          console.info('newFriend:' + JSON.stringify(result.data)); //信息
+          Object.assign(this.newFriendsListLazy.chatList,result.data)//填充正常加载数据
+          Object.assign(this.newFriendsListArray,result.data)// 填充懒加载数据
+          console.info('newFriend:end')
+          // 进行数据填充
+        }
+      })
+      .catch((err) => {
+        console.error('newFriend:' + JSON.stringify(err));
+      });
+    // 把获得的数据放入当前展示的列表中
+
+    // await makeDataLocal(this.newFriendsListLazy);
+    // await makeDataList(this.newFriendsListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }

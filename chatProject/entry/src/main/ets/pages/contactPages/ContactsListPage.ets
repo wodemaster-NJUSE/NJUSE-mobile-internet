@@ -6,6 +6,9 @@ import Logger from '../../utils/Logger';
 import effectKit from '@ohos.effectKit';
 import { ChatModel } from '../../viewmodel/MsgBase';
 import { ChatListData } from '../../viewmodel/ChatListDataSource';
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
 
 
 const TAG: string = 'ContactsListDisplayView';
@@ -90,8 +93,34 @@ export struct ContactsListDisplayView {
     Logger.info(TAG, "ContactsListPage aboutToAppear");
     hiTraceMeter.startTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
     //this.controller.stopEditing();
-    await makeDataLocal(this.contactsListLazy);
-    await makeDataList(this.contactsListArray);
+
+    const requestOptions: RequestOptions = {
+      url: "172.29.4.148:8080/v1/getChatModelList?uid="+globalThis.UID,
+      method: RequestMethod.GET,
+      header: {
+        'Content-Type': 'application/json'
+      },
+    };
+
+    //
+    HttpManager.getInstance().request<ResponseResult>(requestOptions)
+      .then((result) => {
+        if(result.code == '200') {
+          // 成功返回
+          console.info(JSON.stringify(result.data)); //信息
+          Object.assign(this.contactsListArray,result.data)//填充正常加载数据
+          Object.assign(this.contactsListLazy.chatList,result.data)// 填充懒加载数据
+          // 进行数据填充
+
+        }
+      })
+      .catch((err) => {
+        console.error(JSON.stringify(err));
+      });
+
+    // 假数据填充
+    // await makeDataLocal(this.contactsListLazy);
+    // await makeDataList(this.contactsListArray);
     hiTraceMeter.finishTrace(ABOUT_TO_APPEAR_TRACE, ABOUT_TO_APPEAR_TRACE_ID);
   }
 }

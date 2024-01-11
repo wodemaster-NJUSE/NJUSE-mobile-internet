@@ -3,6 +3,9 @@ import Logger from '../utils/Logger';
 import router from '@ohos.router';
 import { ChatContact } from '../viewmodel/MsgBase';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { RequestMethod, RequestOptions } from '../utils/http/RequestOptions';
+import { ResponseResult } from '../utils/http/HttpCore';
+import { HttpManager } from '../utils/http/HttpManager';
 
 const TAG: string = 'NewFriendsList_NewFriendsView';
 
@@ -92,6 +95,27 @@ export struct NewFriendsView {
           .onClick(() => {
               this.consent = true;
             // TODO-联系人:同意好友申请
+
+            const requestOptions: RequestOptions = {
+              url: "http://172.29.4.148:8080/v1/dealRequestFriend",
+              method: RequestMethod.POST,
+              header: {
+                'Content-Type': 'application/json'
+              },
+              extraData: JSON.stringify({
+                dealerUid : globalThis.UID,
+                senderUid : this.contactItem.user.userId,
+                deal : true
+              })
+            };
+            // 调用HttpManager的request方法，发起POST请求
+            HttpManager.getInstance().request<ResponseResult>(requestOptions)
+              .then((result) => {
+                console.info('newFriend:code' + result.code);
+              })
+              .catch((err) => {
+                console.error(JSON.stringify(err));
+              });
           })
           .id('button')
       } else {

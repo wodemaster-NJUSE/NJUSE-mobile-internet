@@ -16,7 +16,8 @@ export struct AddFriendsPage {
 
   uid = globalThis.UID
 
-  user = new UserEntity();
+  @State user : UserEntity = new UserEntity();
+  @State username : string = '';
 
   search_placeholder: string = '请输入您要搜索的UID'
 
@@ -41,22 +42,25 @@ export struct AddFriendsPage {
           this.send = false;
 
           const requestOptions: RequestOptions = {
-                  url: "http://172.29.4.148:8080/v1/find",//
+                  url: "http://172.29.4.148:8080/v1/find?senderUid=" + this.uid + "&receiverUid=" + value,//
                   method: RequestMethod.GET,
                   header: {
                     'Content-Type': 'application/json'
                   },
-                  extraData: JSON.stringify({
-                    uid : value
-                  })
+                  // extraData: JSON.stringify({
+                  //   uid : value
+                  // })
                 };
                 // 调用HttpManager的request方法，发起POST请求
                 HttpManager.getInstance().request<ResponseResult>(requestOptions)
                   .then((result) => {
+                    console.info('csdcs');
+                    // this.user.username = JSON.parse(JSON.stringify(result.data)).username;
+                    // console.info("csdcs:" + this.user.username);
 
-                    Object.assign(this.user, result)
-
-                    console.info(JSON.stringify(result.data));//输出
+                    Object.assign(this.user, result.data);
+                    this.username = this.user.username;
+                    console.info("searchfind" + " " + this.user.username + " " + this.username); //输出
                   })
                   .catch((err) => {
                     console.error(JSON.stringify(err));
@@ -66,7 +70,115 @@ export struct AddFriendsPage {
         .margin(20)
 
       if (this.searchState === 1) {
-        this.SearchMessage(this.user);
+        RelativeContainer() {
+          Image($r('app.media.profile_photo_3'))
+            .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
+            .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
+            .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))
+            .margin({
+              top: 10,
+              left: 12
+            })
+            .alignRules({
+              top: { anchor: '__container__', align: VerticalAlign.Top },
+              left: { anchor: '__container__', align: HorizontalAlign.Start }
+            })
+              // .syncLoad(true)
+            .id("figure")
+
+          Text(this.username)
+            .fontColor($r('app.color.top_bar_font_color'))
+            .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
+            .lineHeight($r('app.integer.layout_22'))
+            .fontWeight(450)
+            .margin({ top: $r('app.integer.layout_10'), left: $r('app.integer.contact_view_row_height') })
+            .alignRules({
+              top: { anchor: '__container__', align: VerticalAlign.Top },
+              left: { anchor: '__container__', align: HorizontalAlign.Start }
+            })
+            .id('user')
+
+          Text('# 这是个性签名')
+            .fontColor(Color.Gray)
+            .fontSize($r('app.integer.text_font_14'))
+            .lineHeight($r('app.integer.layout_19'))
+            .maxLines(1)
+            .margin({ top: $r('app.integer.layout_34'), left: 68 })
+            .alignRules({
+              top: { anchor: '__container__', align: VerticalAlign.Top },
+              left: { anchor: '__container__', align: HorizontalAlign.Start }
+            })
+            .id('msg')
+
+          if (!this.send) {
+            Button('添加', {type: ButtonType.Normal, stateEffect: true})
+              .borderRadius(8)
+              .fontSize(14)
+              .fontColor(Color.Black)
+              .backgroundColor(Color.White)
+              .borderWidth(1)
+              .borderColor(Color.Gray)
+              .width(62)
+              .height(30)
+              .margin({
+                top: 17,
+                right: 32
+              })
+              .alignRules({
+                top: {anchor: '__container__', align: VerticalAlign.Top},
+                right: {anchor: '__container__', align: HorizontalAlign.End}
+              })
+              .onClick(() => {
+                this.send = true;
+                // TODO-联系人:发送好友申请
+
+                const requestOptions: RequestOptions = {
+                  url: "http://172.29.4.148:8080/v1/requestFriend",//
+                  method: RequestMethod.POST,
+                  header: {
+                    'Content-Type': 'application/json'
+                  },
+                  extraData: JSON.stringify({
+                    senderUid : this.uid,
+                    receiverUid : this.user.uid
+                  })
+                };
+                // 调用HttpManager的request方法，发起POST请求
+                HttpManager.getInstance().request<ResponseResult>(requestOptions)
+                  .then((result) => {
+                    console.info('发送好友申请：' + JSON.stringify(result.data));//输出
+                  })
+                  .catch((err) => {
+                    console.error(JSON.stringify(err));
+                  });
+
+              })
+              .id('button')
+          } else {
+            Text('已发送')
+              .fontSize(16)
+              .fontColor(Color.Gray)
+              .height(26)
+              .margin({
+                top: 17,
+                right: 40
+              })
+              .alignRules({
+                top: { anchor: '__container__', align: VerticalAlign.Top },
+                right: {anchor: '__container__', align: HorizontalAlign.End}
+              })
+              .id('hasConsent')
+          }
+        }
+        .width($r('app.string.layout_100_percent'))
+        .height($r('app.integer.opt_layout_contact_view_item_height'))
+        .backgroundColor(Color.White)
+        .padding({
+          left: $r('app.integer.opt_layout_contact_view_item_padding_left'),
+          right: $r('app.integer.opt_layout_contact_view_item_padding_right'),
+          top: $r('app.integer.opt_layout_contact_view_item_padding_top'),
+          bottom: $r('app.integer.opt_layout_contact_view_item_padding_bottom')
+        })
       }
 
     }
@@ -107,7 +219,7 @@ export struct AddFriendsPage {
   }
 
   // 搜索到的用户信息
-  @Builder SearchMessage(user : UserEntity) {
+  @Builder SearchMessage() {
     RelativeContainer() {
       Image($r('app.media.profile_photo_3'))
         .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
@@ -124,7 +236,7 @@ export struct AddFriendsPage {
         // .syncLoad(true)
         .id("figure")
 
-      Text(user.username)
+      Text(this.user.username)
         .fontColor($r('app.color.top_bar_font_color'))
         .fontSize($r('app.integer.opt_layout_contact_view_user_name_font_size'))
         .lineHeight($r('app.integer.layout_22'))

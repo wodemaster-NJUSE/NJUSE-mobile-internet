@@ -11,7 +11,14 @@ export struct LoginComponent {
   @StorageProp('isMinHeight') isMinHeight: boolean = false;
   @State uid: string = '';
   @State password: string = '';
-  @State loginInputState: number = 0; // 登录UI状态
+  @State uid_border_width: number = 0;
+  rep = new RegExp("")
+
+  // 登录UI状态
+  @State loginState: number = 0;
+
+  // 错误提示
+  @State hint: string = '未定义';
 
   build() {
     Column() {
@@ -41,14 +48,18 @@ export struct LoginComponent {
         .border({
           // width: { bottom: $r('app.float.input_border_width') },
           // color: $r('app.color.input_border_color'),
-          radius: 8
+          radius: 8,
+          width: this.uid_border_width,
+          color: Color.Red
         })
         .onChange((value: string) => {
           this.uid = value;
+
+
         })
 
       // 密码输入框
-      TextInput({ placeholder: $r('app.string.password') })
+      TextInput({ placeholder: '密码' })
         .width(CommonConstants.TEXT_INPUT_WIDTH_PERCENT)
         .height($r('app.float.text_input_height'))
         .placeholderColor($r('app.color.text_input_place_holder'))
@@ -92,13 +103,15 @@ export struct LoginComponent {
             // // 调用HttpManager的request方法，发起POST请求
             HttpManager.getInstance().request<ResponseResult>(requestOptions)
               .then((result) => {
-                console.info(JSON.stringify(result.data));//输出用户信息并跳转
+                console.info("login_:" + JSON.stringify(result.data));//输出用户信息并跳转
                 if(result.code  == '200') {
                   // 成功登录
                   // let userentity: UserEntity = new UserEntity(JSON.parse(JSON.stringify(result.data))
                   //   .id, JSON.parse(JSON.stringify(result.data)).username, JSON.parse(JSON.stringify(result.data))
                   //   .password, JSON.parse(JSON.stringify(result.data)).uid);
 
+                  globalThis.USERNAME = JSON.parse(JSON.stringify(result.data)).username;
+                  console.info("login_:" + this.uid + globalThis.USERNAME)
                   globalThis.UID = this.uid;
 
                   router.pushUrl({
@@ -110,7 +123,7 @@ export struct LoginComponent {
                 }
               })
               .catch((err) => {
-                console.error(JSON.stringify(err));
+                console.error("login_:" + JSON.stringify(err));
               });
 
             // globalThis.UID = this.uid;
@@ -118,7 +131,7 @@ export struct LoginComponent {
             // router.pushUrl({
             //   url:CommonConstants.MAIN_PAGE_URL,
             //   params: {
-            //     uid: 10001
+            //     uid: 100000001
             //   }
             // });
           })
