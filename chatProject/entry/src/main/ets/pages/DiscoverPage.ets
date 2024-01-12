@@ -56,6 +56,7 @@ export struct DiscoverPage {
       .width($r('app.string.layout_100'))
       .justifyContent(FlexAlign.Start)
       .alignItems(VerticalAlign.Center)
+      .margin({top:20})
 
       List({ space: LIST_SPACE }) {
         ListItem() {

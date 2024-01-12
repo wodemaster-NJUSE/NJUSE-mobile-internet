@@ -2,6 +2,10 @@ import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
 import {CommonConstants} from '../../common/constants/CommonConstants';
 import {User} from '../../model/UserModel'
+import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
+import { HttpManager } from '../../utils/http/HttpManager';
+import { ResponseResult } from '../../utils/http/HttpCore';
+import { getAvatar } from '../../utils/Constants';
 
 
 @Entry
@@ -10,9 +14,9 @@ struct mySettingPage {
   user : User = new User($r('app.media.profile_photo_3'),"Milo","# 这是一个签名","男");
 
   @State profilePicture : Resource = this.user.profilePicture
-  @State userName : string = this.user.userName
-  @State signature : string = this.user.signature
-  @State gender : string = this.user.gender
+  @State userName : string = globalThis.USERNAME
+  @State signature : string = globalThis.MOTTO
+  @State gender : string = globalThis.GENDER
 
   @State isChanged : boolean = false;
 
@@ -32,6 +36,28 @@ struct mySettingPage {
             .enabled(this.isChanged)
             .onClick(() => {
               // TODO-修改个人信息
+              const requestOptions: RequestOptions = {
+                url: "http://172.29.4.148:8080/v1/setting",//
+                method: RequestMethod.POST,
+                header: {
+                  'Content-Type': 'application/json'
+                },
+                extraData: JSON.stringify({
+                  uid : globalThis.UID,
+                  userName : this.userName,
+                  signature : this.signature,
+                  gender : this.gender
+                })
+              };
+              // 调用HttpManager的request方法，发起POST请求
+              HttpManager.getInstance().request<ResponseResult>(requestOptions)
+                .then((result) => {
+                  console.info('修改个人信息');//输出
+                })
+                .catch((err) => {
+                  console.error(JSON.stringify(err));
+                });
+
             })
 
           // 退出登录按钮
@@ -43,6 +69,7 @@ struct mySettingPage {
             .fontSize(18)
             .onClick(() => {
               // TODO-退出登录
+              globalThis.context.terminateSelf();
             })
         }
         .width('90%')
@@ -82,6 +109,7 @@ struct mySettingPage {
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))
     .justifyContent(FlexAlign.SpaceBetween)
+    .margin({top:20})
   }
 
   // 个人信息列表
@@ -97,7 +125,7 @@ struct mySettingPage {
             .layoutWeight(1)
             .margin({left: 12})
 
-          Image(this.profilePicture)
+          Image(getAvatar(globalThis.UID))
             .height(54)
             .width(54)
             .borderRadius(27)
@@ -132,7 +160,7 @@ struct mySettingPage {
           //   .textAlign(TextAlign.Start)
           //   .height('100%')
           //   .width('75%')
-          TextInput({placeholder : this.userName})
+          TextInput({placeholder : globalThis.USERNAME})
             .placeholderFont({size : 18})
             .placeholderColor(Color.Black)
             .height('100%')
@@ -141,6 +169,7 @@ struct mySettingPage {
             .backgroundColor(Color.White)
             .onChange((value: string) => {
               this.userName = value;
+              globalThis.USERNAME = value;
               this.isChanged = true;
             })
         }
@@ -191,8 +220,10 @@ struct mySettingPage {
               this.isChanged = true;
               if (data.index === 0) {
                 this.gender = '男';
+                globalThis.GENDER = '男';
               } else {
                 this.gender = '女';
+                globalThis.GENDER = '女';
               }
             })
             .catch(err => {
@@ -220,7 +251,7 @@ struct mySettingPage {
           //   .height('100%')
           //   .width('75%')
 
-          TextInput({placeholder : this.signature})
+          TextInput({placeholder : globalThis.MOTTO})
             .placeholderFont({size : 18})
             .placeholderColor(Color.Black)
             .height('100%')
@@ -229,6 +260,7 @@ struct mySettingPage {
             .backgroundColor(Color.White)
             .onChange((value: string) => {
               this.signature = value;
+              globalThis.MOTTO = value;
               this.isChanged = true;
             })
         }

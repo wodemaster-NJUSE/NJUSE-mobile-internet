@@ -68,6 +68,7 @@ export struct ContactsPage {
     .backgroundColor($r('app.color.top_bar_background_color'))
     .height($r('app.integer.top_bar_height'))
     .width($r('app.string.layout_100'))
+    .margin({top:20})
   }
 
   // '新的朋友'列表项

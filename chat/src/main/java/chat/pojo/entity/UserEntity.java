@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 @Accessors(chain = true)
 public class UserEntity {
 
@@ -29,9 +31,24 @@ public class UserEntity {
     private String password;
     @NotNull
     @Column(unique = true)
-    private Long uid;
+    private String uid;
+    //TODO: set方法还没实现
+    private String avatar;
 
-//    private ArrayList<String> RelationList;
+    private String gender;
 
+    private String motto;
 
+    /**
+     * 好友列表,存储 UID
+     */
+    @ElementCollection
+    private List<String> relationList;
+
+    @ElementCollection
+    private List<String> friendRequestList;
+
+    @ElementCollection
+    private List<String> momentList;
+    //TODO:private String photoUrl;
 }

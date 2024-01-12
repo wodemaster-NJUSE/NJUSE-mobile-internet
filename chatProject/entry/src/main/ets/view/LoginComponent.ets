@@ -135,6 +135,8 @@ export struct LoginComponent {
                   globalThis.USERNAME = JSON.parse(JSON.stringify(result.data)).username;
                   console.info("login_:" + this.uid + globalThis.USERNAME)
                   globalThis.UID = this.uid;
+                  globalThis.GENDER = JSON.parse(JSON.stringify(result.data)).gender;
+                  globalThis.MOTTO = JSON.parse(JSON.stringify(result.data)).motto;
 
                   router.pushUrl({
                     url: CommonConstants.MAIN_PAGE_URL

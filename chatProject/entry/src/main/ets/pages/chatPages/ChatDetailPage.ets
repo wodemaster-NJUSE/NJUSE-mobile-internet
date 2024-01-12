@@ -99,6 +99,7 @@ export struct ChatDetailPage {
       .width($r('app.string.layout_100'))
       .backgroundColor(Color.White)
       .justifyContent(FlexAlign.SpaceBetween)
+      .margin({top:20})
 
       List({ scroller: this.scroller, initialIndex: this.msgLength - 1 }) {
         LazyForEach(this.chatDetailData, (msg: MessageBase) => {
@@ -185,7 +186,7 @@ export struct ChatDetailPage {
                   },
                   "msgBody": this.keyboardStr,
                   "msgType": "1",
-                  "msgTime": this.todayDate.getSeconds().toString()
+                  "msgTime": this.todayDate.toString()
                 }
               }
             };

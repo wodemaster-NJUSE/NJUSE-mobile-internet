@@ -42,5 +42,6 @@ export struct NewFriendsPage {
     .width(CommonConstants.FULL_WIDTH_PERCENT)
     .height($r('app.float.title_height'))
     .justifyContent(FlexAlign.SpaceBetween)
+    .margin({top:20})
   }
 }

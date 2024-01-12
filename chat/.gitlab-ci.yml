@@ -29,24 +29,6 @@ build-job:       # This job runs in the build stage, which runs first.
   artifacts:
     untracked: true
 
-# unit-test-job:   # This job runs in the test stage.
-#   stage: test    # It only starts when the job in the build stage completes successfully.
-#   script:
-#     - chmod +x mvnw
-#     - ./mvnw test
-
-#lint-test-job:   # This job also runs in the test stage.
-#  stage: test    # It can run at the same time as unit-test-job (in parallel).
-#  script:
-#  - chmod +x mvnw
-#  - ./mvnw test
-
-#deploy-job:      # This job runs in the deploy stage.
-#  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-#  environment: production
-#  script:
-#    - echo "Deploying application..."
-#    - echo "Application successfully deployed."
 
 deploy-job: # This job runs in the deploy stage.
   stage: deploy # It only runs when *both* jobs in the test stage complete successfully.
