@@ -209,7 +209,7 @@ struct OneMoment {
             .fontFamily($r('app.string.harmony_hei_ti'))
             .fontWeight(FontWeight.Medium)
 
-          Text('2023/06/21 19:20') // TODO
+          Text(this.moment.time) // TODO
             .fontSize(12)
             .fontColor(Color.Gray)
             .lineHeight($r('app.integer.friendMomentsPage_userText_line_height'))
@@ -244,81 +244,81 @@ struct OneMoment {
         right: 60
       })
 
-      Column() {
-        if (this.moment.imageList.length) {
-          if (this.moment.imageList.length >= this.imageListMinLength) {
-            GridRow({ columns: GRID_COLUMN_NUMBER, gutter: $r('app.integer.friendMomentsPage_grid_gap') }) {
-              ForEach(this.moment.imageList, (image: string, index?: number) => {
-                GridCol() {
-                  Image(image)
-                    .id(`${index}`)
-                    .width($r('app.integer.friendMomentsPage_image_width'))
-                    .height($r('app.integer.friendMomentsPage_image_height'))
-                    .borderRadius($r('app.integer.friendMomentsPage_image_radius'))
-                    .onClick(() => {
-                      router.pushUrl({
-                        url: CommonConstants.FULL_IMAGE_PAGE_URL,
-                        params: {
-                          resourceUrl: JSON.stringify(this.moment.imageList),
-                          isMedia: false,
-                          imageIndex: index,
-                          isMultipleImages: true
-                        }
-                      })
-                    })
-                }
-              }, (image: string) => image)
-            }
-            .width($r('app.integer.friendMomentsPage_grid_height'))
-          }
-          else {
-            Image(this.moment.imageList[0])
-              .id('singleImage')
-              .width($r('app.integer.friendMomentsPage_single_image_width'))
-              .height($r('app.integer.friendMomentsPage_single_image_height'))
-              .borderRadius($r('app.integer.friendMomentsPage_single_image_radius'))
-              .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/FullImagePage',
-                  params: {
-                    resourceUrl: this.moment.imageList[0],
-                    isMedia: false
-                  }
-                })
-              })
-          }
-        }
-        else {
-          Stack({ alignContent: Alignment.Center }) {
-            Image(this.moment.mediaPreview)
-              .width($r('app.integer.friendMomentsPage_single_video_width'))
-              .height($r('app.integer.friendMomentsPage_single_video_height'))
-              .borderRadius($r('app.integer.friendMomentsPage_single_video_radius'))
-            Image($r('app.media.play'))
-              .width($r('app.integer.friendMomentsPage_icon_play_width'))
-              .height($r('app.integer.friendMomentsPage_icon_play_height'))
-          }
-          .width($r('app.integer.friendMomentsPage_single_video_width'))
-          .height($r('app.integer.friendMomentsPage_single_video_height'))
-          .id('videoComponent')
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/FullImagePage',
-              params: {
-                resourceUrl: this.moment.media,
-                isMedia: true
-              }
-            })
-          })
-        }
-      }
-      .alignItems(HorizontalAlign.Start)
-      .width($r('app.string.layout_100'))
-      .margin({top : 2})
-      .padding({
-        left: $r('app.integer.friendMomentsPage_image_group_padding_left'),
-        right: $r('app.integer.friendMomentsPage_image_group_padding_right')
-      })
+      // Column() {
+      //   if (this.moment.imageList.length) {
+      //     if (this.moment.imageList.length >= this.imageListMinLength) {
+      //       GridRow({ columns: GRID_COLUMN_NUMBER, gutter: $r('app.integer.friendMomentsPage_grid_gap') }) {
+      //         ForEach(this.moment.imageList, (image: string, index?: number) => {
+      //           GridCol() {
+      //             Image(image)
+      //               .id(`${index}`)
+      //               .width($r('app.integer.friendMomentsPage_image_width'))
+      //               .height($r('app.integer.friendMomentsPage_image_height'))
+      //               .borderRadius($r('app.integer.friendMomentsPage_image_radius'))
+      //               .onClick(() => {
+      //                 router.pushUrl({
+      //                   url: CommonConstants.FULL_IMAGE_PAGE_URL,
+      //                   params: {
+      //                     resourceUrl: JSON.stringify(this.moment.imageList),
+      //                     isMedia: false,
+      //                     imageIndex: index,
+      //                     isMultipleImages: true
+      //                   }
+      //                 })
+      //               })
+      //           }
+      //         }, (image: string) => image)
+      //       }
+      //       .width($r('app.integer.friendMomentsPage_grid_height'))
+      //     }
+      //     else {
+      //       Image(this.moment.imageList[0])
+      //         .id('singleImage')
+      //         .width($r('app.integer.friendMomentsPage_single_image_width'))
+      //         .height($r('app.integer.friendMomentsPage_single_image_height'))
+      //         .borderRadius($r('app.integer.friendMomentsPage_single_image_radius'))
+      //         .onClick(() => {
+      //           router.pushUrl({
+      //             url: 'pages/FullImagePage',
+      //             params: {
+      //               resourceUrl: this.moment.imageList[0],
+      //               isMedia: false
+      //             }
+      //           })
+      //         })
+      //     }
+      //   }
+      //   else {
+      //     Stack({ alignContent: Alignment.Center }) {
+      //       Image(this.moment.mediaPreview)
+      //         .width($r('app.integer.friendMomentsPage_single_video_width'))
+      //         .height($r('app.integer.friendMomentsPage_single_video_height'))
+      //         .borderRadius($r('app.integer.friendMomentsPage_single_video_radius'))
+      //       Image($r('app.media.play'))
+      //         .width($r('app.integer.friendMomentsPage_icon_play_width'))
+      //         .height($r('app.integer.friendMomentsPage_icon_play_height'))
+      //     }
+      //     .width($r('app.integer.friendMomentsPage_single_video_width'))
+      //     .height($r('app.integer.friendMomentsPage_single_video_height'))
+      //     .id('videoComponent')
+      //     .onClick(() => {
+      //       router.pushUrl({
+      //         url: 'pages/FullImagePage',
+      //         params: {
+      //           resourceUrl: this.moment.media,
+      //           isMedia: true
+      //         }
+      //       })
+      //     })
+      //   }
+      // }
+      // .alignItems(HorizontalAlign.Start)
+      // .width($r('app.string.layout_100'))
+      // .margin({top : 2})
+      // .padding({
+      //   left: $r('app.integer.friendMomentsPage_image_group_padding_left'),
+      //   right: $r('app.integer.friendMomentsPage_image_group_padding_right')
+      // })
 
       Row() {
         Row() {
