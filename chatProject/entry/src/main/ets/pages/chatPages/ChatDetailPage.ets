@@ -37,7 +37,7 @@ export struct ChatDetailPage {
   msg = new TextMessage($r('app.string.message1'));
   msgAnother = new TextMessage($r('app.string.message2'));
   todayDate = new Date();
-  msgBody = new MessageBase('1', this.userMyself, this.userFriend, '', "1", this.todayDate.getSeconds().toString());
+  msgBody = new MessageBase('1', this.userMyself, this.userFriend, this.msgAnother, 1, this.todayDate.getSeconds().toString());
 
   @State keyboardStr: string = '';
   private chatDetailData = new ChatDetailData();// 聊天信息加载,要填充
@@ -59,7 +59,6 @@ export struct ChatDetailPage {
   chatImg: string | Resource = this.params.chatImg as string | Resource;
   lastMsg: string | Resource = this.params.lastMsg as string | Resource;
   time  = new Date();
-
 
   build() {
 
@@ -106,7 +105,7 @@ export struct ChatDetailPage {
           ListItem() {
             ChatItemView({ msg: msg });
           }
-        }, (msg: MessageBase) => msg.msgId)
+        })
       }
       .listDirection(Axis.Vertical)
       .divider({ strokeWidth: STROKE_WIDTH, color: $r('app.color.detail_divider') })
@@ -142,7 +141,7 @@ export struct ChatDetailPage {
             let imageStr = `/resources/images/photo${((this.chatId) % 50)}.jpg`;
             let msg = new ImageMessage(40, 50, imageStr);
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, '', "2");
+              .toString(), this.userMyself, this.userFriend, msg, 2);
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);
@@ -157,9 +156,10 @@ export struct ChatDetailPage {
           .margin({ right: 10 })
           .onClick(() => {
             this.todayDate = new Date();
-            let msg = new TextMessage(this.keyboardStr);
+            let msg = this.keyboardStr;
             let msgBody = new MessageBase(this.chatDetailData.totalCount()
-              .toString(), this.userMyself, this.userFriend, msg, "1", this.todayDate.getSeconds().toString());
+              .toString(), this.userMyself, this.userFriend, msg, 1, this.todayDate.getSeconds().toString());
+
             this.chatDetailData.pushData(msgBody);
             this.msgLength = this.chatDetailData.totalCount();
             this.scroller.scrollToIndex(this.msgLength - 1);

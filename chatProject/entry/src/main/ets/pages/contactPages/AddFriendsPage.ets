@@ -1,6 +1,7 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../common/constants/CommonConstants'
 import { UserEntity } from '../../stores/user';
+import { getAvatar } from '../../utils/Constants';
 import { ResponseResult } from '../../utils/http/HttpCore';
 import { HttpManager } from '../../utils/http/HttpManager';
 import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
@@ -18,6 +19,7 @@ export struct AddFriendsPage {
 
   @State user : UserEntity = new UserEntity();
   @State username : string = '';
+  @State userid : string = '';
 
   search_placeholder: string = '请输入您要搜索的UID'
 
@@ -26,7 +28,7 @@ export struct AddFriendsPage {
       this.TopBar()
 
       // 搜索框
-      Text('submitValue:' + this.submitValue).fontSize(18).margin(15)
+      // Text('submitValue:' + this.submitValue).fontSize(18).margin(15)
       Search({placeholder: this.search_placeholder})
         .searchButton('搜索')
         .width('90%')
@@ -60,6 +62,7 @@ export struct AddFriendsPage {
 
                     Object.assign(this.user, result.data);
                     this.username = this.user.username;
+                    this.userid = this.user.uid;
                     console.info("searchfind" + " " + this.user.username + " " + this.username); //输出
                   })
                   .catch((err) => {
@@ -71,7 +74,7 @@ export struct AddFriendsPage {
 
       if (this.searchState === 1) {
         RelativeContainer() {
-          Image($r('app.media.profile_photo_3'))
+          Image(getAvatar(this.userid))
             .width($r('app.integer.opt_layout_contact_view_profile_picture_width'))
             .height($r('app.integer.opt_layout_contact_view_profile_picture_height'))
             .borderRadius($r('app.integer.opt_layout_contact_view_profile_picture_radius'))

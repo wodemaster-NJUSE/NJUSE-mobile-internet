@@ -11,6 +11,7 @@ import { CommonConstants } from '../../common/constants/CommonConstants';
 import { RequestMethod, RequestOptions } from '../../utils/http/RequestOptions';
 import { HttpManager } from '../../utils/http/HttpManager';
 import { ResponseResult } from '../../utils/http/HttpCore';
+import { getAvatar } from '../../utils/Constants';
 
 const TAG: string = 'entry_MomentsPage';
 const ABOUT_TO_APPEAR_TRACE: string = 'FriendsPage_AboutToAppear_HiTrace';
@@ -172,7 +173,7 @@ struct OneMoment {
     Column() {
       Row() {
         // 头像
-        Image(this.moment.user.userImage)
+        Image(getAvatar(this.moment.user.userId))
           .id('userImage')
           .autoResize(false)
           .width($r('app.integer.friendMomentsPage_user_image_width'))

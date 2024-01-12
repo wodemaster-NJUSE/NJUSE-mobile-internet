@@ -2,6 +2,7 @@ import Logger from '../utils/Logger';
 import { ChatModel, ChatContact } from '../viewmodel/MsgBase';
 import router from '@ohos.router';
 import { CommonConstants } from '../common/constants/CommonConstants';
+import { getAvatar } from '../utils/Constants';
 
 const TAG: string = 'ChatList_ChatView';
 
@@ -34,7 +35,7 @@ export struct ChatView {
 
   build() {
     RelativeContainer() {
-      Image(this.chatItem.user.userImage)
+      Image(getAvatar(this.chatItem.user.userId))
         .width($r('app.integer.opt_layout_chat_view_profile_picture_width'))
         .height($r('app.integer.opt_layout_chat_view_profile_picture_height'))
         .borderRadius($r('app.integer.opt_layout_chat_view_profile_picture_radius'))
